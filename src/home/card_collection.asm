@@ -5,12 +5,18 @@ GetAmountOfCardsOwned::
 	push de
 	push bc
 	call EnableSRAM
-	ld hl, $0000
+	ld hl, 0
 	ld de, sDeck1Cards
 	ld c, NUM_DECKS
 .next_deck
+	push bc
 	ld a, [de]
-	or a
+	inc de
+	ld c, a
+	ld a, [de]
+	dec de
+	or c
+	pop bc
 	jr z, .skip_deck ; jump if deck empty
 	ld a, c
 	ld bc, DECK_SIZE
@@ -27,15 +33,20 @@ GetAmountOfCardsOwned::
 	jr nz, .next_deck
 	; hl = DECK_SIZE * (number of non-empty decks)
 	ld de, sCardCollection
-	ld b, $00
+	ld bc, $00
 .next_card
 	ld a, [de]
 	bit CARD_NOT_OWNED_F, a
 	jr nz, .skip_card
+	push bc
 	ld c, a ; card count in sCardCollection
 	add hl, bc
+	pop bc
 .skip_card
-	inc e
+	inc de
+	dec bc
+	ld a, b
+	or c
 	jr nz, .next_card ; assumes sCardCollection is $100 bytes long (CARD_COLLECTION_SIZE)
 	pop bc
 	pop de
@@ -57,32 +68,48 @@ GetCardCountInCollectionAndDecks::
 	ld c, a
 	ld b, 0 ; initial counter
 	ld hl, sDeck1Cards
-	ld d, NUM_DECKS
-.next_deck
-	ld a, [hl]
-	or a
-	jr z, .deck_done ; jump if deck empty
+	ld b, 0
+.loop_decks
+	ld a, [hli]
+	or [hl]
+	dec hl
+	jr z, .next_deck ; jump if deck empty
+
 	push hl
-	ld e, DECK_SIZE
+	push de
+	ld d, h
+	ld e, l
+	ld hl, wCurDeckCards
+	call DecompressSRAMDeck
+	pop de
+
+	ld c, DECK_SIZE
 .next_card
 	ld a, [hli]
-	cp c
+	cp e
+	ld a, [hli]
 	jr nz, .no_match
-	inc b ; this deck card matches card c
+	cp d
+	jr nz, .no_match
+	inc b
 .no_match
-	dec e
+	dec c
 	jr nz, .next_card
 	pop hl
 .deck_done
 	ld a, d
 	ld de, sDeck2Cards - sDeck1Cards
-	add hl, de
-	ld d, a
-	dec d
+	add hl, bc
+	pop bc
+	ld a, h
+	cp HIGH(sDeck4Cards + (DECK_NAME_SIZE + DECK_COMPRESSED_SIZE))
+	jr nz, .loop_decks
+	ld a, l
+	cp LOW(sDeck4Cards + (DECK_NAME_SIZE + DECK_COMPRESSED_SIZE))
 	jr nz, .next_deck
 	; all decks done
-	ld h, HIGH(sCardCollection)
-	ld l, c
+	ld hl, sCardCollection
+	add hl, de
 	ld a, [hl]
 	bit CARD_NOT_OWNED_F, a
 	jr nz, .done
@@ -108,8 +135,8 @@ GetCardCountInCollectionAndDecks::
 GetCardCountInCollection::
 	push hl
 	call EnableSRAM
-	ld h, HIGH(sCardCollection)
-	ld l, a
+	ld hl, sCardCollection
+	add hl, de
 	ld a, [hl]
 	call DisableSRAM
 	pop hl
@@ -148,19 +175,29 @@ CreateTempCardCollection::
 	add hl, de
 	ld e, l
 	ld d, h
-	ld h, HIGH(wTempCardCollection)
+	ld hl, wCurDeckCards
+	call DecompressSRAMDeck
+
+	ld de, wCurDeckCards
+	ld hl, wTempCardCollection
 	ld c, DECK_SIZE
 .next_card_loop
-	ld a, [de] ; count of current card being added
-	inc de ; move to next card for next iteration
+	push hl
+	ld a, [de]
+	inc de
+	add l
 	ld l, a
+	ld a, [de]
+	inc de
+	adc h
+	ld h, a
 	inc [hl] ; increment count
+	pop hl
 	dec c
 	jr nz, .next_card_loop
 	ret
 
-
-; adds card with ID given in a to sCardCollection, provided that
+; add card with id given in de to sCardCollection, provided that
 ; the player has less than MAX_AMOUNT_OF_CARD (99) of them
 ; preserves all registers except af
 ; input:
@@ -169,17 +206,18 @@ AddCardToCollection::
 	push hl
 	push de
 	push bc
-	ld l, a
-	push hl
+	push de
 	call CreateTempCardCollection
-	pop hl
+	pop de
 	call EnableSRAM
-	ld h, HIGH(wTempCardCollection)
+	ld hl, wTempCardCollection
+	add hl, de
 	ld a, [hl]
 	and CARD_COUNT_MASK
 	cp MAX_AMOUNT_OF_CARD
 	jr nc, .already_max
-	ld h, HIGH(sCardCollection)
+	ld hl, sCardCollection
+	add hl, de
 	ld a, [hl]
 	and CARD_COUNT_MASK
 	inc a
@@ -191,15 +229,15 @@ AddCardToCollection::
 	jp DisableSRAM
 
 
-; removes a card with ID given in a from sCardCollection (decrement its count if non-0)
+; removes a card with ID given in de from sCardCollection (decrement its count if non-0)
 ; preserves all registers except af
 ; input:
 ;	a = card ID for the card to remove
 RemoveCardFromCollection::
 	push hl
 	call EnableSRAM
-	ld h, HIGH(sCardCollection)
-	ld l, a
+	ld hl, sCardCollection
+	add hl, de
 	ld a, [hl]
 	and CARD_COUNT_MASK
 	jr z, .zero
@@ -236,7 +274,12 @@ GetCardAlbumProgress::
 	jr nz, .skip
 	inc d ; if this card is owned
 .skip
-	inc l
+	inc hl
+	ld a, l
+	cp LOW(sCardCollection + CARD_COLLECTION_SIZE)
+	jr nz, .next_card
+	ld a, h
+	cp HIGH(sCardCollection + CARD_COLLECTION_SIZE)
 	jr nz, .next_card ; assumes sCardCollection is $100 bytes long (CARD_COLLECTION_SIZE)
 	pop hl
 	jp DisableSRAM

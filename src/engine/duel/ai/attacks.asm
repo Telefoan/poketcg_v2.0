@@ -183,12 +183,18 @@ GetAIScoreOfAttack:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempTurnDuelistCardID], a
+	ld a, e
+	ld [wTempTurnDuelistCardID + 0], a
+	ld a, d
+	ld [wTempTurnDuelistCardID + 1], a
 	rst SwapTurn
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempNonTurnDuelistCardID], a
+	ld a, e
+	ld [wTempNonTurnDuelistCardID + 0], a
+	ld a, d
+	ld [wTempNonTurnDuelistCardID + 1], a
 
 ; take into account whether the Defending Pokémon has a No Damage substatus.
 ; if it does, check if this attack has a residual effect or if it can damage the opposing Bench.
@@ -309,7 +315,7 @@ GetAIScoreOfAttack:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp MAGNEMITE_LV13
+	cp16 MAGNEMITE_LV13
 	jr z, .magnemite1
 	ld b, 10 ; Bench damage
 .magnemite1
@@ -352,17 +358,17 @@ GetAIScoreOfAttack:
 	call _GetCardIDFromDeckIndex
 
 	ld b, 20 ; 20 damage to the Bench
-	cp MAGNETON_LV28
+	cp16 MAGNETON_LV28
 	jr z, .check_bench_kos
-	cp MAGNETON_LV35
+	cp16 MAGNETON_LV35
 	jr z, .check_bench_kos
-	cp GOLEM
+	cp16 GOLEM
 	jr z, .check_bench_kos
 
 	ld b, 10 ; 10 damage to the Bench
-	cp MAGNEMITE_LV13
+	cp16 MAGNEMITE_LV13
 	jr z, .check_bench_kos
-	cp WEEZING
+	cp16 WEEZING
 	jr nz, .check_damage_to_self
 
 .check_bench_kos

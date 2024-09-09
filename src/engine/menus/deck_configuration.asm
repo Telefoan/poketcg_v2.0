@@ -7,13 +7,14 @@
 ;	hl = list of cards in a deck (e.g. wCurDeckCards)
 DecrementDeckCardsInCollection:
 	push hl
-	ld b, $0
 	ld d, DECK_SIZE
 .loop_deck
 	ld a, [hli]
-	or a
-	jr z, .done
 	ld c, a
+	ld a, [hli]
+	ld b, a
+	or c
+	jr z, .done
 	push hl
 	ld hl, sCardCollection
 	add hl, bc
@@ -81,20 +82,30 @@ AddGiftCenterDeckCardsToCollection:
 ;	hl = pointer to the deck list
 AddDeckToCollection:
 	push hl
-	ld b, $0
 	ld d, DECK_SIZE
-.loop_deck
-	ld a, [hli]
-	or a
-	jr z, .done
-	ld c, a
+.loop_outer
+	ld a, [hli] ; command byte
+	ld e, a
+	ld b, $8
+.loop_inner
+	ld c, [hl]
+	xor a
+	rl e
+	rla
+	push bc
 	push hl
+	ld b, a
 	ld hl, sCardCollection
 	add hl, bc
 	inc [hl]
 	pop hl
+	pop bc
 	dec d
-	jr nz, .loop_deck
+	jr z, .done
+	inc hl
+	dec b
+	jr nz, .loop_inner
+	jr .loop_outer
 .done
 	pop hl
 	ret
@@ -360,7 +371,8 @@ CheckIfDeckHasCards:
 	ld bc, DECK_NAME_SIZE
 	add hl, bc
 	call EnableSRAM
-	ld a, [hl]
+	ld a, [hli]
+	or [hl]
 	call DisableSRAM
 	or a
 	ret nz ; return no carry if the first card slot isn't empty
@@ -1047,7 +1059,9 @@ CheckIfCurrentDeckWasChanged:
 .skip_size_check
 ; copy the selected deck to wCurDeckCardChanges
 	call GetPointerToDeckCards
-	ld de, wCurDeckCardChanges
+	ld d, h
+	ld e, l
+	ld hl, wCurDeckCardChanges
 	ld b, DECK_SIZE
 	call CopyNBytesFromHLToDEInSRAM
 	ld a, $ff ; terminator byte
@@ -1077,10 +1091,19 @@ CheckIfCurrentDeckWasChanged:
 	ld hl, wCurDeckCardChanges
 .loop_inner
 	ld a, [hli]
+	and [hl]
 	cp $ff
 	jr z, .loop_outer
+	dec hl
+	ld a, [hli]
+	cp c
+	inc hl
+	jr nz, .loop_inner
+	dec hl
+	ld a, [hli]
 	cp b
 	jr nz, .loop_inner
+
 	; found
 	dec hl
 	ld [hl], $00 ; remove this card from wCurDeckCardChanges
@@ -1090,6 +1113,7 @@ CheckIfCurrentDeckWasChanged:
 	ld hl, wCurDeckCardChanges
 .loop_check_empty
 	ld a, [hli]
+	or [hl]
 	cp $ff
 	jr z, .is_empty
 	or a
@@ -1282,19 +1306,18 @@ CreateFilteredCardList:
 	push af
 	ld a, DECK_SIZE ; number of bytes that will be cleared (60)
 	ld hl, wOwnedCardsCountList
-	call ClearMemory_Bank2
-;	ld a, DECK_SIZE ; number of bytes that will be cleared (60)
+	call ClearNBytesFromHL
+	ld a, DECK_SIZE * 2
 	ld hl, wFilteredCardList
 	call ClearMemory_Bank2
 	pop af
 
 ; loops all cards in collection
-	ld hl, $0 ; starting list index = 0
-	ld d, h
-	ld e, l ; starting card ID = 0
+	ld hl, $0
+	ld de, 0
 	ld b, a ; input card type
 .loop_card_ids
-	inc e
+	inc de
 	call GetCardType
 	jr c, .store_count
 	ld c, a
@@ -1316,8 +1339,11 @@ CreateFilteredCardList:
 	push bc
 	push hl
 	ld bc, wFilteredCardList
+	add hl, hl
 	add hl, bc
 	ld [hl], e
+	inc hl
+	ld [hl], d
 	ld hl, wTempCardCollection
 	add hl, de
 	ld b, [hl]
@@ -1345,7 +1371,7 @@ CreateFilteredCardList:
 	add hl, bc
 	ld [hl], a
 	pop hl
-	inc l
+	inc hl
 .next_card
 	pop bc
 	jr .loop_card_ids
@@ -1357,13 +1383,16 @@ CreateFilteredCardList:
 	xor a ; $00
 	ld c, l
 	ld b, h
-	ld hl, wFilteredCardList
-	add hl, bc
-	ld [hl], a
-	dec a ; $ff
+
 	ld hl, wOwnedCardsCountList
 	add hl, bc
-	ld [hl], a
+	ld [hl], $ff
+
+	ld hl, wFilteredCardList
+	sla c
+	add hl, bc
+	ld [hli], a ; $00
+	ld [hl], a ; $00
 	pop hl
 	pop de
 	pop bc
@@ -1410,7 +1439,12 @@ IsCardInAnyDeck:
 .FindCardInDeck
 	call EnableSRAM
 	ld b, DECK_SIZE
-.loop
+.loop_outer
+	ld a, [hli] ; cmd byte
+	ld [wDeckCompressionCmdByte], a
+	ld c, $8
+.loop_inner
+	push bc
 	ld a, [hli]
 	cp e
 	jr z, .done ; return no carry if the given card ID was found in the deck
@@ -1452,18 +1486,25 @@ ClearMemory_Bank2:
 ;	a & d = number of cards in wCurDeckCards with the ID from input
 GetCountOfCardInCurDeck:
 	push hl
+	push bc
 	ld hl, wCurDeckCards
-	ld d, 0
+	ld b, 0
 .loop
 	ld a, [hli]
-	or a
+	or [hl]
+	dec hl
 	jr z, .done
+	ld a, [hli]
 	cp e
+	ld a, [hli]
 	jr nz, .loop
-	inc d
+	cp d
+	jr nz, .loop
+	inc b
 	jr .loop
 .done
-	ld a, d
+	ld a, b
+	pop bc
 	pop hl
 	ret
 
@@ -1479,17 +1520,24 @@ GetCountOfCardInCurDeck:
 GetOwnedCardCount:
 	push hl
 	ld hl, wFilteredCardList
-	ld d, -1
+	ld b, -1
 .loop
-	inc d
+	inc b
 	ld a, [hli]
-	or a
+	or [hl]
 	jr z, .done ; return with a = 0 if the card wasn't found in the list
-	cp e
+	dec hl
+	push bc
+	ld a, [hli]
+	ld c, a
+	ld b, [hl]
+	inc hl
+	call CompareDEtoBC
+	pop bc
 	jr nz, .loop
 	ld hl, wOwnedCardsCountList
 	push de
-	ld e, d
+	ld e, b
 	ld d, $00
 	add hl, de
 	pop de
@@ -1505,6 +1553,7 @@ GetOwnedCardCount:
 ; input:
 ;	e = card ID
 ;	hl = text string (e.g. wDefaultText)
+; de = card ID
 AppendOwnedCardCountAndStorageCountNumbers:
 	push af
 	push bc
@@ -1614,12 +1663,16 @@ CountNumberOfCardsOfType:
 	push hl
 	push bc
 	ld bc, wCurDeckCards
+	add hl, hl
 	add hl, bc
+	ld a, [hli]
+	ld e, a
 	ld a, [hl]
+	ld d, a
 	pop bc
 	pop hl
 	inc l
-	or a
+	or e
 	jr z, .done ; end of card list
 
 ; gets card type and compares it with the type from input.
@@ -1689,7 +1742,7 @@ PrintFilteredCardList:
 ; copy sCardCollection to wTempCardCollection
 	ld hl, sCardCollection
 	ld de, wTempCardCollection
-	ld b, CARD_COLLECTION_SIZE - 1
+	ld bc, CARD_COLLECTION_SIZE - 1
 	call CopyNBytesFromHLToDEInSRAM
 
 	ld a, [wIncludeCardsInDeck]
@@ -1713,6 +1766,8 @@ PrintFilteredCardList:
 	ret
 
 ; used to filter the cards in the deck building/card selection screen
+; pocket ui: bookmark this for updating the ui to handle many types
+;   i want to make it 2 rows
 CardTypeFilters:
 	db FILTER_GRASS
 	db FILTER_FIRE
@@ -1763,6 +1818,7 @@ PrintDeckBuildingCardList:
 ; iterates by decreasing value in wNumVisibleCardListEntries
 ; by 1 until it reaches 0
 	ld a, [wCardListVisibleOffset]
+	sla a
 	ld c, a
 	ld b, $0
 	ld hl, wFilteredCardList
@@ -1778,6 +1834,10 @@ PrintDeckBuildingCardList:
 	jr z, .invalid_card ; print empty row if list value = 0
 	push de
 	ld e, a
+	or [hl]
+	jr z, .invalid_card ; card ID of 0
+	ld a, [hli]
+	ld d, a
 	call AddCardIDToVisibleList
 	call LoadCardDataToBuffer1_FromCardID
 	ld a, 13
@@ -1844,13 +1904,11 @@ Text_9a36:
 	db "<SPACE>"
 	done
 
-
-; writes the card ID in register e to wVisibleListCardIDs,
-; given its position in the list in register b.
-; preserves all registers
+; writes the card ID in register de to wVisibleListCardIDs
+; given its position in the list in register b
 ; input:
-;	b = list position (starts from bottom)
-;	e = card ID
+; b = list position (starts from bottom)
+; de = card ID
 AddCardIDToVisibleList:
 	push af
 	push bc
@@ -1862,6 +1920,8 @@ AddCardIDToVisibleList:
 	ld b, $0
 	add hl, bc
 	ld [hl], e
+	inc hl
+	ld [hl], d
 	pop hl
 	pop bc
 	pop af
@@ -2197,13 +2257,16 @@ OpenCardPageFromCardList:
 .start
 	ld b, $00
 	ld a, [wCardListCursorPos]
+	sla a
 	ld c, a
 	add hl, bc
 	ld a, [wCardListVisibleOffset]
+	sla a
 	ld c, a
 	add hl, bc
 	ld e, [hl]
-	ld d, $0
+	inc hl
+	ld d, [hl]
 	push de
 	call LoadCardDataToBuffer1_FromCardID
 	lb de, $38, $9f
@@ -2254,14 +2317,16 @@ OpenCardPageFromCardList:
 	ld l, a
 	ld b, $00
 	ld a, [wCardListCursorPos]
+	sla a
 	ld c, a
 	add hl, bc
 	ld a, [wCardListVisibleOffset]
 	inc a
+	sla a
 	ld c, a
 	add hl, bc
-	ld a, [hl]
-	or a
+	ld a, [hli]
+	or [hl]
 	jr z, .skip_change_card
 	ld a, [wCardListVisibleOffset]
 	inc a
@@ -2307,6 +2372,7 @@ OpenCardPageFromCardList:
 ; output:
 ;	carry = set:  if the card was not added to the deck
 TryAddCardToDeck:
+	push de
 	ld a, [wMaxNumCardsAllowed]
 	ld d, a
 	ld a, [wTotalCardCount]
@@ -2382,10 +2448,13 @@ TryAddCardToDeck:
 	push de
 .loop_cards
 	ld a, [hli]
-	or a
-	jr z, .exit_pop_de ; return no carry if there are no more cards to check
+	or [hl]
+	jr z, .exit_pop_de
+	dec hl
+	ld a, [hli]
 	ld e, a
-	ld d, $0
+	ld a, [hli]
+	ld d, a
 	call GetCardName
 	ld a, e
 	cp c
@@ -2415,10 +2484,13 @@ TryAddCardToDeck:
 GetSelectedVisibleCardID:
 	ld hl, wVisibleListCardIDs
 	ld a, [wCardListCursorPos]
+	sla a
 	ld e, a
 	ld d, $00
 	add hl, de
 	ld e, [hl]
+	inc hl
+	ld d, [hl]
 	ret
 
 
@@ -2461,7 +2533,7 @@ PrintNumberValueInCursorYPos:
 ; removes the card in register e from the deck configuration
 ; and updates the values shown for its count in the card selection list
 ; input:
-;	e = card ID
+; de = card ID
 RemoveCardFromDeckAndUpdateCount:
 	call RemoveCardFromDeck
 	ret nc
@@ -2491,6 +2563,9 @@ RemoveCardFromDeck:
 .loop_1
 	ld a, [hli]
 	cp e
+	ld a, [hli]
+	jr nz, .loop_1
+	cp d
 	jr nz, .loop_1
 	ld c, l
 	ld b, h
@@ -2592,7 +2667,14 @@ HandleDeckConfirmationMenu:
 	call PlaySFX
 	ld a, [wCardListCursorPos]
 	ld [wced7], a
+
+	; set wUniqueDeckCardList as current card list
+	; and show card page screen
 	ld de, wUniqueDeckCardList
+	ld hl, wCurCardListPtr
+	ld [hl], e
+	inc hl
+	ld [hl], d
 	call OpenCardPageFromCardList
 	jr .start_selection
 
@@ -2797,7 +2879,12 @@ SortCurDeckCardsByID:
 	ld a, [hli]
 	ld [de], a
 	inc de
-	or a
+	ld a, [hld]
+	ld [de], a
+	inc de
+	or [hl]
+	inc hl
+	inc hl
 	jr z, .sort_cards
 	pop af
 	ld [bc], a ; store deck index
@@ -2827,14 +2914,18 @@ SortCurDeckCardsByID:
 	ld a, [de]
 	cp $ff
 	jr z, .done
+	sla a
 	ld c, a
 	ld b, $0
 	push hl
 	ld hl, wOpponentDeck
 	add hl, bc
-	ld a, [hl]
+	ld a, [hli]
+	ld b, [hl]
 	pop hl
 	ld [hli], a
+	ld [hl], b
+	inc hl
 	inc de
 	jr .loop_order_by_deck_index
 
@@ -2849,24 +2940,35 @@ SortCurDeckCardsByID:
 ; (assuming wCurDeckCards is sorted by ID)
 ; also counts the total number of the different cards
 CreateCurDeckUniqueCardList:
-	lb bc, 0, $0
+	xor a
+	ld [wNumUniqueCards], a
+	ld bc, 0
 	ld hl, wCurDeckCards
 	ld de, wUniqueDeckCardList
 .loop
 	ld a, [hli]
 	cp c
+	jr nz, .different
+	ld a, [hli]
+	cp b
 	jr z, .loop
+	dec hl
+.different
+	dec hl
+	ld a, [hli]
 	ld c, a
 	ld [de], a
 	inc de
-	or a
-	jr z, .done
-	inc b
-	jr .loop
-.done
-	ld a, b
+	ld a, [hli]
+	ld b, a
+	ld [de], a
+	inc de
+	or c
+	ret z
+	ld a, [wNumUniqueCards]
+	inc a
 	ld [wNumUniqueCards], a
-	ret
+	jr .loop
 
 
 ShowConfirmationCardScreen:
@@ -2899,9 +3001,10 @@ PrintConfirmationCardList:
 ; iterates by decreasing value in wNumVisibleCardListEntries
 ; by 1 until it reaches 0
 	ld a, [wCardListVisibleOffset]
+	sla a
 	ld c, a
 	ld b, $0
-	ld hl, wOwnedCardsCountList
+	ld hl, wUniqueDeckCardList
 	add hl, bc
 	ld a, [wNumVisibleCardListEntries]
 .loop_cards
@@ -2915,6 +3018,10 @@ PrintConfirmationCardList:
 	push hl
 	push de
 	ld e, a
+	or [hl]
+	jr z, .no_more_cards
+	ld a, [hli]
+	ld d, a
 	call AddCardIDToVisibleList
 	call LoadCardDataToBuffer1_FromCardID
 	; places in wDefaultText the card's name and level
@@ -2948,8 +3055,27 @@ PrintConfirmationCardList:
 	jr .loop_cards
 
 
-; handles the screen showing all the player's cards.
-; this function is similar to HandleDeckBuildScreen.
+; copies b bytes from hl to de
+CopyNBytesFromHLToDE:
+	ld a, [hli]
+	ld [de], a
+	inc de
+	dec b
+	jr nz, CopyNBytesFromHLToDE
+	ret
+
+; copies bc bytes from hl to de
+CopyNBytesFromHLToDE_Long:
+	ld a, [hli]
+	ld [de], a
+	inc de
+	dec bc
+	ld a, b
+	or c
+	jr nz, CopyNBytesFromHLToDE_Long
+	ret
+
+; handles the screen showing all the player's cards
 HandlePlayersCardsScreen:
 	call WriteCardListsTerminatorBytes
 	call PrintPlayersCardsHeaderInfo
@@ -3138,7 +3264,7 @@ CreateCardCollectionListWithDeckCards:
 ; copies sCardCollection to wTempCardCollection
 	ld hl, sCardCollection
 	ld de, wTempCardCollection
-	ld b, CARD_COLLECTION_SIZE - 1
+	ld bc, CARD_COLLECTION_SIZE - 2
 	call CopyNBytesFromHLToDEInSRAM
 
 ; deck_1
@@ -3172,23 +3298,33 @@ CreateCardCollectionListWithDeckCards:
 ;	de = sDeck*Cards
 IncrementDeckCardsInTempCollection:
 	call EnableSRAM
-	ld bc, wTempCardCollection
-	ld h, DECK_SIZE
-.loop
+	ld a, DECK_SIZE
+	ld [wDecompSavedDeckCount], a
+.loop_outer
 	ld a, [de]
 	inc de
-	or a
-	jr z, .done
-	push hl
-	ld h, $0
+	ld b, a
+	ld c, 8 ; number of bits
+.loop_inner
+	ld a, [de]
+	inc de
 	ld l, a
+	xor a
+	rl b
+	rla
+	ld h, a
+	push bc
+	ld bc, wTempCardCollection
 	add hl, bc
 	inc [hl]
-	pop hl
-	dec h
-	jr nz, .loop
-.done
-	jp DisableSRAM
+	pop bc
+	ld a, [wDecompSavedDeckCount]
+	dec a
+	ld [wDecompSavedDeckCount], a
+	jp z, DisableSRAM
+	dec c
+	jr nz, .loop_inner
+	jr .loop_outer
 
 
 ; prints the name, level and storage count of the cards
@@ -3215,6 +3351,7 @@ PrintCardSelectionList:
 ; iterates by decreasing value in wNumVisibleCardListEntries
 ; by 1 until it reaches 0
 	ld a, [wCardListVisibleOffset]
+	sla a
 	ld c, a
 	ld b, $0
 	ld hl, wFilteredCardList
@@ -3230,6 +3367,10 @@ PrintCardSelectionList:
 	jr z, .invalid_card ; card ID of 0
 	push de
 	ld e, a
+	or [hl]
+	jr z, .invalid_card ; card ID of 0
+	ld a, [hli]
+	ld d, a
 	call AddCardIDToVisibleList
 	call LoadCardDataToBuffer1_FromCardID
 	; places in wDefaultText the card's name and level
@@ -3348,6 +3489,8 @@ DrawCardTypeIcons:
 	pop hl
 	jr .loop
 
+; pocket ui: bookmark this
+; move these fuckers around!
 .CardTypeIcons
 ; icon tile, x coordinate, y coordinate
 	db ICON_TILE_GRASS,      1, 2
@@ -3410,6 +3553,7 @@ PrintTotalNumberOfCardsInCollection:
 
 ; count all the cards in collection
 	ld de, wTempCardCollection + 1
+	ld bc, 0
 	ld hl, 0
 	ld b, NUM_CARDS
 .loop_all_cards
@@ -3421,7 +3565,12 @@ PrintTotalNumberOfCardsInCollection:
 	ld c, a
 	add hl, bc
 	pop bc
-	dec b
+	inc bc
+	ld a, LOW(NUM_CARDS)
+	cp c
+	jr nz, .loop_all_cards
+	ld a, HIGH(NUM_CARDS)
+	cp b
 	jr nz, .loop_all_cards
 
 ; hl = total number of cards in collection

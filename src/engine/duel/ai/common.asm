@@ -50,9 +50,9 @@ CheckIfPlayerHasPokemonOtherThanMewtwoLv53:
 	call LoadCardDataToBuffer2_FromDeckIndex
 	ld a, [wLoadedCard2Type]
 	cp TYPE_ENERGY
-	jr nc, .next
-	ld a, [wLoadedCard2ID]
-	cp MEWTWO_LV53
+	jp nc, .next ; can be a jr
+	ld hl, wLoadedCard2ID + 1
+	cphl MEWTWO_LV53
 	jr nz, .not_mewtwo1
 .next
 	ld a, e
@@ -94,8 +94,12 @@ FindBasicEnergyCardsInLocation:
 
 ; this card is in the given location.
 	ld a, e
+	push de
+	push hl
 	call _GetCardIDFromDeckIndex
-	cp DOUBLE_COLORLESS_ENERGY
+	pop hl
+	cp16 DOUBLE_COLORLESS_ENERGY
+	pop de
 	; only Basic Energy cards will set carry here
 	jr nc, .next_card
 
@@ -135,7 +139,7 @@ CheckIfEnergyIsUseful:
 	push de
 	call GetCardIDFromDeckIndex
 	ld a, e
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
 	jr z, .set_carry
 	ld a, [wTempCardType]
 	cp TYPE_ENERGY_DOUBLE_COLORLESS
@@ -143,19 +147,19 @@ CheckIfEnergyIsUseful:
 	ld a, [wTempCardID]
 
 	ld d, PSYCHIC_ENERGY
-	cp EXEGGCUTE
+	cp16 EXEGGCUTE
 	jr z, .check_energy
-	cp EXEGGUTOR
+	cp16 EXEGGUTOR
 	jr z, .check_energy
-	cp PSYDUCK
+	cp16 PSYDUCK
 	jr z, .check_energy
-	cp GOLDUCK
+	cp16 GOLDUCK
 	jr z, .check_energy
 
 	ld d, WATER_ENERGY
-	cp SURFING_PIKACHU_LV13
+	cp16 SURFING_PIKACHU_LV13
 	jr z, .check_energy
-	cp SURFING_PIKACHU_ALT_LV13
+	cp16 SURFING_PIKACHU_ALT_LV13
 	jr z, .check_energy
 
 .check_type
@@ -302,6 +306,10 @@ PickTwoAttachedEnergyCards:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	add DUELVARS_ARENA_CARD
 	get_turn_duelist_var
+	ld a, e
+	ld [wTempCardID + 0], a
+	ld a, d
+	ld [wTempCardID + 1], a
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld [wTempCardID], a
 	ld a, [wLoadedCard1Type]
@@ -318,7 +326,8 @@ PickTwoAttachedEnergyCards:
 	cp $ff
 	jr z, .check_useful
 	call _GetCardIDFromDeckIndex
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
+	pop hl
 	jr z, .found_double_colorless
 	inc hl
 	jr .loop_1
@@ -514,12 +523,15 @@ LookForCardIDInLocation_Bank8:
 
 ; checks the AI's hand for a specific card
 ; input:
-;	a = card ID
+;	de = card ID
 ; output:
 ;	a & [hTempCardIndex_ff98] = deck index for a copy of the given card in the turn holder's hand (0-59, -1 if none)
 ;	carry = set:  if the given card ID was found in the turn holder's hand
 LookForCardIDInHandList_Bank8:
-	ld [wTempCardIDToLook], a
+	ld a, e
+	ld [wTempCardIDToLook + 0], a
+	ld a, d
+	ld [wTempCardIDToLook + 1], a
 	call CreateHandCardList
 	ld hl, wDuelTempList
 .loop
@@ -528,8 +540,11 @@ LookForCardIDInHandList_Bank8:
 	ret z ; return no carry if there are no more cards in the hand to check
 	ldh [hTempCardIndex_ff98], a
 	call GetCardIDFromDeckIndex
-	ld a, [wTempCardIDToLook]
+	ld a, [wTempCardIDToLook + 0]
 	cp e
+	jr nz, .loop
+	ld a, [wTempCardIDToLook + 1]
+	pc d 
 	jr nz, .loop
 
 ; found a match, so return carry with the deck index in a.
@@ -537,21 +552,70 @@ LookForCardIDInHandList_Bank8:
 	scf
 	ret
 
-
-; checks the AI's hand and play area for a specific card.
+; searches in deck for card ID 1 in a, and
+; if found, searches in Hand/Play Area for card ID 2 in b, and
+; if found, searches for card ID 1 in Hand/Play Area, and
+; if none found, return carry and output deck index
+; of the card ID 1 in deck.
 ; input:
-;	a = card ID
+;   de = card ID 1
+;   bc = card ID 2
 ; output:
-;	carry = set:  if the given card ID was found in the turn holder's hand or
-;	              if the given card ID was found in the turn holder's play area
-LookForCardIDInHandAndPlayArea:
-	ld b, a
-	push bc
-	call LookForCardIDInHandList_Bank8
-	pop bc
-	ret c
-
+;   a = index of card ID 1 in deck
+LookForCardIDInDeck_GivenCardIDInHandAndPlayArea:
+	ld a, c
+	ld [wTempAI + 0], a
 	ld a, b
+	ld [wTempAI + 1], a
+	ld a, e
+	ld [wTempAI2 + 0], a
+	ld a, d
+	ld [wTempAI2 + 1], a
+
+; look for the card ID 1 in deck
+	ld a, CARD_LOCATION_DECK
+	call LookForCardIDInLocation
+	ret nc
+
+; was found, store its deck index in memory
+	ld [wTempAIPokemonCard], a
+
+; look for the card ID 2
+; in Hand and Play Area, return if not found.
+	ld a, [wTempAI + 0]
+	ld e, a
+	ld a, [wTempAI + 1]
+	ld d, a
+	call LookForCardIDInHandAndPlayArea
+	ret nc
+
+; look for the card ID 1 in the Hand and Play Area
+; if any card is found, return no carry.
+	ld a, [wTempAI2 + 0]
+	ld e, a
+	ld a, [wTempAI2 + 1]
+	ld d, a
+	call LookForCardIDInHandAndPlayArea
+	jr c, .no_carry
+; none found
+
+	ld a, [wTempAIPokemonCard]
+	scf
+	ret
+
+.no_carry
+	or a
+	ret
+
+; returns carry if card ID in de
+; is found in Play Area or in hand
+; input:
+;	de = card ID
+LookForCardIDInHandAndPlayArea:
+	push de
+	call LookForCardIDInHandList_Bank8
+	pop de
+	ret c
 	ld b, PLAY_AREA_ARENA
 ;	fallthrough
 
@@ -608,7 +672,6 @@ LookForCardIDInDeck_GivenCardIDInHandAndPlayArea:
 
 ; was found, store its deck index in memory
 	ld [wTempAIPokemonCard], a
-
 ; look for card ID #2 in the hand and play area
 	ld a, [wTempAI]
 	call LookForCardIDInHandAndPlayArea
@@ -617,6 +680,53 @@ LookForCardIDInDeck_GivenCardIDInHandAndPlayArea:
 ; look for card ID #1 in the hand and play area.
 ; if no card is found, return carry.
 	ld a, [wCurCardCanAttack]
+	call LookForCardIDInHandAndPlayArea
+	ccf
+	ld a, [wTempAIPokemonCard]
+	ret
+; searches in deck for card ID 1 in a, and
+; if found, searches in Hand Area for card ID 2 in b, and
+; if found, searches for card ID 1 in Hand/Play Area, and
+; if none found, return carry and output deck index
+; of the card ID 1 in deck.
+; input:
+;   de = card ID 1
+;   bc = card ID 2
+; output:
+;   a = index of card ID 1 in deck
+LookForCardIDInDeck_GivenCardIDInHand:
+	ld hl, wTempAI
+	ld [hl], e
+	inc hl
+	ld [hl], d
+	inc hl
+	ld [hl], c ; wTempAI2
+	inc hl
+	ld [hl], b
+
+; look for the card ID 1 in deck
+	ld a, CARD_LOCATION_DECK
+	call LookForCardIDInLocation_Bank8
+	ret nc
+
+; was found, store its deck index in memory
+	ld [wTempAIPokemonCard], a
+
+; look for card ID #2 in the hand and play area
+	ld a, [wTempAI2 + 0]
+	ld e, a
+	ld a, [wTempAI2 + 1]
+	ld d, a
+	call LookForCardIDInHandAndPlayArea
+	ret nc
+
+; look for card ID #1 in the hand and play area.
+; if no card is found, return carry.
+	
+	ld a, [wTempAI + 0]
+	ld e, a
+	ld a, [wTempAI + 1]
+	ld d, a
 	call LookForCardIDInHandAndPlayArea
 	ccf
 	ld a, [wTempAIPokemonCard]
@@ -650,7 +760,10 @@ LookForCardIDInDeck_GivenCardIDInHand:
 	ld [wTempAIPokemonCard], a
 
 ; look for card ID #2 in the hand
-	ld a, [wTempAI]
+	ld a, [wTempAI2 + 0]
+	ld e, a
+	ld a, [wTempAI2 + 1]
+	ld d, a
 	call LookForCardIDInHandList_Bank8
 	ret nc
 
@@ -673,6 +786,55 @@ LookForCardIDInDeck_GivenCardIDInHand:
 ; output:
 ;	a & [hTempCardIndex_ff98] = deck index of the card that was removed from the list (0-59, -1 if none)
 ;	carry = set:  if a card was removed from the list
+;	de = card ID
+;	b = PLAY_AREA_* to start with
+; output:
+;	a = PLAY_AREA_* of found card
+;	carry set if found
+LookForCardIDInPlayArea_Bank8:
+	ld a, e
+	ld [wTempCardIDToLook + 0], a
+	ld a, d
+	ld [wTempCardIDToLook + 1], a
+.loop
+	ld a, DUELVARS_ARENA_CARD
+	add b
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z
+
+	call LoadCardDataToBuffer1_FromDeckIndex
+	ld a, [wTempCardIDToLook + 0]
+	cp e
+	jr nz, .next
+	ld a, [wTempCardIDToLook + 1]
+	cp d
+	jr z, .is_same
+
+.next
+	inc b
+	ld a, MAX_PLAY_AREA_POKEMON
+	cp b
+	jr nz, .loop
+	ld b, $ff
+	or a
+	ret
+
+.is_same
+	ld a, b
+	scf
+	ret
+
+; runs through list avoiding card in e.
+; removes first card in list not equal to e
+; and that has a type allowed to be removed, in d.
+; returns carry if successful in finding a card.
+; input:
+;   d = type of card allowed to be removed
+;       ($00 = Trainer, $01 = Pokemon, $02 = Energy)
+;   e = card deck index to avoid removing
+; output:
+;   a = card index of removed card
 RemoveFromListDifferentCardOfGivenType:
 	push hl
 	push de
@@ -742,26 +904,33 @@ RemoveFromListDifferentCardOfGivenType:
 ; used in Pokémon Trader checks to look for a specific card in the deck
 ; to trade with a Pokémon in hand that has a card ID different from input in e.
 ; input:
-;	a = card ID #1
-;	e = card ID #2
+;   de = card ID 1
+;   bc = card ID 2
 ; output:
 ;	a = deck index of a card in the deck with ID #1 (0-59, -1 if none)
 ;	e = deck index of a Pokémon in the hand that doesn't have card ID #2 (0-59, -1 if none)
 ;	carry = set:  if AI has a card with ID #1 is in their deck but not their hand
 ;	              and also a Pokémon in their hand that doesn't have card ID #2
 LookForCardIDToTradeWithDifferentHandCard:
-	ld hl, wCurCardCanAttack
+	ld hl, wTempAI
 	ld [hl], e
-	ld [wTempAI], a
+	inc hl
+	ld [hl], d
+	inc hl
+	ld [hl], c ; wTempAI2
+	inc hl
+	ld [hl], b
 
 ; if card ID #1 is in the hand, return no carry.
 	call LookForCardIDInHandList_Bank8
 	ccf
 	ret nc
 
-; if card ID #1 is not in the deck, return no carry.
-	ld a, [wTempAI]
+; if card ID 1 is not in deck, return no carry.
+	ld a, [wTempAI + 0]
 	ld e, a
+	ld a, [wTempAI + 1]
+	ld d, a
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -774,6 +943,10 @@ LookForCardIDToTradeWithDifferentHandCard:
 	ld a, [wCurCardCanAttack]
 	ld c, a
 	call CreateHandCardList
+	ld a, [wTempAI2 + 0]
+	ld c, a
+	ld a, [wTempAI2 + 1]
+	ld b, a
 	ld hl, wDuelTempList
 
 .loop_hand
@@ -782,13 +955,20 @@ LookForCardIDToTradeWithDifferentHandCard:
 	ret z ; return no carry if there are no more cards in the hand to check
 	ld e, a
 	call LoadCardDataToBuffer1_FromDeckIndex
-	cp c
+	ld a, [wLoadedCard1ID + 0]
+	ld e, a
+	ld a, [wLoadedCard1ID + 1]
+	ld d, a
+	call CompareDEtoBC
 	jr z, .loop_hand
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
 	jr nc, .loop_hand
 
-; found, output the deck index of the card in the deck and return carry.
+; found, output deck index of card ID 1 in deck
+; and deck index of card found in hand, and set carry
+	dec hl
+	ld e, [hl]
 	ld a, [wTempAI]
 	ret
 
@@ -801,8 +981,10 @@ LookForCardIDToTradeWithDifferentHandCard:
 ;	                            in the turn holder's hand (0-59, -1 if none)
 ;	carry = set:  if there are at least 2 copies of the given card in the hand
 CheckIfHasDuplicateCardIDInHand:
+	push de 
 	ld [wTempCardIDToLook], a
 	call CreateHandCardList
+	pop de
 	ld hl, wDuelTempList
 	ld c, 0 ; counter
 
@@ -812,8 +994,13 @@ CheckIfHasDuplicateCardIDInHand:
 	ret z ; return no carry if there are no more cards in the hand to check
 	ldh [hTempCardIndex_ff98], a
 	call GetCardIDFromDeckIndex
-	ld a, [wTempCardIDToLook]
-	cp e
+	push bc
+	ld a, [wLoadedCard1ID + 0]
+	ld c, a
+	ld a, [wLoadedCard1ID + 1]
+	ld b, a
+	call CompareDEtoBC
+	pop bc
 	jr nz, .loop_hand
 	ld a, c
 	or a
@@ -874,10 +1061,8 @@ FindDuplicatePokemonCards:
 	ld a, [hli]
 	cp $ff
 	jr z, .loop_hand_outer
-	ld c, a
 	call GetCardIDFromDeckIndex
-	ld a, e
-	cp b
+	call CompareDEtoBC
 	jr nz, .loop_hand_inner
 
 ; found two cards with the same ID,

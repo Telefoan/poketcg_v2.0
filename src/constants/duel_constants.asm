@@ -256,7 +256,7 @@ DEF PRIZES_5    EQU $05
 DEF PRIZES_6    EQU $06
 
 ; constants to use as input to LookForCardInDeck
-	const_def
+	const_def $80
 	const SEARCHEFFECT_CARD_ID        ; $0
 	const SEARCHEFFECT_BASIC_ENERGY   ; $1
 	const SEARCHEFFECT_TRAINER        ; $2

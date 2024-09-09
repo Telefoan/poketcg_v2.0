@@ -2879,8 +2879,8 @@ PracticeDuel_DrawSevenCards:
 ; output:
 ;	carry = set:  if the Player didn't choose Goldeen as their starting Pokemon
 PracticeDuel_PlayGoldeen:
-	ld a, [wLoadedCard2ID]
-	cp GOLDEEN
+	ld hl, [wLoadedCard2ID]
+	cphl GOLDEEN
 	ret z
 	ldtx hl, ChooseGoldeenPracticeDuelText
 	scf
@@ -3194,8 +3194,8 @@ PracticeDuelTurnVerificationPointerTable:
 ; output:
 ;	carry = set:  if the Player didn't follow all of the instructions for turn 1
 PracticeDuelVerify_Turn1:
-	ld a, [wTempCardID_ccc2]
-	cp GOLDEEN
+	ld hl, [wTempCardID_ccc2]
+	cphl GOLDEEN
 	jr nz, ReturnWrongAction
 	ret
 
@@ -3203,8 +3203,8 @@ PracticeDuelVerify_Turn1:
 ; output:
 ;	carry = set:  if the Player didn't follow all of the instructions for turn 2
 PracticeDuelVerify_Turn2:
-	ld a, [wTempCardID_ccc2]
-	cp SEAKING
+	ld hl, [wTempCardID_ccc2] + 1
+	cphl SEAKING
 	jr nz, ReturnWrongAction
 	ld a, [wSelectedAttack]
 	cp SECOND_ATTACK
@@ -3213,16 +3213,16 @@ PracticeDuelVerify_Turn2:
 	call GetPlayAreaCardAttachedEnergies
 	ld a, [wAttachedEnergies + PSYCHIC]
 	or a
-	jr z, ReturnWrongAction
+	jp z, ReturnWrongAction
 	ret
 
 
 ; output:
 ;	carry = set:  if the Player didn't follow all of the instructions for turn 3
 PracticeDuelVerify_Turn3:
-	ld a, [wTempCardID_ccc2]
-	cp SEAKING
-	jr nz, ReturnWrongAction
+	ld hl, wTempCardID_ccc2 + 1
+	cphl SEAKING
+	jp nz, ReturnWrongAction
 	ld e, PLAY_AREA_BENCH_1
 	call GetPlayAreaCardAttachedEnergies
 	ld a, [wAttachedEnergies + WATER]
@@ -3242,8 +3242,8 @@ PracticeDuelVerify_Turn4:
 	ld a, [wAttachedEnergies + WATER]
 	or a
 	jr z, ReturnWrongAction
-	ld a, [wTempCardID_ccc2]
-	cp SEAKING
+	ld hl, wTempCardID_ccc2 + 1
+	cphl SEAKING
 	jr nz, ReturnWrongAction
 	ld a, [wSelectedAttack]
 	cp SECOND_ATTACK
@@ -3263,8 +3263,8 @@ PracticeDuelVerify_Turn5:
 	ld a, [wAttachedEnergies + WATER]
 	cp 2
 	jr nz, ReturnWrongAction
-	ld a, [wTempCardID_ccc2]
-	cp STARYU
+	ld hl, wTempCardID_ccc2 + 1
+	cphl STARYU
 	jr nz, ReturnWrongAction
 	ret
 
@@ -3280,16 +3280,16 @@ PracticeDuelVerify_Turn6:
 	ld a, [wPlayerArenaCardHP]
 	cp 40
 	jr nz, ReturnWrongAction
-	ld a, [wTempCardID_ccc2]
-	cp STARYU
+	ld hl, wTempCardID_ccc2 + 1
+	cphl STARYU
 	jr nz, ReturnWrongAction
 	ret
 
 ; output:
 ;	carry = set:  if the Player didn't follow all of the instructions for turn 7/8
 PracticeDuelVerify_Turn7Or8:
-	ld a, [wTempCardID_ccc2]
-	cp STARMIE
+	ld hl, wTempCardID_ccc2 + 1
+	cphl STARMIE
 	jr nz, ReturnWrongAction
 	ld a, [wSelectedAttack]
 	cp SECOND_ATTACK
@@ -6306,7 +6306,7 @@ DisplayOpponentUsedAttackScreen:
 	call EmptyScreen
 	call LoadDuelCardSymbolTiles
 	call LoadDuelFaceDownCardTiles
-	ld a, [wTempCardID_ccc2]
+	ld a, [wTempCardID_ccc2 + 0]
 	ld e, a
 	call LoadCardDataToBuffer1_FromCardID
 	ld a, CARDPAGE_POKEMON_OVERVIEW
@@ -6607,9 +6607,10 @@ LoadPlayerDeck:
 	call HtimesL
 	ld de, sDeck1Cards
 	add hl, de
-	ld de, wPlayerDeck
-	ld b, DECK_SIZE
-	call CopyNBytesFromHLToDE
+	ld d, h
+	ld e, l
+	ld hl, wPlayerDeck
+	call DecompressSRAMDeck
 	jp DisableSRAM
 
 
@@ -7229,8 +7230,10 @@ OppAction_UseMetronomeAttack:
 	ld [wPlayerAttackingCardIndex], a
 	ld a, [wSelectedAttack]
 	ld [wPlayerAttackingAttackIndex], a
-	ld a, [wTempCardID_ccc2]
-	ld [wPlayerAttackingCardID], a
+	ld a, [wTempCardID_ccc2 + 0]
+	ld [wPlayerAttackingCardID + 0], a
+	ld a, [wTempCardID_ccc2 + 1]
+	ld [wPlayerAttackingCardID + 1], a
 	call UpdateArenaCardIDsAndClearTwoTurnDuelVars
 	pop bc
 	ld a, c
@@ -7405,7 +7408,10 @@ HandleBetweenTurnsEvents:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempNonTurnDuelistCardID], a
+	ld a, e
+	ld [wTempNonTurnDuelistCardID + 0], a
+	ld a, d
+	ld [wTempNonTurnDuelistCardID + 1], a
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	ld a, [hl]
 	or a
@@ -7435,7 +7441,10 @@ HandleBetweenTurnsEvents:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempNonTurnDuelistCardID], a
+	ld a, e
+	ld [wTempNonTurnDuelistCardID + 0], a
+	ld a, d
+	ld [wTempNonTurnDuelistCardID + 1], a
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	ld a, [hl]
 	or a
@@ -7594,8 +7603,10 @@ RedrawTurnDuelistsDuelHUD:
 ;	[wTempNonTurnDuelistCardID] = card ID from which to read the name data
 PrintCardNameFromCardIDInTextBox:
 	push hl
-	ld a, [wTempNonTurnDuelistCardID]
+	ld a, [wTempNonTurnDuelistCardID + 0]
 	ld e, a
+	ld a, [wTempNonTurnDuelistCardID + 1]
+	ld d, a
 	call LoadCardDataToBuffer1_FromCardID
 	ld hl, wLoadedCard1Name
 	ld a, [hli]
@@ -7622,8 +7633,10 @@ HandleSleepCheck:
 	ret nz ; return if the Pokemon isn't Asleep
 
 	push hl
-	ld a, [wTempNonTurnDuelistCardID]
+	ld a, [wTempNonTurnDuelistCardID + 0]
 	ld e, a
+	ld a, [wTempNonTurnDuelistCardID + 1]
+	ld d, a
 	call LoadCardDataToBuffer1_FromCardID
 	ld a, 18
 	call CopyCardNameAndLevel

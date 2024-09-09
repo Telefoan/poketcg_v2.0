@@ -95,11 +95,20 @@ SetUpBossStartingHandAndDeck:
 	call GetCardIDFromDeckIndex
 .loop_id_list
 	ld a, [hli]
-	or a
-	ret z ; return no carry if there are no more card IDs to check
-	cp e
+	ld c, a
+	ld a, [hli]
+	ld b, a
+	or c
+	jr z, .false
+	call CompareDEtoBC
 	jr nz, .loop_id_list
+	pop hl
 	scf
+	ret
+
+.false
+	pop hl
+	or a
 	ret
 
 

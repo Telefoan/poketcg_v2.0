@@ -2478,6 +2478,12 @@ Conversion1_ChangeWeaknessEffect:
 
 ; apply substatus
 	ld a, SUBSTATUS2_CONVERSION2
+	ld b, a
+	ld a, [wPlayerAttackingCardID + 0]
+	ld e, a
+	ld a, [wPlayerAttackingCardID + 1]
+	ld d, a
+	call CopyAttackDataAndDamage_FromCardID
 	jp ApplySubstatus2ToDefendingCard
 
 
@@ -2718,13 +2724,18 @@ ShiftListItemToColor:
 	db LIGHTNING
 	db FIGHTING
 	db PSYCHIC
+	;db DARKNESS
+	;db STEEL 
+	;db DRAGON
 
 ShiftMenuData:
 	; x, y, text ID
 	textitem 10,  9, TypeText
 	textitem 10, 10, WeaknessText
-	textitem 10, 11, ResistanceText
+	textitem 10, 11, ResistanceText ; remove this? lol idk
 	db $ff
+
+
 
 ColorTileAndBGP:
 	; tile, cgb palette
@@ -2734,6 +2745,9 @@ ColorTileAndBGP:
 	db ICON_TILE_LIGHTNING, $01
 	db ICON_TILE_FIGHTING,  $03
 	db ICON_TILE_PSYCHIC,   $03
+	;db ICON_TILE_DARKNESS	$03
+	;db ICON_TILE_STEEL		$02
+	;db ICON_TILE_DRAGON	$01
 
 
 ; loads wTxRam2 and wTxRam2_b:
@@ -2774,6 +2788,9 @@ ColorToTextSymbol:
 	tx WaterSymbolText
 	tx FightingSymbolText
 	tx PsychicSymbolText
+	;tx DarknessSymbolText
+	;tx SteelSymbolText
+	;tx DragonSymbolText
 
 
 Conversion1_AISelection:
@@ -7228,9 +7245,9 @@ HandleNShieldAndTransparency:
 	add e
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp MEW_LV8
+	cp16 MEW_LV8
 	jr z, .nshield
-	cp HAUNTER_LV17
+	cp16 HAUNTER_LV17
 	jr z, .transparency
 .done
 	pop de

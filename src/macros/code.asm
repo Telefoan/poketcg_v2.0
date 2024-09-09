@@ -67,3 +67,21 @@ ENDM
 MACRO get_turn_duelist_var
 	rst GetTurnDuelistVariable
 ENDM
+
+MACRO cp16
+	ld a, d
+	cp HIGH(\1)
+	jr nz, :+
+	ld a, e
+	cp LOW(\1)
+:
+ENDM
+
+MACRO cphl
+	ld a, [hld]
+	cp HIGH(\1)
+	jr nz, :+
+	ld a, [hli]
+	cp LOW(\1)
+:
+ENDM

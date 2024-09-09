@@ -13,57 +13,56 @@ HandleSpecialAIAttacks:
 	add DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call GetCardIDFromDeckIndex
-	ld a, e
 
-	cp NINETALES_LV35
+	cp16 NINETALES_LV35
 	jp z, .MixUp
-	cp MOLTRES_LV35
+	cp16 MOLTRES_LV35
 	jp z, .Wildfire
-	cp ELECTRODE_LV35
+	cp16 ELECTRODE_LV35
 	jp z, .EnergySpike
-	cp ELECTRODE_LV42
+	cp16 ELECTRODE_LV42
 	jp z, .ChainLightning
-	cp ZAPDOS_LV68
+	cp16 ZAPDOS_LV68
 	jp z, .BigThunder
-	cp DUGTRIO
+	cp16 DUGTRIO
 	jp z, .Earthquake
-	cp GASTLY_LV8
+	cp16 GASTLY_LV8
 	jp z, .DestinyBond
-	cp GASTLY_LV17
+	cp16 GASTLY_LV17
 	jp z, .EnergyConversion
-	cp MEWTWO_LV60
+	cp16 MEWTWO_LV60
 	jp z, .EnergyAbsorption
-	cp MEWTWO_ALT_LV60
+	cp16 MEWTWO_ALT_LV60
 	jp z, .EnergyAbsorption
-	cp MEW_LV23
+	cp16 MEW_LV23
 	jp z, .DevolutionBeam
-	cp KANGASKHAN
+	cp16 KANGASKHAN
 	jp z, .Fetch
-	cp PORYGON
+	cp16 PORYGON
 	jp z, .Conversion
-	cp GOLDUCK
+	cp16 GOLDUCK
 	jp z, .HyperBeam
-	cp DRAGONAIR
+	cp16 DRAGONAIR
 	jp z, .HyperBeam
-	cp ODDISH
+	cp16 ODDISH
 	jr z, .CallForFamily
-	cp BELLSPROUT
+	cp16 BELLSPROUT
 	jr z, .CallForFamily
-	cp KRABBY
+	cp16 KRABBY
 	jr z, .CallForFamily
-	cp NIDORANF
+	cp16 NIDORANF
 	jr z, .NidoranFCallForFamily
-	cp MAROWAK_LV26
+	cp16 MAROWAK_LV26
 	jr z, .CallForFriend
-	cp MAROWAK_LV32
+	cp16 MAROWAK_LV32
 	jr z, .Wail
-	cp JIGGLYPUFF_LV13
+	cp16 JIGGLYPUFF_LV13
 	jr z, .FriendshipSong
-	cp EXEGGUTOR
+	cp16 EXEGGUTOR
 	jr z, .Teleport
-	cp SCYTHER
+	cp16 SCYTHER
 	jr z, .SwordsDanceAndFocusEnergy
-	cp VAPOREON_LV29
+	cp16 VAPOREON_LV29
 	jr z, .SwordsDanceAndFocusEnergy
 	; return zero score.
 	xor a
@@ -95,11 +94,11 @@ HandleSpecialAIAttacks:
 ; return a score of $80 + slots available on the Bench.
 ; otherwise, dismiss the attack.
 .NidoranFCallForFamily:
-	ld e, NIDORANM
+	ld de, NIDORANM
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
-	ld e, NIDORANF
+	ld de, NIDORANF
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
@@ -112,19 +111,19 @@ HandleSpecialAIAttacks:
 ; $80 + slots available on the Bench.
 ; otherwise, dismiss the attack.
 .CallForFriend:
-	ld e, GEODUDE
+	ld de, GEODUDE
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
-	ld e, ONIX
+	ld de, ONIX
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
-	ld e, CUBONE
+	ldde, CUBONE
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
-	ld e, RHYHORN
+	ld de, RHYHORN
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
@@ -287,7 +286,7 @@ HandleSpecialAIAttacks:
 ; if any Psychic Energy is found in the discard pile,
 ; return a score of $80 + 2. otherwise, dismiss the attack.
 .EnergyAbsorption:
-	ld e, PSYCHIC_ENERGY
+	ld de, PSYCHIC_ENERGY
 	ld a, CARD_LOCATION_DISCARD_PILE
 	call LookForCardIDInLocation_Bank5
 	jr nc, .zero_score2
@@ -432,7 +431,7 @@ HandleSpecialAIAttacks:
 ; return a score of $80 + 3. otherwise, dismiss the attack.
 .EnergySpike:
 	ld a, CARD_LOCATION_DECK
-	ld e, LIGHTNING_ENERGY
+	ld de, LIGHTNING_ENERGY
 	call LookForCardIDInLocation_Bank5
 	jr nc, .zero_score2
 	call AIProcessButDontPlayEnergy_SkipEvolution
@@ -548,7 +547,7 @@ AISelectSpecialAttackParameters:
 	ldh [hTempList + 2], a
 
 ; search for Psychic Energy cards in the discard pile.
-	ld e, PSYCHIC_ENERGY
+	ld de, PSYCHIC_ENERGY
 	ld a, CARD_LOCATION_DISCARD_PILE
 	call LookForCardIDInLocation_Bank5
 	ret nc ; return no carry if there weren't any Psychic Energy cards in the discard pile
@@ -600,7 +599,7 @@ AISelectSpecialAttackParameters:
 
 ; try to target a Lightning Energy in the deck.
 	ld a, CARD_LOCATION_DECK
-	ld e, LIGHTNING_ENERGY
+	ld de, LIGHTNING_ENERGY
 	call LookForCardIDInLocation_Bank5
 	ret nc ; return no carry if there are no Lightning Energy in the deck
 	ldh [hTemp_ffa0], a

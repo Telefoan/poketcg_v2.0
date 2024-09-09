@@ -34,13 +34,15 @@ CopyDeckFromSRAM:
 WriteCardListsTerminatorBytes:
 	xor a ; both lists are null-terminated
 	ld hl, wFilteredCardList
-	ld bc, DECK_SIZE
+	ld bc, DECK_SIZE * 2
 	add hl, bc
-	ld [hl], a ; add terminating byte to wFilteredCardList
+	ld [hli], a ; terminator byte
+	ld [hl], a ; terminator byte
 	ld hl, wCurDeckCards
-	ld bc, DECK_CONFIG_BUFFER_SIZE
+	ld bc, DECK_CONFIG_BUFFER_SIZE * 2
 	add hl, bc
-	ld [hl], a ; add terminating byte to wCurDeckCards
+	ld [hli], a ; terminator byte
+	ld [hl], a ; terminator byte
 	ret
 
 
@@ -187,7 +189,7 @@ DeckSelectionSubMenu:
 	call AddDeckToCollection
 	ld e, l
 	ld d, h
-	ld hl, wCurDeckCards
+	ld de, wCurDeckCards
 	ld b, DECK_SIZE
 	call CopyNBytesFromHLToDE
 	call GetPointerToDeckName
@@ -462,7 +464,7 @@ CheckIfDeckIsValid:
 GetPointerToDeckName:
 	ld a, [wCurDeck]
 	ld h, a
-	ld l, DECK_STRUCT_SIZE
+	ld l, DECK_COMPRESSED_STRUCT_SIZE
 	call HtimesL
 	push de
 	ld de, sDeck1Name

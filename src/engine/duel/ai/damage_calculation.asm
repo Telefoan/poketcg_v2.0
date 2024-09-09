@@ -130,14 +130,22 @@ CalculateDamage_VersusDefendingPokemon:
 	add DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempTurnDuelistCardID], a
+	call LoadCardDataToBuffer2_FromDeckIndex
+	ld a, [wLoadedCard2ID + 0]
+	ld [wTempTurnDuelistCardID + 0], a
+	ld a, [wLoadedCard2ID + 1]
+	ld [wTempTurnDuelistCardID + 1], a
 
 	; load the Defending Pokémon's card data
 	rst SwapTurn
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempNonTurnDuelistCardID], a
+	call LoadCardDataToBuffer2_FromDeckIndex
+	ld a, [wLoadedCard2ID + 0]
+	ld [wTempNonTurnDuelistCardID + 0], a
+	ld a, [wLoadedCard2ID + 1]
+	ld [wTempNonTurnDuelistCardID + 1], a
 	rst SwapTurn
 
 	push de
@@ -343,7 +351,11 @@ CalculateDamage_FromDefendingPokemon:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempTurnDuelistCardID], a
+	call LoadCardDataToBuffer2_FromDeckIndex
+	ld a, [wLoadedCard2ID + 0]
+	ld [wTempTurnDuelistCardID + 0], a
+	ld a, [wLoadedCard2ID + 1]
+	ld [wTempTurnDuelistCardID + 1], a
 	rst SwapTurn
 
 	; load the card data for the Pokémon receiving the attack 
@@ -351,7 +363,11 @@ CalculateDamage_FromDefendingPokemon:
 	add DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempNonTurnDuelistCardID], a
+	call LoadCardDataToBuffer2_FromDeckIndex
+	ld a, [wLoadedCard2ID + 0]
+	ld [wTempNonTurnDuelistCardID + 0], a
+	ld a, [wLoadedCard2ID + 1]
+	ld [wTempNonTurnDuelistCardID + 1], a
 
 ; handle double damage substatus
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1

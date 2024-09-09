@@ -122,9 +122,9 @@ HandleDamageReductionExceptSubstatus2::
 	cp POKEMON_POWER
 	ret z ; return if the damage is being dealt by a Pokémon Power
 	ld a, [wTempNonTurnDuelistCardID]
-	cp MR_MIME
+	cphl MR_MIME
 	jr z, PreventAllDamage_IfMoreThan20 ; Invisible Wall
-	cp KABUTO
+	cphl KABUTO
 	ret nz
 ;	fallthrough
 
@@ -396,7 +396,7 @@ CheckCantUseTrainerDueToEffect::
 ;	hl = ID for notification text:  if the below condition is true
 ;	carry = set:  if there's an Aerodactyl in play with an active Prehistoric Power
 IsPrehistoricPowerActive::
-	ld a, AERODACTYL
+	ld de, AERODACTYL
 	call CountPokemonWithActivePkmnPowerInBothPlayAreas
 	ret nc ; return if there isn't an Aerodactyl in play
 	call CheckIfPkmnPowersAreCurrentlyDisabled
@@ -505,11 +505,11 @@ CheckIfActiveCardCanBeAffectedByStatus::
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp CLEFAIRY_DOLL ; Trainer Pokémon are unaffected
+	cp16 CLEFAIRY_DOLL ; Trainer Pokémon are unaffected
 	ret z ; return no carry if the Active Pokémon is a Clefairy Doll
-	cp MYSTERIOUS_FOSSIL ; Trainer Pokémon are unaffected
+	cp16 MYSTERIOUS_FOSSIL ; Trainer Pokémon are unaffected
 	ret z ; return no carry if the Active Pokémon is a Mysterious Fossil
-	cp SNORLAX ; Snorlax's Thick Skinned Pokémon Power may make it unaffected
+	cp16 SNORLAX ; Snorlax's Thick Skinned Pokémon Power may make it unaffected
 	scf
 	ret nz ; return carry if the Active Pokémon isn't a Snorlax
 ;	fallthrough
@@ -542,7 +542,7 @@ CheckIsIncapableOfUsingPkmnPower::
 	scf
 	ret nz ; return carry if it's Asleep, Confused, or Paralyzed
 .check_toxic_gas
-	ld a, MUK
+	ld de, MUK
 	call CountPokemonWithActivePkmnPowerInBothPlayAreas
 	ldtx hl, UnableDueToToxicGasText
 	ret

@@ -7,7 +7,7 @@
 ;	wOwnedCardsCountList = $ff-terminated list with card counts of every card in the given set
 CreateCardSetList:
 	push af
-	ld a, DECK_SIZE ; number of bytes that will be cleared (max number of cards in a set = 60)
+	ld a, DECK_SIZE * 2 ; number of bytes that will be cleared (max number of cards in a set = 60)
 	ld hl, wFilteredCardList
 	call ClearMemory_Bank2
 	ld a, DECK_SIZE ; number of bytes that will be cleared (max number of cards in a set = 60)
@@ -20,9 +20,12 @@ CreateCardSetList:
 	ld d, a
 	ld e, a
 	pop af
+
+	ld hl, 0
+	ld de, 0
 	ld b, a
 .loop_all_cards
-	inc e
+	inc de
 	call LoadCardDataToBuffer1_FromCardID
 	jr c, .check_energy_cards
 	ld a, [wLoadedCard1Type]
@@ -35,15 +38,19 @@ CreateCardSetList:
 	jr nz, .loop_all_cards
 	; this card has the same set as input
 	ld a, e
-	cp VENUSAUR_LV64
+	cp16 VENUSAUR_LV64
 	jp z, .SetVenusaurLv64OwnedFlag
-	cp MEW_LV15
+	cp16 MEW_LV15
 	jp z, .SetMewLv15OwnedFlag
 	push bc
 	push hl
 	ld bc, wFilteredCardList
+	add hl, hl
 	add hl, bc
 	ld [hl], e ; card ID
+	inc hl     ;
+	ld [hl], d ;
+
 	ld hl, wTempCardCollection
 	add hl, de
 	ld a, [hl]
@@ -100,8 +107,11 @@ CreateCardSetList:
 	push bc
 	push hl
 	ld bc, wFilteredCardList
+	add hl, hl
 	add hl, bc
 	ld [hl], e
+	inc hl
+	ld [hl], d
 	ld hl, wTempCardCollection
 	add hl, de
 	ld a, [hl]
@@ -149,6 +159,13 @@ CreateCardSetList:
 	ld a, $ff ; terminator byte
 	ld hl, wOwnedCardsCountList
 	add hl, bc
+	ld [hl], $ff ; terminator byte
+
+	xor a
+	ld hl, wFilteredCardList
+	sla c
+	add hl, bc
+	ld [hli], a
 	ld [hl], a
 	ret
 
@@ -182,7 +199,7 @@ CreateCardSetList:
 .PlaceVenusaurLv64InList
 	push af
 	push hl
-	ld e, VENUSAUR_LV64
+	ld de, VENUSAUR_LV64
 	; fallthrough
 
 ; places card in register e directly in the list
@@ -190,8 +207,11 @@ CreateCardSetList:
 ;	e = card ID
 .PlaceCardInList
 	ld bc, wFilteredCardList
+	add hl, hl
 	add hl, bc
 	ld [hl], e
+	inc hl
+	ld [hl], d
 	pop hl
 	push hl
 	ld bc, wOwnedCardsCountList
@@ -205,7 +225,7 @@ CreateCardSetList:
 .PlaceMewLv15InList
 	push af
 	push hl
-	ld e, MEW_LV15
+	ld de, MEW_LV15
 	jr .PlaceCardInList
 
 
@@ -216,7 +236,7 @@ CreateCardSetListAndInitListCoords:
 	push af
 	ld hl, sCardCollection
 	ld de, wTempCardCollection
-	ld b, CARD_COLLECTION_SIZE - 1
+	ld bc, CARD_COLLECTION_SIZE - 2
 	call CopyNBytesFromHLToDEInSRAM
 	pop af
 
@@ -276,6 +296,10 @@ BoosterNamesTextIDTable:
 	tx MysteryText          ; CARD_SET_MYSTERY
 	tx LaboratoryText       ; CARD_SET_LABORATORY
 	tx PromotionalText      ; CARD_SET_PROMOTIONAL
+	;tx GeneticApexCText	; CARD_SET_GAC
+	;tx GeneticApexMText	; CARD_SET_GAM
+	;tx GeneticApexPText	; CARD_SET_GAP
+	;tx MythicalIslandText	; CARD_SET_MYTHICALISLAND
 
 ; prints the cards being shown in the Card Album screen
 ; for the corresponding Card Set
@@ -323,13 +347,15 @@ PrintCardSetListEntries:
 	ld b, a
 	ld de, wFilteredCardList
 	push hl
+	add hl, hl
 	add hl, de
-	ld a, [hl]
+	ld a, [hli]
+	ld d, [hl]
+	ld e, a
 	pop hl
 	inc l
-	or a
+	or d
 	jr z, .no_down_cursor
-	ld e, a
 	call AddCardIDToVisibleList
 	call LoadCardDataToBuffer1_FromCardID
 	push bc
@@ -365,9 +391,10 @@ PrintCardSetListEntries:
 
 .handle_down_cursor
 	ld de, wFilteredCardList
+	add hl, hl
 	add hl, de
-	ld a, [hl]
-	or a
+	ld a, [hli]
+	or [hl]
 	jr z, .no_down_cursor
 	pop de
 	xor a ; FALSE
@@ -397,13 +424,14 @@ PrintCardSetListEntries:
 .AppendCardListIndex
 	push bc
 	push de
+	add hl, hl
 	ld de, wFilteredCardList
 	add hl, de
 	dec hl
 	ld a, [hl]
-	cp VENUSAUR_LV64
+	cp16 VENUSAUR_LV64
 	jr z, .phantom_card
-	cp MEW_LV15
+	cp16 MEW_LV15
 	jr z, .phantom_card
 
 	ld a, [wNumVisibleCardListEntries]
@@ -481,9 +509,11 @@ HandleCardAlbumCardPage:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+	sla c
 	add hl, bc
 	ld e, [hl]
-	ld d, $00
+	inc hl
+	ld d, [hl]
 	push de
 	call LoadCardDataToBuffer1_FromCardID
 	lb de, $38, $9f
@@ -541,14 +571,16 @@ HandleCardAlbumCardPage:
 	ld l, a
 	ld b, $00
 	ld a, [wCardListCursorPos]
+	sla a
 	ld c, a
 	add hl, bc
 	ld a, [wCardListVisibleOffset]
 	inc a
+	sla a
 	ld c, a
 	add hl, bc
-	ld a, [hl]
-	or a
+	ld a, [hli]
+	or [hl]
 	jr z, .open_card_page_pop_af
 	ld a, [wCardListVisibleOffset]
 	inc a

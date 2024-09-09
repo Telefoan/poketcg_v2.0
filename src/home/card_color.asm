@@ -138,7 +138,7 @@ HandleEnergyBurn::
 	add e
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp CHARIZARD
+	cp16 CHARIZARD
 	ret nz
 	ld a, e
 	call CheckIsIncapableOfUsingPkmnPower

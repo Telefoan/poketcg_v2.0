@@ -178,7 +178,8 @@ AIDecideWhetherToRetreat:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp PORYGON
+	cp16 PORYGON
+	pop de
 	jr nz, .check_weakness_3
 
 ; if the AI's Active Pokémon is Porygon and
@@ -275,7 +276,7 @@ AIDecideWhetherToRetreat:
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
 	rst SwapTurn
-	cp MR_MIME
+	cp16 MR_MIME
 	jr nz, .check_retreat_cost
 
 ; if the Active Pokémon can't damage the opponent's Mr. Mime,
@@ -344,11 +345,27 @@ AIDecideWhetherToRetreat:
 	cp -1 ; empty play area slot?
 	jr z, .exit_loop_ko
 	inc e
+	push de
+	push hl
 	call _GetCardIDFromDeckIndex
-	cp MYSTERIOUS_FOSSIL
+	pop hl
+	pop de
+	ld a, [wLoadedCard2ID + 0]
+	cp LOW(MYSTERIOUS_FOSSIL)
+	jr nz, .not_mysterious_fossil
+	ld a, [wLoadedCard2ID + 1]
+	cp HIGH(MYSTERIOUS_FOSSIL)
 	jr z, .loop_ko_2
-	cp CLEFAIRY_DOLL
+
+.not_mysterious_fossil
+	ld a, [wLoadedCard2ID + 0]
+	cp LOW(CLEFAIRY_DOLL)
+	jr nz, .not_clefairy_doll
+	ld a, [wLoadedCard2ID + 1]
+	cp HIGH(CLEFAIRY_DOLL)
 	jr z, .loop_ko_2
+
+.not_clefairy_doll
 	ld a, e
 	ldh [hTempPlayAreaLocation_ff9d], a
 	push de
@@ -367,9 +384,9 @@ AIDecideWhetherToRetreat:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp MYSTERIOUS_FOSSIL
+	cp16 MYSTERIOUS_FOSSIL
 	jr z, .mysterious_fossil_or_clefairy_doll
-	cp CLEFAIRY_DOLL
+	cp16 CLEFAIRY_DOLL
 	jr z, .mysterious_fossil_or_clefairy_doll
 
 ; if wAIScore is at least 131, set carry
@@ -523,7 +540,8 @@ AIDecideBenchPokemonToSwitchTo:
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
 	rst SwapTurn
-	cp MR_MIME
+	ld hl, wLoadedCard2ID + 1
+	cp16 MR_MIME
 	jr nz, .check_defending_weak
 	xor a ; FIRST_ATTACK_OR_PKMN_POWER
 	call EstimateDamage_VersusDefendingCard
@@ -773,9 +791,9 @@ AITryToRetreat:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp MYSTERIOUS_FOSSIL
+	cp16 MYSTERIOUS_FOSSIL
 	jp z, .mysterious_fossil_or_clefairy_doll
-	cp CLEFAIRY_DOLL
+	cp16 CLEFAIRY_DOLL
 	jp z, .mysterious_fossil_or_clefairy_doll
 
 ; store some variables for later.
@@ -822,8 +840,14 @@ AITryToRetreat:
 ; choose Energy cards to discard according to their type/color.
 .find_energy_to_discard
 ; retrieve some data that was stored during GetPlayAreaCardRetreatCost.
-	ld a, [wLoadedCard1ID]
-	ld [wTempCardID], a
+	ld a, DUELVARS_ARENA_CARD
+	get_turn_duelist_var
+	call _GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempCardID + 0], a
+	ld a, d
+	ld [wTempCardID + 1], a
+	call LoadCardDataToBuffer1_FromCardID
 	ld a, [wLoadedCard1Type]
 	or TYPE_ENERGY
 	ld [wTempCardType], a
@@ -837,8 +861,10 @@ AITryToRetreat:
 	cp $ff
 	jr z, .find_least_useful_energy
 	ld [de], a
+	push de
 	call _GetCardIDFromDeckIndex
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
+	pop de
 	jr nz, .choose_double_colorless_loop
 	ld a, [de]
 	call RemoveCardFromDuelTempList
@@ -884,8 +910,10 @@ AITryToRetreat:
 	jr z, .set_carry
 	ld [de], a
 	inc de
+	push de
 	call _GetCardIDFromDeckIndex
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
+	pop de
 	jr nz, .not_double_colorless
 	dec c
 	jr z, .end_retreat_list

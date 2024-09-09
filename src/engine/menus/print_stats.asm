@@ -185,6 +185,8 @@ ThreeDigitNumberToTxSymbol_TrimLeadingZeros:
 PrintAlbumProgress:
 	push bc
 	call GetCardAlbumProgress
+	ld l, c
+	ld h, b
 	pop bc
 ;	fallthrough
 
@@ -194,7 +196,7 @@ PrintAlbumProgress:
 ;	e = total number of cards in the game
 PrintAlbumProgress_SkipGetProgress:
 	push bc
-	push de
+	push hl
 	push bc
 	ld l, d ; number of different cards collected
 	ld h, $00

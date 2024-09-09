@@ -36,11 +36,16 @@ _AIProcessHandTrainerCards:
 	jr nz, .inc_hl_by_5
 
 	ld a, [hli]
-	ld [wAITrainerLogicCard], a
+	ld c, a
+	ld a, [hli]
+	ld b, a
+
 	ld a, [wAITrainerCardToPlay]
 	call _GetCardIDFromDeckIndex
-	ld b, a
-	cp SWITCH
+	push hl
+	ld hl, wLoadedCard1ID + 1
+	cphl SWITCH
+	pop hl
 	jr nz, .skip_switch_check
 
 	ld a, [wPreviousAIFlags]
@@ -49,8 +54,11 @@ _AIProcessHandTrainerCards:
 
 .skip_switch_check
 ; compare hand card to second byte in data and continue if equal.
-	ld a, [wAITrainerLogicCard]
-	cp b
+	ld a, [wAITrainerLogicCard + 0]
+	ld e, a
+	ld a, [wAITrainerLogicCard + 1]
+	ld d, a
+	call CompareDEtoBC
 	jr nz, .inc_hl_by_4
 
 ; found Trainer card
@@ -114,7 +122,8 @@ _AIProcessHandTrainerCards:
 	ld [wPreviousAIFlags], a
 	jp .loop_hand
 
-.inc_hl_by_5
+.inc_hl_by_6
+	inc hl
 	inc hl
 .inc_hl_by_4
 	inc hl
@@ -637,7 +646,10 @@ AIDecide_Pluspower_Phase13:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempTurnDuelistCardID], a
+	ld a, e
+	ld [wTempTurnDuelistCardID + 0], a
+	ld a, d
+	ld [wTempTurnDuelistCardID + 1], a
 
 ; get the Defending Pokémon's info and check its No Damage or Effect substatus.
 ; don't play PlusPower if the Defending Pokémon is temporarily protected from all damage.
@@ -645,7 +657,10 @@ AIDecide_Pluspower_Phase13:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	ld [wTempNonTurnDuelistCardID], a
+	ld a, e
+	ld [wTempNonTurnDuelistCardID + 0], a
+	ld a, d
+	ld [wTempNonTurnDuelistCardID + 1], a
 	call HandleNoDamageOrEffectSubstatus
 	rst SwapTurn
 	ccf
@@ -890,9 +905,9 @@ AIDecide_GustOfWind:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp MEW_LV23
+	cp16 MEW_LV23
 	ret z ; return no carry if MewLv23 is the AI's Active Pokémon
-	cp MEWTWO_LV53
+	cp16 MEWTWO_LV53
 	ret z ; return no carry if MewtwoLv53 is the AI's Active Pokémon
 
 ; if there's any Pokémon on the Player's Bench that can be KO'd by the
@@ -1548,7 +1563,7 @@ AIDecide_PokemonBreeder:
 .loop_hand_1
 	ld a, [hli]
 	cp $ff
-	jr z, .not_found_in_hand
+	jp z, .not_found_in_hand
 
 ; check if the Evolution card in the hand is any of the following Stage 2 Pokémon.
 ; having a Stage 2 Evolution card listed here means that its Basic Pokémon doesn't
@@ -1556,17 +1571,21 @@ AIDecide_PokemonBreeder:
 ; these Stage 2 cards either have a useful Pokémon Power or can attack with only 1 Energy.
 	ld d, a
 	call _GetCardIDFromDeckIndex
-	cp VENUSAUR_LV64
+	ld a, [wLoadedCard1ID + 0]
+	ld e, a
+	ld a, [wLoadedCard1ID + 1]
+	ld d, a
+	cp16 VENUSAUR_LV64
 	jr z, .found
-	cp VENUSAUR_LV67
+	cp16 VENUSAUR_LV67
 	jr z, .found
-	cp BLASTOISE
+	cp16 BLASTOISE
 	jr z, .found
-	cp VILEPLUME
+	cp16 VILEPLUME
 	jr z, .found
-	cp ALAKAZAM
+	cp16 ALAKAZAM
 	jr z, .found
-	cp GENGAR
+	cp16 GENGAR
 	jr nz, .loop_hand_1
 
 .found
@@ -1796,7 +1815,8 @@ AIDecide_PokemonBreeder:
 	push hl
 	ld a, d
 	call _GetCardIDFromDeckIndex
-	cp DRAGONITE_LV41
+	cp16 DRAGONITE_LV41
+	pop de
 	jr nz, .no_carry ; return no carry if the Evolution card being considered isn't DragoniteLv41
 	farcall AIDecidePlayLegendaryDragonite
 	jr .done
@@ -1889,12 +1909,12 @@ AIDecide_ProfessorOak:
 	jr c, .check_hand
 
 ; Toxic Gas isn't in effect.
-	ld a, BLASTOISE
+	ld de, BLASTOISE
 	call CountTurnDuelistPokemonWithActivePkmnPower
 	jr nc, .check_hand
 
 ; at least one Blastoise is in the AI's play area.
-	ld a, WATER_ENERGY
+	ld de, WATER_ENERGY
 	farcall LookForCardIDInHand
 	jr nc, .check_hand
 
@@ -2060,7 +2080,7 @@ AIDecide_ProfessorOak:
 ; remove both Professor Oak cards from the list before checking for playable cards.
 	call CreateHandCardList
 	ld hl, wDuelTempList
-	ld c, PROFESSOR_OAK
+	ld de, PROFESSOR_OAK
 	farcall RemoveCardIDInList
 	farcall RemoveCardIDInList
 
@@ -2088,7 +2108,7 @@ AIDecide_ProfessorOak:
 ; search the AI's hand and play area for Mysterious Fossil.
 ; if none are found, then massively increase the initial score
 ; before returning to the default logic.
-	ld a, MYSTERIOUS_FOSSIL
+	ld de, MYSTERIOUS_FOSSIL
 	call LookForCardIDInHandAndPlayArea
 	jr c, .found_mysterious_fossil
 	ld a, 80
@@ -2104,12 +2124,12 @@ AIDecide_ProfessorOak:
 ; do not play Professor Oak if there's either a Grimer or a Muk in the AI's hand.
 ; if neither are in the hand, then return to the default logic.
 .HandleWondersOfScienceDeck
-	ld a, GRIMER
+	ld de, GRIMER
 	call LookForCardIDInHandList_Bank8
 	ccf
 	ret nc
 
-	ld a, MUK
+	ld de, MUK
 	call LookForCardIDInHandList_Bank8
 	ccf
 	ret nc
@@ -2160,7 +2180,7 @@ AIDecide_EnergyRetrieval:
 	jr nz, .start
 	call CheckIfPkmnPowersAreCurrentlyDisabled
 	jr c, .start
-	ld a, BLASTOISE
+	ld de, BLASTOISE
 	call CountTurnDuelistPokemonWithActivePkmnPower
 	ret nc
 
@@ -2198,7 +2218,12 @@ AIDecide_EnergyRetrieval:
 ; store this card's ID in wTempCardID and this card's Type in wTempCardType.
 	get_turn_duelist_var
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld [wTempCardID], a
+	ld a, e
+	ld [wTempCardID + 0], a
+	ld a, d
+	ld [wTempCardID + 1], a
+	call LoadCardDataToBuffer1_FromCardID
+	pop de
 	ld a, [wLoadedCard1Type]
 	or TYPE_ENERGY
 	ld [wTempCardType], a
@@ -2263,7 +2288,6 @@ AIDecide_EnergyRetrieval:
 
 
 
-
 AIPlay_SuperEnergyRetrieval:
 	ld a, [wCurrentAIFlags]
 	or AI_FLAG_MODIFIED_HAND
@@ -2317,7 +2341,7 @@ AIDecide_SuperEnergyRetrieval:
 	jr nz, .start
 	call CheckIfPkmnPowersAreCurrentlyDisabled
 	jr c, .start
-	ld a, BLASTOISE
+	ld de, BLASTOISE
 	call CountTurnDuelistPokemonWithActivePkmnPower
 	ret nc
 
@@ -2367,7 +2391,12 @@ AIDecide_SuperEnergyRetrieval:
 ; store this card's ID in wTempCardID and this card's Type in wTempCardType.
 	get_turn_duelist_var
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld [wTempCardID], a
+	ld a, e
+	ld [wTempCardID + 0], a
+	ld a, d
+	ld [wTempCardID + 1], a
+	call LoadCardDataToBuffer1_FromCardID
+	pop de
 	ld a, [wLoadedCard1Type]
 	or TYPE_ENERGY
 	ld [wTempCardType], a
@@ -2650,8 +2679,12 @@ LookForUsefulEnergyCardInList_OnlyCheckFireAndLightningPokemon:
 
 ; store the Pokémon's card ID and equivalent Energy type.
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld [wTempCardID], a
-	ld a, [wLoadedCard1Type]
+	ld a, e
+	ld [wTempCardID + 0], a
+	ld a, d
+	ld [wTempCardID + 1], a
+	call LoadCardDataToBuffer1_FromCardID
+	pop de
 	cp TYPE_PKMN_FIRE
 	jr z, .fire_or_lightning
 	cp TYPE_PKMN_LIGHTNING
@@ -2713,7 +2746,12 @@ LookForUsefulEnergyCardInList_OnlyCheckPokemonOfGivenType:
 
 ; store the Pokémon's card ID and equivalent Energy type.
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld [wTempCardID], a
+	ld a, e
+	ld [wTempCardID + 0], a
+	ld a, d
+	ld [wTempCardID + 1], a
+	call LoadCardDataToBuffer1_FromCardID
+	pop de
 	ld a, [wLoadedCard1Type]
 	cp c
 	jr nz, .next_play_area ; skip this Pokémon if it's type doesn't match c input
@@ -3129,20 +3167,20 @@ AIDecide_FullHeal:
 .asleep
 ; set carry if there's a HaunterLv22 or any Gastly in the
 ; Player's play area (due to Haunter's Dream Eater attack).
-	ld a, GASTLY_LV8
+	ld de, GASTLY_LV8
 	call .CheckPlayerArenaCard
 	ret c
-	ld a, GASTLY_LV17
+	ld de, GASTLY_LV17
 	call .CheckPlayerArenaCard
 	ret c
-	ld a, HAUNTER_LV22
+	ld de, HAUNTER_LV22
 	call .CheckPlayerArenaCard
 	ret c
 ;	fallthrough
 
 .paralyzed
 ; don't play Full Heal if the AI will decide to play Scoop Up later in the turn.
-	ld a, SCOOP_UP
+	ld de, SCOOP_UP
 	call LookForCardIDInHandList_Bank8
 	jr nc, .no_scoop_up_prz
 	call AIDecide_ScoopUp
@@ -3178,7 +3216,7 @@ AIDecide_FullHeal:
 
 .confused
 ; don't play Full Heal if the AI will decide to play Scoop Up later in the turn.
-	ld a, SCOOP_UP
+	ld de, SCOOP_UP
 	call LookForCardIDInHandList_Bank8
 	jr nc, .no_scoop_up_cnf
 	call AIDecide_ScoopUp
@@ -3359,7 +3397,7 @@ AIDecide_ScoopUp:
 	ret nc
 
 ; look for ArticunoLv37 on the Bench
-	ld a, ARTICUNO_LV37
+	ld de, ARTICUNO_LV37
 	ld b, PLAY_AREA_BENCH_1
 	call LookForCardIDInPlayArea_Bank8
 	jr c, .articuno_bench
@@ -3368,9 +3406,9 @@ AIDecide_ScoopUp:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp ARTICUNO_LV37
+	cp16 ARTICUNO_LV37
 	jr z, .articuno_or_chansey
-	cp CHANSEY
+	cp16 CHANSEY
 	jr z, .articuno_or_chansey
 	or a
 	ret
@@ -3429,17 +3467,17 @@ AIDecide_ScoopUp:
 	ret nc
 
 ; look for specific Pokémon on the AI's Bench.
-	ld a, ARTICUNO_LV37
+	ld de, ARTICUNO_LV37
 	ld b, PLAY_AREA_BENCH_1
 	call LookForCardIDInPlayArea_Bank8
 	call c, .articuno_bench
 	ret c ; return if AI decided to use Scoop Up on a Benched ArticunoLv37
-	ld a, ZAPDOS_LV68
+	ld de, ZAPDOS_LV68
 	ld b, PLAY_AREA_BENCH_1
 	call LookForCardIDInPlayArea_Bank8
 	call c, .check_attached_energy
 	ret c ; return if AI decided to use Scoop up on a Benched ZapdosLv68
-	ld a, MOLTRES_LV37
+	ld de, MOLTRES_LV37
 	ld b, PLAY_AREA_BENCH_1
 	call LookForCardIDInPlayArea_Bank8
 	jr c, .check_attached_energy
@@ -3619,30 +3657,34 @@ AIDecide_Recycle:
 
 	ld b, a
 	call _GetCardIDFromDeckIndex
+	ld a, [wLoadedCard1ID + 0]
+	ld e, a
+	ld a, [wLoadedCard1ID + 1]
+	ld d, a
 
 ; double colorless energy
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
 	jr nz, .chansey
 	ld a, b
 	ld [wce08], a
 	jr .fire_charge_search_loop
 
 .chansey
-	cp CHANSEY
+	cp16 CHANSEY
 	jr nz, .tauros
 	ld a, b
 	ld [wce08 + 1], a
 	jr .fire_charge_search_loop
 
 .tauros
-	cp TAUROS
+	cp16 TAUROS
 	jr nz, .jigglypuff
 	ld a, b
 	ld [wce08 + 2], a
 	jr .fire_charge_search_loop
 
 .jigglypuff
-	cp JIGGLYPUFF_LV12
+	cp16 JIGGLYPUFF_LV12
 	jr nz, .fire_charge_search_loop
 	ld a, b
 	ld [wce08 + 3], a
@@ -3670,37 +3712,41 @@ AIDecide_Recycle:
 
 	ld b, a
 	call _GetCardIDFromDeckIndex
+	ld a, [wLoadedCard1ID + 0]
+	ld e, a
+	ld a, [wLoadedCard1ID + 1]
+	ld d, a
 
 ; gastly2
-	cp GASTLY_LV17
+	cp16 GASTLY_LV17
 	jr nz, .gastly1
 	ld a, b
 	ld [wce08], a
 	jr .ghost_search_loop
 
 .gastly1
-	cp GASTLY_LV8
+	cp16 GASTLY_LV8
 	jr nz, .zubat
 	ld a, b
 	ld [wce08 + 1], a
 	jr .ghost_search_loop
 
 .zubat
-	cp ZUBAT
+	cp16 ZUBAT
 	jr nz, .ditto
 	ld a, b
 	ld [wce08 + 2], a
 	jr .ghost_search_loop
 
 .ditto
-	cp DITTO
+	cp16 DITTO
 	jr nz, .meowth
 	ld a, b
 	ld [wce08 + 3], a
 	jr .ghost_search_loop
 
 .meowth
-	cp MEOWTH_LV15
+	cp16 MEOWTH_LV15
 	jr nz, .ghost_search_loop
 	ld a, b
 	ld [wce08 + 4], a
@@ -3744,7 +3790,10 @@ AIDecide_Lass:
 	ret z ; return carry if there are no more cards to check
 	ld b, a
 	call LoadCardDataToBuffer1_FromDeckIndex
-	cp LASS
+	push hl
+	ld hl, wLoadedCard1ID + 1
+	cphl LASS
+	pop hl
 	jr z, .loop
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER
@@ -3802,7 +3851,11 @@ AIDecide_ItemFinder:
 	ret z ; return no carry if there are no more cards in the list
 	ld b, a
 	call _GetCardIDFromDeckIndex
-	cp ITEM_FINDER
+	ld a, [wLoadedCard1ID + 0]
+	ld e, a
+	ld a, [wLoadedCard1ID + 1]
+	ld d, a
+	cp16 ITEM_FINDER
 	jr z, .loop_discard_pile
 ; found, store this deck index
 	ld a, b
@@ -4038,13 +4091,13 @@ AIDecide_Revive:
 	ret z ; return no carry if there are no more discard pile cards to check
 	ld b, a
 	call _GetCardIDFromDeckIndex
-	cp HITMONCHAN
+	cp16 HITMONCHAN
 	jr z, .set_carry
-	cp HITMONLEE
+	cp16 HITMONLEE
 	jr z, .set_carry
-	cp TAUROS
+	cp16 TAUROS
 	jr z, .set_carry
-	cp KANGASKHAN
+	cp16 KANGASKHAN
 	jr nz, .muscles_for_brains_loop
 
 .set_carry
@@ -4164,7 +4217,7 @@ AIDecide_ClefairyDollOrMysteriousFossil:
 	ld a, DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call _GetCardIDFromDeckIndex
-	cp WIGGLYTUFF
+	cp16 WIGGLYTUFF
 	scf
 	ret z
 
@@ -4281,15 +4334,15 @@ AIDecide_Pokeball:
 ; this deck runs a deck check for specific
 ; card IDs in order of decreasing priority
 .fire_charge
-	ld e, CHANSEY
+	ld de, CHANSEY
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, TAUROS
+	ld de, TAUROS
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, JIGGLYPUFF_LV12
+	ld de, JIGGLYPUFF_LV12
 	ld a, CARD_LOCATION_DECK
 	jp LookForCardIDInLocation_Bank8
 
@@ -4297,15 +4350,15 @@ AIDecide_Pokeball:
 ; this deck runs a deck check for specific
 ; card IDs in order of decreasing priority
 .hard_pokemon
-	ld e, RHYHORN
+	ld de, RHYHORN
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, RHYDON
+	ld de, RHYDON
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, ONIX
+	ld de, ONIX
 	ld a, CARD_LOCATION_DECK
 	jp LookForCardIDInLocation_Bank8
 
@@ -4313,23 +4366,23 @@ AIDecide_Pokeball:
 ; this deck runs a deck check for specific
 ; card IDs in order of decreasing priority
 .pikachu
-	ld e, PIKACHU_LV14
+	ld de, PIKACHU_LV14
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, PIKACHU_LV16
+	ld de, PIKACHU_LV16
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, PIKACHU_ALT_LV16
+	ld de, PIKACHU_ALT_LV16
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, PIKACHU_LV12
+	ld de, PIKACHU_LV12
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, FLYING_PIKACHU
+	ld de, FLYING_PIKACHU
 	ld a, CARD_LOCATION_DECK
 	jp LookForCardIDInLocation_Bank8
 
@@ -4341,77 +4394,77 @@ AIDecide_Pokeball:
 ; has that card ID in the hand, it is skipped.
 .etcetera
 ; fire
-	ld a, FIRE_ENERGY
+	ld de, FIRE_ENERGY
 	call LookForCardIDInHandList_Bank8
 	jr nc, .lightning
-	ld a, CHARMANDER
+	ld de, CHARMANDER
 	call LookForCardIDInHandList_Bank8
 	jr c, .lightning
-	ld a, MAGMAR_LV31
+	ld de, MAGMAR_LV31
 	call LookForCardIDInHandList_Bank8
 	jr c, .lightning
-	ld e, CHARMANDER
+	ld de, CHARMANDER
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, MAGMAR_LV31
+	ld de, MAGMAR_LV31
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
 
 .lightning
-	ld a, LIGHTNING_ENERGY
+	ld de, LIGHTNING_ENERGY
 	call LookForCardIDInHandList_Bank8
 	jr nc, .fighting
-	ld a, PIKACHU_LV12
+	ld de, PIKACHU_LV12
 	call LookForCardIDInHandList_Bank8
 	jr c, .fighting
-	ld a, MAGNEMITE_LV13
+	ld de, MAGNEMITE_LV13
 	call LookForCardIDInHandList_Bank8
 	jr c, .fighting
-	ld e, PIKACHU_LV12
+	ld de, PIKACHU_LV12
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, MAGNEMITE_LV13
+	ld de, MAGNEMITE_LV13
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
 
 .fighting
-	ld a, FIGHTING_ENERGY
+	ld de, FIGHTING_ENERGY
 	call LookForCardIDInHandList_Bank8
 	jr nc, .psychic
-	ld a, DIGLETT
+	ld de, DIGLETT
 	call LookForCardIDInHandList_Bank8
 	jr c, .psychic
-	ld a, MACHOP
+	ld de, MACHOP
 	call LookForCardIDInHandList_Bank8
 	jr c, .psychic
-	ld e, DIGLETT
+	ld de, DIGLETT
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, MACHOP
+	ld de, MACHOP
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
 
 .psychic
-	ld a, PSYCHIC_ENERGY
+	ld de, PSYCHIC_ENERGY
 	call LookForCardIDInHandList_Bank8
 	ret nc
-	ld a, GASTLY_LV8
+	ld de, GASTLY_LV8
 	call LookForCardIDInHandList_Bank8
 	jr c, .done_etcetera
-	ld a, JYNX
+	ld de, JYNX
 	call LookForCardIDInHandList_Bank8
 	jr c, .done_etcetera
-	ld e, GASTLY_LV8
+	ld de, GASTLY_LV8
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
-	ld e, JYNX
+	ld de, JYNX
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret c
@@ -4425,43 +4478,43 @@ AIDecide_Pokeball:
 ; it does this for both the NidoranM (first) and NidoranF (second) families.
 .lovely_nidoran
 ; pick Nidorino if it was found in the deck but not the hand/play area and Nidoran M was also found in the hand/play area.
-	ld b, NIDORANM
-	ld a, NIDORINO
+	ld bc, NIDORANM
+	ld de, NIDORINO
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	ret c
 ; pick Nidoking if it was found in the deck but not the hand/play area and Nidorino was also found in the hand/play area.
-	ld b, NIDORINO
-	ld a, NIDOKING
+	ld bc, NIDORINO
+	ld de, NIDOKING
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	ret c
 ; pick Nidoran M if it was found in the deck but not the hand/play area and Nidorino was also found in the hand.
-	ld a, NIDORANM
-	ld b, NIDORINO
+	ld de, NIDORANM
+	ld bc, NIDORINO
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret c
 ; pick Nidorino if it was found in the deck but not the hand/play area and Nidoking was also found in the hand.
-	ld a, NIDORINO
-	ld b, NIDOKING
+	ld de, NIDORINO
+	ld bc, NIDOKING
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret c
 ; pick Nidorina if it was found in the deck but not the hand/play area and Nidoran F was also found in the hand/play area.
-	ld b, NIDORANF
-	ld a, NIDORINA
+	ld bc, NIDORANF
+	ld de, NIDORINA
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	ret c
 ; pick Nidoqueen if it was found in the deck but not the hand/play area and Nidorina was also found in the hand/play area.
-	ld b, NIDORINA
-	ld a, NIDOQUEEN
+	ld bc, NIDORINA
+	ld de, NIDOQUEEN
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	ret c
 ; pick Nidoran F if it was found in the deck but not the hand/play area and Nidorina was also found in the hand.
-	ld a, NIDORANF
-	ld b, NIDORINA
+	ld de, NIDORANF
+	ld bc, NIDORINA
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret c
 ; pick Nidorina if it was found in the deck but not the hand/play area and Nidoqueen was also found in the hand.
-	ld a, NIDORINA
-	ld b, NIDOQUEEN
+	ld de, NIDORINA
+	ld bc, NIDOQUEEN
 	jp LookForCardIDInDeck_GivenCardIDInHand
 
 
@@ -4523,10 +4576,10 @@ AIDecide_ComputerSearch_RockCrusher:
 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	get_turn_duelist_var
 	cp 3
-	jr nz, .graveler
+	jp nz, .graveler
 
 ; don't play Computer Search unless there's a Professor Oak card in the AI's deck.
-	ld e, PROFESSOR_OAK
+	ld de, PROFESSOR_OAK
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -4547,19 +4600,19 @@ AIDecide_ComputerSearch_RockCrusher:
 
 ; don't play Computer Search if any of the following cards are in the AI's hand.
 	call _GetCardIDFromDeckIndex
-	cp PROFESSOR_OAK
+	cp16 PROFESSOR_OAK
 	ret z ; return no carry if it's a Professor Oak
-	cp FIGHTING_ENERGY
+	cp16 FIGHTING_ENERGY
 	ret z ; return no carry if it's a Fighting Energy
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
 	ret z ; return no carry if it's a Double Colorless Energy
-	cp DIGLETT
+	cp16 DIGLETT
 	ret z ; return no carry if it's a Diglett
-	cp GEODUDE
+	cp16 GEODUDE
 	ret z ; return no carry if it's a Geodude
-	cp ONIX
+	cp16 ONIX
 	ret z ; return no carry if it's an Onix
-	cp RHYHORN
+	cp16 RHYHORN
 	ret z ; return no carry if it's a Rhyhorn
 
 ; store this card index in memory
@@ -4580,20 +4633,20 @@ AIDecide_ComputerSearch_RockCrusher:
 ; and if there's no Graveler card in the hand, proceed.
 ; also removes Geodude from hand list so that it is not discarded.
 .graveler
-	ld e, GRAVELER
+	ld de, GRAVELER
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	jr nc, .golem
 	ld [wce06], a
-	ld a, GEODUDE
+	ld de, GEODUDE
 	call LookForCardIDInHandAndPlayArea
 	jr nc, .golem
-	ld a, GRAVELER
+	ld de, GRAVELER
 	call LookForCardIDInHandList_Bank8
 	jr c, .golem
 	call CreateHandCardList
 	ld hl, wDuelTempList
-	ld c, GEODUDE
+	ld de, GEODUDE
 	farcall RemoveCardIDInList
 	jr .find_discard_cards_2
 
@@ -4601,15 +4654,15 @@ AIDecide_ComputerSearch_RockCrusher:
 ; if so, check if there's a Graveler in the play area,
 ; and if there's no Golem card in the hand, proceed.
 .golem
-	ld e, GOLEM
+	ld de, GOLEM
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	jr nc, .dugtrio
 	ld [wce06], a
-	ld a, GRAVELER
+	ld de, GRAVELER
 	call LookForCardIDInPlayArea_Bank8
 	jr nc, .dugtrio
-	ld a, GOLEM
+	ld de, GOLEM
 	call LookForCardIDInHandList_Bank8
 	jr c, .dugtrio
 	call CreateHandCardList
@@ -4619,15 +4672,15 @@ AIDecide_ComputerSearch_RockCrusher:
 ; finally, check if there's a Diglett in the play area
 ; and a Dugtrio in the deck but not the hand.
 .dugtrio
-	ld e, DUGTRIO
+	ld de, DUGTRIO
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
 	ld [wce06], a
-	ld a, DIGLETT
+	ld de, DIGLETT
 	call LookForCardIDInPlayArea_Bank8
 	ret nc
-	ld a, DUGTRIO
+	ld de, DUGTRIO
 	call LookForCardIDInHandList_Bank8
 	ccf
 	ret nc
@@ -4687,7 +4740,7 @@ AIDecide_ComputerSearch_WondersOfScience:
 
 ; if there's a Professor Oak in the deck, then store its deck index
 ; and move on to choosing cards in the hand to discard.
-	ld e, PROFESSOR_OAK
+	ld de, PROFESSOR_OAK
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	jr nc, .look_in_hand
@@ -4697,10 +4750,10 @@ AIDecide_ComputerSearch_WondersOfScience:
 ; search for either a Grimer or a Muk if there
 ; isn't already one in the AI's hand or play area.
 .look_in_hand
-	ld a, GRIMER
+	ld de, GRIMER
 	call LookForCardIDInHandAndPlayArea
 	jr nc, .target_grimer
-	ld a, MUK
+	ld de, MUK
 	call LookForCardIDInHandAndPlayArea
 	jr nc, .target_muk
 	or a
@@ -4709,7 +4762,7 @@ AIDecide_ComputerSearch_WondersOfScience:
 ; if there's a Grimer in the deck, then store its deck index
 ; and move on to choosing cards in the hand to discard.
 .target_grimer
-	ld e, GRIMER
+	ld de, GRIMER
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -4718,7 +4771,7 @@ AIDecide_ComputerSearch_WondersOfScience:
 ; if there's a Muk in the deck, then store its deck index
 ; and move on to choosing cards in the hand to discard.
 .target_muk
-	ld e, MUK
+	ld de, MUK
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -4727,13 +4780,15 @@ AIDecide_ComputerSearch_WondersOfScience:
 
 ; the Fire Charge deck tries to search for specific Pokémon that aren't already in the hand.
 AIDecide_ComputerSearch_FireCharge:
-	ld a, CHANSEY
+; pick target card in deck from highest to lowest priority.
+; if not found in hand, go to corresponding branch.
+	ld de, CHANSEY
 	call LookForCardIDInHandList_Bank8
 	jr nc, .chansey
-	ld a, TAUROS
+	ld de, TAUROS
 	call LookForCardIDInHandList_Bank8
 	jr nc, .tauros
-	ld a, JIGGLYPUFF_LV12
+	ld de, JIGGLYPUFF_LV12
 	call LookForCardIDInHandList_Bank8
 	jr nc, .jigglypuff
 	or a
@@ -4742,19 +4797,19 @@ AIDecide_ComputerSearch_FireCharge:
 ; don't play Computer Search if the given card isn't in the deck,
 ; but if a copy was found, then check the hand for Trainer cards to discard.
 .chansey
-	ld e, CHANSEY
+	ld de, CHANSEY
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
 	jr CheckHandForTwoTrainerCards
 .tauros
-	ld e, TAUROS
+	ld de, TAUROS
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
 	jr CheckHandForTwoTrainerCards
 .jigglypuff
-	ld e, JIGGLYPUFF_LV12
+	ld de, JIGGLYPUFF_LV12
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -4788,33 +4843,33 @@ CheckHandForTwoTrainerCards:
 ; depending on the cards in its hand and play area.
 AIDecide_ComputerSearch_Anger:
 ; pick Raticate if it was found in the deck but not the hand/play area and Rattata was also found in the hand/play area.
-	ld b, RATTATA
-	ld a, RATICATE
+	ld bc, RATTATA
+	ld de, RATICATE
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, CheckHandForTwoTrainerCards
 ; pick Rattata if it was found in the deck but not the hand/play area and Raticate was also found in the hand.
-	ld a, RATTATA
-	ld b, RATICATE
+	ld de, RATTATA
+	ld bc, RATICATE
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, CheckHandForTwoTrainerCards
 ; pick ArcanineLv34 if it was found in the deck but not the hand/play area and Growlithe was also found in the hand/play area.
-	ld b, GROWLITHE
-	ld a, ARCANINE_LV34
+	ld bc, GROWLITHE
+	ld de, ARCANINE_LV34
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, CheckHandForTwoTrainerCards
 ; pick Growlithe if it was found in the deck but not the hand/play area and ArcanineLv34 was also found in the hand.
-	ld a, GROWLITHE
-	ld b, ARCANINE_LV34
+	ld de, GROWLITHE
+	ld bc, ARCANINE_LV34
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, CheckHandForTwoTrainerCards
 ; pick Dodrio if it was found in the deck but not the hand/play area and Doduo was also found in the hand/play area.
-	ld b, DODUO
-	ld a, DODRIO
+	ld bc, DODUO
+	ld de, DODRIO
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, CheckHandForTwoTrainerCards
 ; pick Doduo if it was found in the deck but not the hand/play area and Dodrio was also found in the hand.
-	ld a, DODUO
-	ld b, DODRIO
+	ld de, DODUO
+	ld bc, DODRIO
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, CheckHandForTwoTrainerCards
 	ret
@@ -4860,8 +4915,10 @@ AIDecide_PokemonTrader:
 ; AI only plays Pokémon Trader if it can target a MoltresLv37 in its deck and
 ; trade it with a Pokémon in its hand other than MoltresLv35.
 AIDecide_PokemonTrader_LegendaryMoltres:
-	ld a, MOLTRES_LV37
-	ld e, MOLTRES_LV35
+; look for MoltresLv37 card in deck to trade with a
+; card in hand different from MoltresLv35.
+	ld de, MOLTRES_LV37
+	ld bc, MOLTRES_LV35
 	call LookForCardIDToTradeWithDifferentHandCard
 	ret nc
 ; success
@@ -4874,32 +4931,32 @@ AIDecide_PokemonTrader_LegendaryMoltres:
 ; and trade it with a duplicate Chansey, Ditto, or ArticunoLv37 in its hand.
 AIDecide_PokemonTrader_LegendaryArticuno:
 ; don't play Pokémon Trader if there's a Lapras or ArticunoLv35 in the AI's hand or play area.
-	ld a, ARTICUNO_LV35
+	ld de, ARTICUNO_LV35
 	call LookForCardIDInHandAndPlayArea
 	ccf
 	ret nc
-	ld a, LAPRAS
+	ld de, LAPRAS
 	call LookForCardIDInHandAndPlayArea
 	ccf
 	ret nc
 
 ; if AI doesn't have a Seel in its hand or play area, then look for it in the deck.
 ; otherwise, look for a Dewgong instead.
-	ld a, SEEL
+	ld de, SEEL
 	call LookForCardIDInHandAndPlayArea
 	jr c, .dewgong
 
-	ld e, SEEL
+	ld de, SEEL
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	jr c, .check_hand
 
 .dewgong
-	ld a, DEWGONG
+	ld de, DEWGONG
 	call LookForCardIDInHandAndPlayArea
 	ccf
 	ret nc
-	ld e, DEWGONG
+	ld de, DEWGONG
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -4908,13 +4965,13 @@ AIDecide_PokemonTrader_LegendaryArticuno:
 ; duplicate Chansey, Ditto, or ArticunoLv37 in the hand to trade.
 .check_hand
 	ld [wce1a], a
-	ld a, CHANSEY
+	ld de, CHANSEY
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Chansey
-	ld a, DITTO
+	ld de, DITTO
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Ditto
-	ld a, ARTICUNO_LV37
+	ld de, ARTICUNO_LV37
 	jp CheckIfHasDuplicateCardIDInHand
 
 
@@ -4934,60 +4991,60 @@ AIDecide_PokemonTrader_LegendaryDragonite:
 	; total number of Pokémon cards >= 5
 
 ; pick Gyarados if it was found in the deck but not the hand/play area and Magikarp was also found in the hand/play area.
-	ld b, MAGIKARP
-	ld a, GYARADOS
+	ld bc, MAGIKARP
+	ld de, GYARADOS
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Magikarp if it was found in the deck but not the hand/play area and Gyarados was also found in the hand.
-	ld a, MAGIKARP
-	ld b, GYARADOS
+	ld de, MAGIKARP
+	ld bc, GYARADOS
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Dragonair if it was found in the deck but not the hand/play area and Dratini was also found in the hand/play area.
-	ld b, DRATINI
-	ld a, DRAGONAIR
+	ld bc, DRATINI
+	ld de, DRAGONAIR
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick DragoniteLv41 if it was found in the deck but not the hand/play area and Dragonair was also found in the hand/play area.
-	ld b, DRAGONAIR
-	ld a, DRAGONITE_LV41
+	ld bc, DRAGONAIR
+	ld de, DRAGONITE_LV41
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Dratini if it was found in the deck but not the hand/play area and Dragonair was also found in the hand.
-	ld a, DRATINI
-	ld b, DRAGONAIR
+	ld de, DRATINI
+	ld bc, DRAGONAIR
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Dragonair if it was found in the deck but not the hand/play area and DragoniteLv41 was also found in the hand.
-	ld a, DRAGONAIR
-	ld b, DRAGONITE_LV41
+	ld de, DRAGONAIR
+	ld bc, DRAGONITE_LV41
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Charmeleon if it was found in the deck but not the hand/play area and Charmander was also found in the hand/play area.
-	ld b, CHARMANDER
-	ld a, CHARMELEON
+	ld bc, CHARMANDER
+	ld de, CHARMELEON
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Charizard if it was found in the deck but not the hand/play area and Charmeleon was also found in the hand/play area.
-	ld b, CHARMELEON
-	ld a, CHARIZARD
+	ld bc, CHARMELEON
+	ld de, CHARIZARD
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Charmander if it was found in the deck but not the hand/play area and Charmeleon was also found in the hand.
-	ld a, CHARMANDER
-	ld b, CHARMELEON
+	ld de, CHARMANDER
+	ld bc, CHARMELEON
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Charmeleon if it was found in the deck but not the hand/play area and Charizard was also found in the hand.
-	ld a, CHARMELEON
-	ld b, CHARIZARD
+	ld de, CHARMELEON
+	ld bc, CHARIZARD
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 	ret
 
 ; don't play Pokémon Trader if Kangaskhan isn't in the deck.
 .kangaskhan
-	ld e, KANGASKHAN
+	ld de, KANGASKHAN
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank8
 	ret nc
@@ -4995,22 +5052,22 @@ AIDecide_PokemonTrader_LegendaryDragonite:
 ; a target was found in the deck, so look for a duplicate Pokémon in the hand to trade.
 .choose_hand
 	ld [wce1a], a
-	ld a, DRAGONAIR
+	ld de, DRAGONAIR
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Dragonair
-	ld a, CHARMELEON
+	ld de, CHARMELEON
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Charmeleon
-	ld a, GYARADOS
+	ld de, GYARADOS
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Gyarados
-	ld a, MAGIKARP
+	ld de, MAGIKARP
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Magikarp
-	ld a, CHARMANDER
+	ld de, CHARMANDER
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; found Charmander
-	ld a, DRATINI
+	ld de, DRATINI
 	jp CheckIfHasDuplicateCardIDInHand
 
 
@@ -5018,53 +5075,53 @@ AIDecide_PokemonTrader_LegendaryDragonite:
 ; if a target is found, then pick a Legendary Articuno, Zapdos, or Moltres in the hand for the trade.
 AIDecide_PokemonTrader_LegendaryRonald:
 ; pick FlareonLv22 if it was found in the deck but not the hand/play area and Eevee was also found in the hand/play area.
-	ld b, EEVEE
-	ld a, FLAREON_LV22
+	ld bc, EEVEE
+	ld de, FLAREON_LV22
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick VaporeonLv29 if it was found in the deck but not the hand/play area and Eevee was also found in the hand/play area.
-	ld b, EEVEE
-	ld a, VAPOREON_LV29
+	ld bc, EEVEE
+	ld de, VAPOREON_LV29
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick JolteonLv24 if it was found in the deck but not the hand/play area and Eevee was also found in the hand/play area.
-	ld b, EEVEE
-	ld a, JOLTEON_LV24
+	ld bc, EEVEE
+	ld de, JOLTEON_LV24
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Eevee if it was found in the deck but not the hand/play area and FlareonLv22 was also found in the hand.
-	ld a, EEVEE
-	ld b, FLAREON_LV22
+	ld de, EEVEE
+	ld bc, FLAREON_LV22
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Eevee if it was found in the deck but not the hand/play area and VaporeonLv29 was also found in the hand.
-	ld a, EEVEE
-	ld b, VAPOREON_LV29
+	ld de, EEVEE
+	ld bc, VAPOREON_LV29
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Eevee if it was found in the deck but not the hand/play area and JolteonLv24 was also found in the hand.
-	ld a, EEVEE
-	ld b, JOLTEON_LV24
+	ld de, EEVEE
+	ld bc, JOLTEON_LV24
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Dragonair if it was found in the deck but not the hand/play area and Dratini was also found in the hand/play area.
-	ld b, DRATINI
-	ld a, DRAGONAIR
+	ld bc, DRATINI
+	ld de, DRAGONAIR
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick DragoniteLv41 if it was found in the deck but not the hand/play area and Dragonair was also found in the hand/play area.
-	ld b, DRAGONAIR
-	ld a, DRAGONITE_LV41
+	ld bc, DRAGONAIR
+	ld de, DRAGONITE_LV41
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Dratini if it was found in the deck but not the hand/play area and Dragonair was also found in the hand.
-	ld a, DRATINI
-	ld b, DRAGONAIR
+	ld de, DRATINI
+	ld bc, DRAGONAIR
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Dragonair if it was found in the deck but not the hand/play area and DragoniteLv41 was also found in the hand.
-	ld a, DRAGONAIR
-	ld b, DRAGONITE_LV41
+	ld de, DRAGONAIR
+	ld bc, DRAGONITE_LV41
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret nc
 	; fallthrough
@@ -5073,13 +5130,13 @@ AIDecide_PokemonTrader_LegendaryRonald:
 ; if a duplicate is found, then return carry with its deck index in a.
 .choose_hand
 	ld [wce1a], a
-	ld a, ZAPDOS_LV68
+	ld de, ZAPDOS_LV68
 	call LookForCardIDInHandList_Bank8
 	ret c ; found Zapdos
-	ld a, ARTICUNO_LV37
+	ld de, ARTICUNO_LV37
 	call LookForCardIDInHandList_Bank8
 	ret c ; found Articuno
-	ld a, MOLTRES_LV37
+	ld de, MOLTRES_LV37
 	jp LookForCardIDInHandList_Bank8
 
 
@@ -5087,33 +5144,33 @@ AIDecide_PokemonTrader_LegendaryRonald:
 ; if a target is found, then pick any duplicate Pokémon in the hand for the trade.
 AIDecide_PokemonTrader_BlisteringPokemon:
 ; pick Rhydon if it was found in the deck but not the hand/play area and Rhyhorn was also found in the hand/play area.
-	ld b, RHYHORN
-	ld a, RHYDON
+	ld bc, RHYHORN
+	ld de, RHYDON
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Rhyhorn if it was found in the deck but not the hand/play area and Rhydon was also found in the hand.
-	ld a, RHYHORN
-	ld b, RHYDON
+	ld de, RHYHORN
+	ld bc, RHYDON
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick MarowakLv26 if it was found in the deck but not the hand/play area and Cubone was also found in the hand/play area.
-	ld b, CUBONE
-	ld a, MAROWAK_LV26
+	ld bc, CUBONE
+	ld de, MAROWAK_LV26
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Cubone if it was found in the deck but not the hand/play area and MarowakLv26 was also found in the hand.
-	ld a, CUBONE
-	ld b, MAROWAK_LV26
+	ld de, CUBONE
+	ld bc, MAROWAK_LV26
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Rapidash if it was found in the deck but not the hand/play area and Ponyta was also found in the hand/play area.
-	ld b, PONYTA
-	ld a, RAPIDASH
+	ld bc, PONYTA
+	ld de, RAPIDASH
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Ponyta if it was found in the deck but not the hand/play area and Rapidash was also found in the hand.
-	ld a, PONYTA
-	ld b, RAPIDASH
+	ld de, PONYTA
+	ld bc, RAPIDASH
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret nc
 	; fallthrough
@@ -5129,53 +5186,53 @@ AIDecide_PokemonTrader_BlisteringPokemon:
 ; The card to trade from the hand is also chosen from a priority list (and it must be a duplicate).
 AIDecide_PokemonTrader_SoundOfTheWaves:
 ; pick Dewgong if it was found in the deck but not the hand/play area and Seel was also found in the hand/play area.
-	ld b, SEEL
-	ld a, DEWGONG
+	ld bc, SEEL
+	ld de, DEWGONG
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Seel if it was found in the deck but not the hand/play area and Dewgong was also found in the hand.
-	ld a, SEEL
-	ld b, DEWGONG
+	ld de, SEEL
+	ld bc, DEWGONG
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Kingler if it was found in the deck but not the hand/play area and Krabby was also found in the hand/play area.
-	ld b, KRABBY
-	ld a, KINGLER
+	ld bc, KRABBY
+	ld de, KINGLER
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Krabby if it was found in the deck but not the hand/play area and Kingler was also found in the hand.
-	ld a, KRABBY
-	ld b, KINGLER
+	ld de, KRABBY
+	ld bc, KINGLER
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Cloyster if it was found in the deck but not the hand/play area and Shellder was also found in the hand/play area.
-	ld b, SHELLDER
-	ld a, CLOYSTER
+	ld bc, SHELLDER
+	ld de, CLOYSTER
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Shellder if it was found in the deck but not the hand/play area and Cloyster was also found in the hand.
-	ld a, SHELLDER
-	ld b, CLOYSTER
+	ld de, SHELLDER
+	ld bc, CLOYSTER
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Seadra if it was found in the deck but not the hand/play area and Horsea was also found in the hand/play area.
-	ld b, HORSEA
-	ld a, SEADRA
+	ld bc, HORSEA
+	ld de, SEADRA
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Horsea if it was found in the deck but not the hand/play area and Seadra was also found in the hand.
-	ld a, HORSEA
-	ld b, SEADRA
+	ld de, HORSEA
+	ld bc, SEADRA
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .choose_hand
 ; pick Tentacruel if it was found in the deck but not the hand/play area and Tentacool was also found in the hand/play area.
-	ld b, TENTACOOL
-	ld a, TENTACRUEL
+	ld bc, TENTACOOL
+	ld de, TENTACRUEL
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .choose_hand
 ; pick Tentacool if it was found in the deck but not the hand/play area and Tentacruel was also found in the hand.
-	ld a, TENTACOOL
-	ld b, TENTACRUEL
+	ld de, TENTACOOL
+	ld bc, TENTACRUEL
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret nc
 	; fallthrough
@@ -5183,19 +5240,19 @@ AIDecide_PokemonTrader_SoundOfTheWaves:
 ; a target was found in the deck, so look for a duplicate Pokémon in the hand to trade.
 .choose_hand
 	ld [wce1a], a
-	ld a, SEEL
+	ld de, SEEL
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; Seel found
-	ld a, KRABBY
+	ld de, KRABBY
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; Krabby found
-	ld a, HORSEA
+	ld de, HORSEA
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; Horsea found
-	ld a, SHELLDER
+	ld de, SHELLDER
 	call CheckIfHasDuplicateCardIDInHand
 	ret c ; Shellder found
-	ld a, TENTACOOL
+	ld de, TENTACOOL
 	jp CheckIfHasDuplicateCardIDInHand
 
 
@@ -5203,83 +5260,83 @@ AIDecide_PokemonTrader_SoundOfTheWaves:
 ; if a target is found, then pick any duplicate Pokémon in the hand for the trade.
 AIDecide_PokemonTrader_PowerGenerator:
 ; pick RaichuLv40 if it was found in the deck but not the hand/play area and PikachuLv14 was also found in the hand/play area.
-	ld b, PIKACHU_LV14
-	ld a, RAICHU_LV40
+	ld bc, PIKACHU_LV14
+	ld de, RAICHU_LV40
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jp c, .find_duplicates
 ; pick RaichuLv40 if it was found in the deck but not the hand/play area and PikachuLv12 was also found in the hand/play area.
-	ld b, PIKACHU_LV12
-	ld a, RAICHU_LV40
+	ld bc, PIKACHU_LV12
+	ld de, RAICHU_LV40
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick PikachuLv14 if it was found in the deck but not the hand/play area and RaichuLv40 was also found in the hand.
-	ld a, PIKACHU_LV14
-	ld b, RAICHU_LV40
+	ld de, PIKACHU_LV14
+	ld bc, RAICHU_LV40
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick PikachuLv12 if it was found in the deck but not the hand/play area and RaichuLv40 was also found in the hand.
-	ld a, PIKACHU_LV12
-	ld b, RAICHU_LV40
+	ld de, PIKACHU_LV12
+	ld bc, RAICHU_LV40
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick ElectrodeLv42 if it was found in the deck but not the hand/play area and Voltorb was also found in the hand/play area.
-	ld b, VOLTORB
-	ld a, ELECTRODE_LV42
+	ld bc, VOLTORB
+	ld de, ELECTRODE_LV42
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick ElectrodeLv35 if it was found in the deck but not the hand/play area and Voltorb was also found in the hand/play area.
-	ld b, VOLTORB
-	ld a, ELECTRODE_LV35
+	ld bc, VOLTORB
+	ld de, ELECTRODE_LV35
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Voltorb if it was found in the deck but not the hand/play area and ElectrodeLv42 was also found in the hand.
-	ld a, VOLTORB
-	ld b, ELECTRODE_LV42
+	ld de, VOLTORB
+	ld bc, ELECTRODE_LV42
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Voltorb if it was found in the deck but not the hand/play area and ElectrodeLv35 was also found in the hand.
-	ld a, VOLTORB
-	ld b, ELECTRODE_LV35
+	ld de, VOLTORB
+	ld bc, ELECTRODE_LV35
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick MagnetonLv35 if it was found in the deck but not the hand/play area and MagnemiteLv13 was also found in the hand/play area.
-	ld b, MAGNEMITE_LV13
-	ld a, MAGNETON_LV35
+	ld bc, MAGNEMITE_LV13
+	ld de, MAGNETON_LV35
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick MagnetonLv35 if it was found in the deck but not the hand/play area and MagnemiteLv15 was also found in the hand/play area.
-	ld b, MAGNEMITE_LV15
-	ld a, MAGNETON_LV35
+	ld bc, MAGNEMITE_LV15
+	ld de, MAGNETON_LV35
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick MagnetonLv28 if it was found in the deck but not the hand/play area and MagnemiteLv13 was also found in the hand/play area.
-	ld b, MAGNEMITE_LV13
-	ld a, MAGNETON_LV28
+	ld bc, MAGNEMITE_LV13
+	ld de, MAGNETON_LV28
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick MagnetonLv28 if it was found in the deck but not the hand/play area and MagnemiteLv15 was also found in the hand/play area.
-	ld b, MAGNEMITE_LV15
-	ld a, MAGNETON_LV28
+	ld bc, MAGNEMITE_LV15
+	ld de, MAGNETON_LV28
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick MagnemiteLv15 if it was found in the deck but not the hand/play area and MagnetonLv35 was also found in the hand.
-	ld a, MAGNEMITE_LV15
-	ld b, MAGNETON_LV35
+	ld de, MAGNEMITE_LV15
+	ld bc, MAGNETON_LV35
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick MagnemiteLv13 if it was found in the deck but not the hand/play area and MagnetonLv35 was also found in the hand.
-	ld a, MAGNEMITE_LV13
-	ld b, MAGNETON_LV35
+	ld de, MAGNEMITE_LV13
+	ld bc, MAGNETON_LV35
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick MagnemiteLv15 if it was found in the deck but not the hand/play area and MagnetonLv28 was also found in the hand.
-	ld a, MAGNEMITE_LV15
-	ld b, MAGNETON_LV28
+	ld de, MAGNEMITE_LV15
+	ld bc, MAGNETON_LV28
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick MagnemiteLv13 if it was found in the deck but not the hand/play area and MagnetonLv28 was also found in the hand.
-	ld a, MAGNEMITE_LV13
-	ld b, MAGNETON_LV28
+	ld de, MAGNEMITE_LV13
+	ld bc, MAGNETON_LV28
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret nc
 	; fallthrough
@@ -5295,63 +5352,63 @@ AIDecide_PokemonTrader_PowerGenerator:
 ; if a target is found, then pick any duplicate Pokémon in the hand for the trade.
 AIDecide_PokemonTrader_FlowerGarden:
 ; pick Ivysaur if it was found in the deck but not the hand/play area and Bulbasaur was also found in the hand/play area.
-	ld b, BULBASAUR
-	ld a, IVYSAUR
+	ld bc, BULBASAUR
+	ld de, IVYSAUR
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick VenusaurLv67 if it was found in the deck but not the hand/play area and Ivysaur was also found in the hand/play area.
-	ld b, IVYSAUR
-	ld a, VENUSAUR_LV67
+	ld bc, IVYSAUR
+	ld de, VENUSAUR_LV67
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Bulbasaur if it was found in the deck but not the hand/play area and Ivysaur was also found in the hand.
-	ld a, BULBASAUR
-	ld b, IVYSAUR
+	ld de, BULBASAUR
+	ld bc, IVYSAUR
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Ivysaur if it was found in the deck but not the hand/play area and VenusaurLv67 was also found in the hand/play area.
-	ld a, IVYSAUR
-	ld b, VENUSAUR_LV67
+	ld de, IVYSAUR
+	ld bc, VENUSAUR_LV67
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Weepinbell if it was found in the deck but not the hand/play area and Bellsprout was also found in the hand/play area.
-	ld b, BELLSPROUT
-	ld a, WEEPINBELL
+	ld bc, BELLSPROUT
+	ld de, WEEPINBELL
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Victreebel if it was found in the deck but not the hand/play area and Weepinbell was also found in the hand/play area.
-	ld b, WEEPINBELL
-	ld a, VICTREEBEL
+	ld bc, WEEPINBELL
+	ld de, VICTREEBEL
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Bellsprout if it was found in the deck but not the hand/play area and Weepinbell was also found in the hand.
-	ld a, BELLSPROUT
-	ld b, WEEPINBELL
+	ld de, BELLSPROUT
+	ld bc, WEEPINBELL
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Weepinbell if it was found in the deck but not the hand/play area and Victreebel was also found in the hand.
-	ld a, WEEPINBELL
-	ld b, VICTREEBEL
+	ld de, WEEPINBELL
+	ld bc, VICTREEBEL
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Gloom if it was found in the deck but not the hand/play area and Oddish was also found in the hand/play area.
-	ld b, ODDISH
-	ld a, GLOOM
+	ld bc, ODDISH
+	ld de, GLOOM
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Vileplume if it was found in the deck but not the hand/play area and Gloom was also found in the hand/play area.
-	ld b, GLOOM
-	ld a, VILEPLUME
+	ld bc, GLOOM
+	ld de, VILEPLUME
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Oddish if it was found in the deck but not the hand/play area and Gloom was also found in the hand.
-	ld a, ODDISH
-	ld b, GLOOM
+	ld de, ODDISH
+	ld bc, GLOOM
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Gloom if it was found in the deck but not the hand/play area and Vileplume was also found in the hand.
-	ld a, GLOOM
-	ld b, VILEPLUME
+	ld de, GLOOM
+	ld bc, VILEPLUME
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret nc
 	; fallthrough
@@ -5367,8 +5424,8 @@ AIDecide_PokemonTrader_FlowerGarden:
 AIDecide_PokemonTrader_StrangePower:
 ; inputting Mr Mime's card ID in register e for the function is redundant
 ; since it already checks that there was no Mr Mime in the hand.
-	ld a, MR_MIME
-	ld e, a
+	ld de, MR_MIME
+	ld bc, MR_MIME
 	call LookForCardIDToTradeWithDifferentHandCard
 	ret nc
 ; found
@@ -5382,53 +5439,53 @@ AIDecide_PokemonTrader_StrangePower:
 ; if a target is found, then pick any duplicate Pokémon in the hand for the trade.
 AIDecide_PokemonTrader_Flamethrower:
 ; pick Charmeleon if it was found in the deck but not the hand/play area and Charmander was also found in the hand/play area.
-	ld b, CHARMANDER
-	ld a, CHARMELEON
+	ld bc, CHARMANDER
+	ld de, CHARMELEON
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Charizard if it was found in the deck but not the hand/play area and Charmeleon was also found in the hand/play area.
-	ld b, CHARMELEON
-	ld a, CHARIZARD
+	ld bc, CHARMELEON
+	ld de, CHARIZARD
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Charmander if it was found in the deck but not the hand/play area and Charmeleon was also found in the hand.
-	ld a, CHARMANDER
-	ld b, CHARMELEON
+	ld de, CHARMANDER
+	ld bc, CHARMELEON
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick Charmeleon if it was found in the deck but not the hand/play area and Charizard was also found in the hand.
-	ld a, CHARMELEON
-	ld b, CHARIZARD
+	ld de, CHARMELEON
+	ld bc, CHARIZARD
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick NinetalesLv32 if it was found in the deck but not the hand/play area and Vulpix was also found in the hand/play area.
-	ld b, VULPIX
-	ld a, NINETALES_LV32
+	ld bc, VULPIX
+	ld de, NINETALES_LV32
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Vulpix if it was found in the deck but not the hand/play area and NinetalesLv32 was also found in the hand.
-	ld a, VULPIX
-	ld b, NINETALES_LV32
+	ld de, VULPIX
+	ld bc, NINETALES_LV32
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick ArcanineLv45 if it was found in the deck but not the hand/play area and Growlithe was also found in the hand/play area.
-	ld b, GROWLITHE
-	ld a, ARCANINE_LV45
+	ld bc, GROWLITHE
+	ld de, ARCANINE_LV45
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Growlithe if it was found in the deck but not the hand/play area and ArcanineLv45 was also found in the hand.
-	ld a, GROWLITHE
-	ld b, ARCANINE_LV45
+	ld de, GROWLITHE
+	ld bc, ARCANINE_LV45
 	call LookForCardIDInDeck_GivenCardIDInHand
 	jr c, .find_duplicates
 ; pick FlareonLv28 if it was found in the deck but not the hand/play area and Eevee was also found in the hand/play area.
-	ld b, EEVEE
-	ld a, FLAREON_LV28
+	ld bc, EEVEE
+	ld de, FLAREON_LV28
 	call LookForCardIDInDeck_GivenCardIDInHandAndPlayArea
 	jr c, .find_duplicates
 ; pick Eevee if it was found in the deck but not the hand/play area and FlareonLv28 was also found in the hand.
-	ld a, EEVEE
-	ld b, FLAREON_LV28
+	ld de, EEVEE
+	ld bc, FLAREON_LV28
 	call LookForCardIDInDeck_GivenCardIDInHand
 	ret nc
 	; fallthrough

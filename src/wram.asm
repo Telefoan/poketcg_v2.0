@@ -8,7 +8,7 @@ SECTION "WRAM0", WRAM0
 UNION
 
 wTempCardCollection:: ; c000
-	ds $100
+	ds CARD_COLLECTION_SIZE
 
 NEXTU
 
@@ -45,9 +45,6 @@ wDeckToBuild:: ; c000
 
 ENDU
 
-; Unused wram bytes?
-	ds $100
-
 SECTION "WRAM0 Duels 1", WRAM0
 
 ; this union spans from c200 to c3ff
@@ -79,16 +76,15 @@ UNION
 ; temporary list of the cards drawn from a booster pack
 wBoosterCardsDrawn:: ; c400
 wBoosterTempNonEnergiesDrawn:: ; c400
-	ds $b
+	ds 2 * 11
 wBoosterTempEnergiesDrawn:: ; c40b
-	ds $b
+	ds 2 * 11
 wBoosterCardsDrawnEnd:: ; c416
-	ds $6a
 
 NEXTU
 
 wPlayerDeck:: ; c400
-	ds $80
+	ds DECK_SIZE * 2
 
 NEXTU
 
@@ -99,7 +95,7 @@ wCardPopCardCandidates:: ; c400
 ENDU
 
 wOpponentDeck:: ; c480
-	ds $80
+	ds DECK_SIZE * 2
 
 ; this holds names like player's or opponent's.
 wNameBuffer:: ; c500
@@ -343,61 +339,6 @@ wObjectPalettesCGB:: ; cb30
 ; to be read or written sequentially
 wListPointer:: ; cb72
 	ds $2
-
-SECTION "WRAM0 Serial Transfer", WRAM0
-
-wSerialOp:: ; cb74
-	ds $1
-
-wSerialFlags:: ; cb75
-	ds $1
-
-wSerialCounter:: ; cb76
-	ds $1
-
-wSerialCounter2:: ; cb77
-	ds $1
-
-wSerialTimeoutCounter:: ; cb78
-	ds $1
-
-wcb79:: ; cb79
-	ds $2
-
-wcb7b:: ; cb7b
-	ds $2
-
-wSerialSendSave:: ; cb7d
-	ds $1
-
-wSerialSendBufToggle:: ; cb7e
-	ds $1
-
-wSerialSendBufIndex:: ; cb7f
-	ds $1
-
-wcb80:: ; cb80
-	ds $1
-
-wSerialSendBuf:: ; cb81
-	ds $20
-
-wSerialLastReadCA:: ; cba1
-	ds $1
-
-wSerialRecvCounter:: ; cba2
-	ds $1
-
-wcba3:: ; cba3
-	ds $1
-
-wSerialRecvIndex:: ; cba4
-	ds $1
-
-wSerialRecvBuf:: ; cba5
-	ds $20
-
-wSerialEnd:: ; cbc5
 
 SECTION "WRAM0 Duels 2", WRAM0
 
@@ -675,7 +616,7 @@ wPlayerAttackingCardIndex:: ; cc11
 
 ; ID of the player's Active Pokemon that is attacking or using a Pokemon Power
 wPlayerAttackingCardID:: ; cc12
-	ds $1
+	ds $2
 
 wIsPracticeDuel:: ; cc13
 	ds $1
@@ -748,13 +689,13 @@ wDamageEffectiveness:: ; ccc1
 
 ; used in damage-related functions
 wTempCardID_ccc2:: ; ccc2
-	ds $1
+	ds $2
 
 wTempTurnDuelistCardID:: ; ccc3
-	ds $1
+	ds $2
 
 wTempNonTurnDuelistCardID:: ; ccc4
-	ds $1
+	ds $2
 
 ; the status condition of the Defending Pokemon is loaded here after an attack
 wccc5:: ; ccc5
@@ -1092,12 +1033,11 @@ wTempLoadedAttackEnergyNeededTotal::
 wTempCardRetreatCost:: ; cdb8
 	ds $1
 wTempCardID:: ; cdb9
-	ds $1
+	ds $2
 wTempCardType:: ; cdba
 	ds $1
 
-; Unused wram bytes?
-	ds $3
+	ds $2
 
 ; used for AI to score decisions for actions
 wAIScore:: ; cdbe
@@ -1144,7 +1084,7 @@ wAIOpponentPrizeCount:: ; cdd3
 
 ; AI stores the card ID to look for here
 wTempCardIDToLook:: ; cdd4
-	ds $1
+	ds $2
 
 ; when AI decides which Benched Pokemon to switch to
 ; it stores its Play Area location here.
@@ -1213,13 +1153,14 @@ wAICannotDamage:: ; cdf0
 
 ; used by AI to store variable information
 wTempAI:: ; cdf1
-	ds $1
+	ds $2
 
 ; used for AI to store whether this card can use any attack
 ; $00 = can't attack
 ; $01 = can attack
 wCurCardCanAttack:: ; cdf2
-	ds $1
+wTempAI2::
+	ds $2
 
 ; used to temporarily store the card deck index
 ; while AI is deciding whether to evolve a Pokémon
@@ -1293,11 +1234,6 @@ wce0f:: ; ce0f
 
 ; stores the deck index (0-59) of a Trainer card that the AI intends to play from its hand.
 wAITrainerCardToPlay:: ; ce16
-	ds $1
-
-; temporarily stores the card ID from AITrainerCardLogic
-; to compare with the card in AI's hand
-wAITrainerLogicCard:: ; ce17
 	ds $1
 
 wAITrainerCardPhase:: ; ce18
@@ -1740,7 +1676,7 @@ wCardFilterCounts:: ; cebb
 
 ; buffer used to show which card IDs are visible in a given list
 wVisibleListCardIDs:: ; cec4
-	ds NUM_DECK_CONFIRMATION_VISIBLE_CARDS ; ds $7
+	ds NUM_DECK_CONFIRMATION_VISIBLE_CARDS * 2
 
 ; number of visible entries when showing a list of cards
 wNumVisibleCardListEntries:: ; cecb
@@ -1788,10 +1724,6 @@ wCardListVisibleOffsetBackup:: ; ced8
 ; stores how many different cards there are in a deck
 wNumUniqueCards:: ; ced9
 	ds $1
-
-; stores the list of all card IDs that filtered by its card type
-; (Fire, Water, ..., Energy card, Trainer card)
-wFilteredCardList:: ; ceda
 
 ; stores AI temporary hand card list
 wHandTempList:: ; ceda
@@ -1862,6 +1794,10 @@ wCardConfirmationText:: ; cfda
 ; if pointer is null ($0000), then A button will open the card page for the currently selected card.
 wHandlePlayersCardsScreenPointer:: ; cfdc
 	ds $2
+wDeckCompressionCmdByte::
+	ds $1
+
+	ds $1
 
 ; the tile to draw in place of the cursor, in case
 ; the cursor is not to be drawn
@@ -2451,15 +2387,14 @@ wMedalCount:: ; d3cc
 
 ; total number of cards the player has collected
 wTotalNumCardsCollected:: ; d3cd
-	ds $1
+	ds $2
 
 ; total number of cards to be collected
 ; doesn't count the Phantom cards (VenusaurLv64 and MewLv15)
 ; unless they have already been collected
 wTotalNumCardsToCollect:: ; d3ce
-	ds $1
+	ds $2
 
-wCardToAddToCollection:: ; d3cf
 	ds $1
 
 wd3d0:: ; d3d0
@@ -2873,7 +2808,7 @@ wBoosterPackID:: ; d669
 
 ; card currently being processed by the booster pack engine functions
 wBoosterCurrentCard:: ; d66a
-	ds $1
+	ds $2
 
 ; BOOSTER_CARD_TYPE_* of the card that has just been drawn from the pack
 wBoosterJustDrawnCardType:: ; d66b
@@ -2944,8 +2879,14 @@ wCardReceived:: ; d697
 wd698:: ; d698
 	ds $4
 
-; Unused wram bytes?
-	ds $6e4
+; stores the list of all card IDs that filtered by its card type
+; (Fire, Water, ..., Energy card, Trainer card)
+wFilteredCardList::
+	ds DECK_SIZE * 2
+
+; list of all the different cards in a deck configuration
+wUniqueDeckCardList::
+	ds DECK_SIZE * 2
 
 SECTION "WRAM1 Audio", WRAMX
 

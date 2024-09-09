@@ -65,25 +65,33 @@ SaveGeneralSaveDataFromDE:
 
 
 ; writes in de total num of cards collected
-; and in (de + 1) total num of cards to collect
+; and total num of cards to collect
 ; also updates wTotalNumCardsCollected and wTotalNumCardsToCollect
 ; preserves all registers except af
 ; input:
 ;	de = sAlbumProgress
 UpdateAlbumProgress:
 	push hl
+	push bc
 	push de
 	push de
 	call GetCardAlbumProgress
 	call EnableSRAM
 	pop hl
-	ld a, d
-	ld [wTotalNumCardsCollected], a
-	ld [hli], a
 	ld a, e
-	ld [wTotalNumCardsToCollect], a
+	ld [wTotalNumCardsCollected + 0], a
+	ld [hli], a
+	ld a, d
+	ld [wTotalNumCardsCollected + 1], a
+	ld [hli], a
+	ld a, c
+	ld [wTotalNumCardsToCollect + 0], a
+	ld [hli], a
+	ld a, b
+	ld [wTotalNumCardsToCollect + 1], a
 	ld [hl], a
 	pop de
+	pop bc
 	pop hl
 	jp DisableSRAM
 
@@ -362,10 +370,16 @@ ValidateGeneralSaveDataFromDE:
 LoadAlbumProgressFromSRAM:
 	push de
 	ld a, [de]
-	ld [wTotalNumCardsCollected], a
+	ld [wTotalNumCardsCollected + 0], a
 	inc de
 	ld a, [de]
-	ld [wTotalNumCardsToCollect], a
+	ld [wTotalNumCardsCollected + 1], a
+	inc de
+	ld a, [de]
+	ld [wTotalNumCardsToCollect + 0], a
+	inc de
+	ld a, [de]
+	ld [wTotalNumCardsToCollect + 1], a
 	pop de
 	ret
 
@@ -586,7 +600,7 @@ _AddCardToCollectionAndUpdateAlbumProgress::
 ; preserves de
 WriteBackupCardAndDeckSaveData:
 	ld bc, sCardAndDeckSaveDataEnd - sCardAndDeckSaveData
-	ld hl, sCardCollection
+	ld hl, sCardAndDeckSaveData
 	jr WriteDataToBackup
 
 ; preserves de
@@ -624,7 +638,7 @@ WriteDataToBackup:
 ; preserves de
 LoadBackupCardAndDeckSaveData:
 	ld bc, sCardAndDeckSaveDataEnd - sCardAndDeckSaveData
-	ld hl, sCardCollection
+	ld hl, sCardAndDeckSaveData
 	jr LoadDataFromBackup
 
 ; preserves de

@@ -111,7 +111,7 @@ AIProcessEnergyCards:
 .check_venusaur
 	call CheckIfPkmnPowersAreCurrentlyDisabled
 	jr c, .check_if_active
-	ld a, VENUSAUR_LV67
+	ld de, VENUSAUR_LV67
 	call CountTurnDuelistPokemonWithActivePkmnPower
 	ld a, 1
 	call c, AIEncourage ; add 1 if Energy Trans is active
@@ -211,10 +211,15 @@ AIProcessEnergyCards:
 
 .loop_id_list
 	ld a, [hli]
-	or a
+	or [hl]
+	dec hl
 	jr z, .check_boss_deck
+	ld a, [hli]
 	cp e
-	jr nz, .next_id
+	jr nz, .next_id_inc_hl_3
+	ld a, [hli]
+	cp d
+	jr nz, .next_id_inc_hl_2
 
 	; number of attached Energy cards
 	ld a, [hli]
@@ -232,7 +237,9 @@ AIProcessEnergyCards:
 	call AIDiscourage
 	jr .check_boss_deck
 
-.next_id
+.next_id_inc_hl_3
+	inc hl
+.next_id_inc_hl_2
 	inc hl
 	inc hl
 	jr .loop_id_list
@@ -410,8 +417,8 @@ DetermineAIScoreOfAttackEnergyRequirement:
 ; if the current card is ZapdosLv64, don't increase the score.
 ; if there is no surplus Energy, encourage playing an Energy card.
 .discard_energy
-	ld a, [wLoadedCard1ID]
-	cp ZAPDOS_LV64
+	ld hl, wLoadedCard1ID + 1
+	cphl ZAPDOS_LV64
 	jr z, .check_evolution
 	call CheckIfNoSurplusEnergyForAttack
 	jr c, .asm_166cd
@@ -631,7 +638,6 @@ GetEnergyCardForDiscardOrEnergyBoostAttack:
 	add DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call LoadCardDataToBuffer2_FromDeckIndex
-	ld b, a
 	ld a, [wSelectedAttack]
 	or a ; cp FIRST_ATTACK_OR_PKMN_POWER
 	jr z, .first_attack
@@ -640,12 +646,12 @@ GetEnergyCardForDiscardOrEnergyBoostAttack:
 ; Charizard's Fire Spin or Exeggutor's Big Eggsplosion,
 ; for these to be treated differently.
 ; for both attacks, load its Energy cost.
-	ld a, b
-	cp ZAPDOS_LV64
+	ld hl, wLoadedCard2ID + 1
+	cphl ZAPDOS_LV64
 	ret z ; return no carry if ZapdosLv64's Thunderbolt
-	cp CHARIZARD
+	cphl CHARIZARD
 	jr z, .charizard_or_exeggutor
-	cp EXEGGUTOR
+	cphl EXEGGUTOR
 	jr z, .charizard_or_exeggutor
 	ld hl, wLoadedCard2Atk2EnergyCost
 	jr .fire
@@ -660,36 +666,36 @@ GetEnergyCardForDiscardOrEnergyBoostAttack:
 	ld b, a
 	and $f0
 	jr z, .grass
-	ld e, FIRE_ENERGY
+	ld de, FIRE_ENERGY
 	jr .set_carry
 .grass
 	ld a, b
 	and $0f
 	jr z, .lightning
-	ld e, GRASS_ENERGY
+	ld de, GRASS_ENERGY
 	jr .set_carry
 .lightning
 	ld a, [hli]
 	ld b, a
 	and $f0
 	jr z, .water
-	ld e, LIGHTNING_ENERGY
+	ld de, LIGHTNING_ENERGY
 	jr .set_carry
 .water
 	ld a, b
 	and $0f
 	jr z, .fighting
-	ld e, WATER_ENERGY
+	ld de, WATER_ENERGY
 	jr .set_carry
 .fighting
 	ld a, [hli]
 	ld b, a
 	and $f0
 	jr z, .psychic
-	ld e, FIGHTING_ENERGY
+	ld de, FIGHTING_ENERGY
 	jr .set_carry
 .psychic
-	ld e, PSYCHIC_ENERGY
+	ld de, PSYCHIC_ENERGY
 
 .set_carry
 	lb bc, TRUE, FALSE
@@ -820,7 +826,7 @@ AITryToPlayEnergyCard:
 	jr z, .look_for_any_energy
 	ldh [hTemp_ffa0], a
 	call _GetCardIDFromDeckIndex
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
 	jr nz, .loop_1
 	jr .play_energy_card
 
@@ -836,9 +842,10 @@ AITryToPlayEnergyCard:
 	jr z, .check_if_done
 	call CheckIfOpponentHasBossDeckID
 	jr nc, .load_card
-	ld b, a
+	push af
 	call _GetCardIDFromDeckIndex
-	cp DOUBLE_COLORLESS_ENERGY
+	cp16 DOUBLE_COLORLESS_ENERGY
+	pop bc
 	jr z, .loop_2
 	ld a, b
 .load_card
@@ -899,26 +906,26 @@ CheckSpecificDecksToAttachDoubleColorless:
 ; if playing Legendary Dragonite deck,
 ; check for Charmander and Dratini.
 .legendary_dragonite_deck
-	call .get_id
-	cp CHARMANDER
+	call .GetArenaCardID
+	cp16 CHARMANDER
 	jr z, .check_colorless_attached
-	cp DRATINI
+	cp16 DRATINI
 	jr z, .check_colorless_attached
 	jr .no_carry
 
 ; if playing Fire Charge deck,
 ; check for Growlithe.
 .fire_charge_deck
-	call .get_id
-	cp GROWLITHE
+	call .GetArenaCardID
+	cp16 GROWLITHE
 	jr z, .check_colorless_attached
 	jr .no_carry
 
 ; if playing Legendary Ronald deck,
 ; check for Dratini.
 .legendary_ronald_deck
-	call .get_id
-	cp DRATINI
+	call .GetArenaCardID
+	cp16 DRATINI
 	jr z, .check_colorless_attached
 	jr .no_carry
 
@@ -934,7 +941,7 @@ CheckSpecificDecksToAttachDoubleColorless:
 
 ; the Pokémon has no Colorless Energy, so look for a Double Colorless Energy
 ; in the hand and if found, return carry with its deck index in a and hTempffa0.
-	ld a, DOUBLE_COLORLESS_ENERGY
+	ld de, DOUBLE_COLORLESS_ENERGY
 	call LookForCardIDInHand
 	jr c, .no_carry
 	ldh [hTemp_ffa0], a

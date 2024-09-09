@@ -311,7 +311,8 @@ AIDecideEvolution:
 	add DUELVARS_ARENA_CARD
 	get_turn_duelist_var
 	call LoadCardDataToBuffer1_FromDeckIndex
-	cp MYSTERIOUS_FOSSIL
+	ld hl, wLoadedCard1ID + 1
+	cphl MYSTERIOUS_FOSSIL
 	jr z, .mysterious_fossil
 	ld a, [wLoadedCard1PokemonFlags]
 	and AI_ENCOURAGE_EVOLUTION
@@ -328,14 +329,14 @@ AIDecideEvolution:
 	ld a, [wOpponentDeckID]
 	cp PIKACHU_DECK_ID
 	jr nz, .check_score
-	ld a, [wLoadedCard1ID]
-	cp PIKACHU_LV12
+	ld hl, wLoadedCard1ID + 1
+	cphl PIKACHU_LV12
 	jr z, .pikachu
-	cp PIKACHU_LV14
+	cphl PIKACHU_LV14
 	jr z, .pikachu
-	cp PIKACHU_LV16
+	cphl PIKACHU_LV16
 	jr z, .pikachu
-	cp PIKACHU_ALT_LV16
+	cphl PIKACHU_ALT_LV16
 	jr nz, .check_score
 .pikachu
 	ld a, 3
@@ -389,12 +390,12 @@ AIDecideSpecialEvolutions:
 	ret
 
 .legendary_dragonite
-	ld a, [wLoadedCard2ID]
-	cp CHARMELEON
+	ld hl, wLoadedCard2ID + 1
+	cphl CHARMELEON
 	jr z, .charmeleon
-	cp MAGIKARP
+	cphl MAGIKARP
 	jr z, .magikarp
-	cp DRAGONAIR
+	cphl DRAGONAIR
 	jr z, .dragonair
 	ret
 
@@ -433,8 +434,8 @@ AIDecideSpecialEvolutions:
 	jp AIEncourage
 
 .invincible_ronald
-	ld a, [wLoadedCard2ID]
-	cp GRIMER
+	ld hl, wLoadedCard2ID + 1
+	cphl GRIMER
 	ret nz
 
 ; check if Grimer is not the Active Pokémon
@@ -447,8 +448,8 @@ AIDecideSpecialEvolutions:
 	jp AIEncourage
 
 .legendary_ronald
-	ld a, [wLoadedCard2ID]
-	cp DRAGONAIR
+	ld hl, wLoadedCard2ID + 1
+	cphl DRAGONAIR
 	ret nz
 
 .dragonair
@@ -525,12 +526,12 @@ AIDecidePlayLegendaryBirds:
 
 ; check if card applies
 .begin
-	ld a, [wLoadedCard2ID]
-	cp ZAPDOS_LV68
+	ld hl, wLoadedCard1ID + 1
+	cphl ZAPDOS_LV68
 	jr z, .zapdos
-	cp MOLTRES_LV37
+	cphl MOLTRES_LV37
 	jr z, .moltres
-	cp ARTICUNO_LV37
+	cphl ARTICUNO_LV37
 	ret nz ; return if this card isn't one of the Legendary Basic Pokémon
 
 .articuno

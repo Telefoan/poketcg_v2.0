@@ -18,7 +18,8 @@ OpenBoosterPack::
 	ld c, $00
 .loop_index_sequence
 	ld a, [hli]
-	or a
+	or [hl]
+	inc hl
 	jr z, .done_index_sequence
 	ld a, c
 	ld [de], a

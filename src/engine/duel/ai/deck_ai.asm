@@ -4,7 +4,7 @@
 ; it applies a retreat score bonus to this Pokémon.
 ; positive (negative) means more (less) likely to switch to this card.
 MACRO ai_retreat
-	db \1       ; card ID
+	dw \1       ; card ID
 	db $80 + \2 ; retreat score (ranges between -128 and 127)
 ENDM
 
@@ -16,7 +16,7 @@ ENDM
 ; has already been reached. If it hasn't, it also applies a positive
 ; (or negative) AI score to attach the Energy card to this Pokémon.
 MACRO ai_energy
-	db \1       ; card ID
+	dw \1       ; card ID
 	db \2       ; maximum number of attached cards
 	db $80 + \3 ; energy score (ranges between -128 and 127)
 ENDM

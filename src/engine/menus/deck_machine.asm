@@ -4,13 +4,9 @@
 ;	hl = deck name
 ;	de = deck cards
 HandleDeckMissingCardsList:
-; read deck name from hl and cards from de
-	push de
+; read deck name from hl
 	ld de, wCurDeckName
 	call CopyListFromHLToDEInSRAM
-	pop de
-	ld hl, wCurDeckCards
-	call CopyDeckFromSRAM
 
 	ld a, NUM_FILTERS ; number of bytes that will be cleared
 	ld hl, wCardFilterCounts
@@ -77,7 +73,14 @@ HandleDeckMissingCardsList:
 	call PlaySFX
 	ld a, [wCardListCursorPos]
 	ld [wced7], a
+
+	; set wUniqueDeckCardList as current card list
+	; and show card page screen
 	ld de, wUniqueDeckCardList
+	ld hl, wCurCardListPtr
+	ld [hl], e
+	inc hl
+	ld [hl], d
 	call OpenCardPageFromCardList
 	jr .loop
 
@@ -318,10 +321,10 @@ HandleDeckMachineSelection:
 	ld d, h
 	ld e, l
 	call EnableSRAM
-	ld a, [hl]
+	ld a, [hli]
+	or [hl]
 	call DisableSRAM
 	pop hl
-	or a
 	jr z, .start
 
 ; show deck confirmation screen with deck cards
@@ -415,9 +418,9 @@ CheckIfSelectedDeckMachineEntryIsEmpty:
 	ld bc, DECK_NAME_SIZE
 	add hl, bc
 	call EnableSRAM
-	ld a, [hl]
+	ld a, [hli]
+	or [hl]
 	call DisableSRAM
-	or a
 	ret nz ; is valid
 	scf
 	ret ; is empty
@@ -464,7 +467,7 @@ GetSavedDeckPointers:
 	call ClearMemory_Bank2
 	ld de, wMachineDeckPtrs
 	ld hl, sSavedDecks
-	ld bc, DECK_STRUCT_SIZE
+	ld bc, DECK_COMPRESSED_STRUCT_SIZE
 	ld a, NUM_DECK_SAVE_MACHINE_SLOTS
 .loop_saved_decks
 	push af
@@ -661,15 +664,20 @@ PrintDeckMachineEntry:
 	ld l, a
 	ld bc, DECK_NAME_SIZE
 	add hl, bc
+	ld d, h
+	ld e, l
 
 	call EnableSRAM
+	ld hl, wCurDeckCards
+	call DecompressSRAMDeck
+
 	ld de, wTempCardCollection
 	lb bc, DECK_SIZE, 0
 .loop
 	ld a, [hli]
 	push hl
+	ld h, [hl]
 	ld l, a
-	ld h, $00
 	add hl, de
 	ld a, [hl]
 	and CARD_COUNT_MASK
@@ -693,8 +701,9 @@ PrintDeckMachineEntry:
 GetSavedDeckCount:
 	call EnableSRAM
 	ld hl, sSavedDecks
-	ld bc, DECK_STRUCT_SIZE
-	lb de, NUM_DECK_SAVE_MACHINE_SLOTS, 0
+	ld bc, DECK_COMPRESSED_STRUCT_SIZE
+	ld d, NUM_DECK_SAVE_MACHINE_SLOTS
+	ld e, 0
 .loop
 	ld a, [hl]
 	or a
@@ -934,24 +943,24 @@ FindFirstEmptyDeckSlot:
 
 .check_deck_2
 	ld hl, sDeck2Cards
-	ld a, [hl]
-	or a
+	ld a, [hli]
+	or [hl]
 	jr nz, .check_deck_3
 	inc a ; 1
 	ret
 
 .check_deck_3
 	ld hl, sDeck3Cards
-	ld a, [hl]
-	or a
+	ld a, [hli]
+	or [hl]
 	jr nz, .check_deck_4
 	ld a, 2
 	ret
 
 .check_deck_4
 	ld hl, sDeck4Cards
-	ld a, [hl]
-	or a
+	ld a, [hli]
+	or [hl]
 	jr nz, .set_carry
 	ld a, 3
 	ret
@@ -1134,14 +1143,14 @@ TryBuildDeckMachineDeck:
 	ld hl, wMachineDeckPtrs
 	add hl, bc
 	ld a, [hli]
-	ld h, [hl]
-	ld l, a
+	ld d, [hl]
+	ld e, a
 
 	; copy deck to buffer
-	ld de, wDeckToBuild
-	ld b, DECK_STRUCT_SIZE
+	ld hl, wDeckToBuild
 	call EnableSRAM
-	call CopyNBytesFromHLToDE
+	call .CopyDeckNameFromDEToHL
+	call DecompressSRAMDeck
 
 	; remove the needed cards from collection
 	ld hl, wDeckToBuild + DECK_NAME_SIZE
@@ -1152,15 +1161,13 @@ TryBuildDeckMachineDeck:
 	; to the deck slot that was chosen
 	ld a, [wDeckSlotForNewDeck]
 	ld l, a
-	ld h, DECK_STRUCT_SIZE
+	ld h, DECK_COMPRESSED_STRUCT_SIZE
 	call HtimesL
 	ld bc, sBuiltDecks
 	add hl, bc
-	ld d, h
-	ld e, l
-	ld hl, wDeckToBuild
-	ld b, DECK_STRUCT_SIZE
-	call CopyNBytesFromHLToDE
+	ld de, wDeckToBuild
+	call .CopyDeckNameFromDEToHL
+	call CompressDeckToSRAM
 	call DisableSRAM
 
 	; draw Decks screen
@@ -1237,7 +1244,7 @@ TryBuildDeckMachineDeck:
 ;	a = DECK_*_F to dismantle
 .DismantleDeck
 	ld l, a
-	ld h, DECK_STRUCT_SIZE
+	ld h, DECK_COMPRESSED_STRUCT_SIZE
 	call HtimesL
 	ld bc, sBuiltDecks
 	add hl, bc
@@ -1267,7 +1274,8 @@ TryBuildDeckMachineDeck:
 	ld b, DECK_SIZE
 	call CopyNBytesFromHLToDEInSRAM
 	xor a ; terminator byte for deck
-	ld [de], a
+	ld [wCurDeckCards + DECK_SIZE * 2 + 0], a
+	ld [wCurDeckCards + DECK_SIZE * 2 + 1], a
 	call SortCurDeckCardsByID
 	call CreateCurDeckUniqueCardList
 
@@ -1283,11 +1291,16 @@ TryBuildDeckMachineDeck:
 	ld de, wFilteredCardList
 .loop_deck_configuration
 	ld a, [hli]
-	or a
+	or [hl]
+	inc hl
 	jr z, .finish_missing_card_list
-	ld b, a
+	push bc
 	push de
 	push hl
+	dec hl
+	ld a, [hld]
+	ld d, a
+	ld e, [hl]
 	ld hl, wCurDeckCards
 	call .CheckIfCardIsMissing
 	pop hl
@@ -1296,16 +1309,25 @@ TryBuildDeckMachineDeck:
 	; this card is missing, so store in wFilteredCardList this card ID
 	; a number of times equal to the amount still needed
 	ld c, a
-	ld a, b
+	dec hl
+	dec hl
 .loop_number_missing
+	ld a, [hli]
+	ld [de], a
+	inc de
+	ld a, [hld]
 	ld [de], a
 	inc de
 	dec c
 	jr nz, .loop_number_missing
+	inc hl
+	inc hl
 	jr .loop_deck_configuration
 
 .finish_missing_card_list
 	xor a ; terminator byte
+	ld [de], a
+	inc de
 	ld [de], a
 
 	ld hl, wCardConfirmationText
@@ -1313,10 +1335,26 @@ TryBuildDeckMachineDeck:
 	ld [hli], a
 	ld [hl], HIGH(TheseCardsAreNeededToBuildThisDeckText_)
 
+	ld de, wFilteredCardList
+	ld hl, wCurDeckCards
+	ld c, DECK_SIZE
+.loop_copy
+	ld a, [de]
+	inc de
+	ld [hli], a
+	ld a, [de]
+	inc de
+	ld [hli], a
+	dec c
+	jr nz, .loop_copy
+	xor a ; terminator bytes
+	ld [hli], a
+	ld [hl], a
+
 	call GetSelectedSavedDeckPtr
 	ld h, d
 	ld l, e
-	ld de, wFilteredCardList
+
 	call HandleDeckMissingCardsList
 .set_carry
 	ld a, [wCardListCursorPos]
@@ -1343,8 +1381,14 @@ TryBuildDeckMachineDeck:
 	or a
 	jr z, .get_card_count_from_collection
 	cp e
+	jr nz, .next_card
+	ld a, [hli]
+	cp d
 	jr nz, .loop_deck_cards
-	inc d
+	inc c
+	jr .loop_deck_cards
+.next_card
+	inc hl
 	jr .loop_deck_cards
 
 .get_card_count_from_collection
@@ -1607,7 +1651,8 @@ HandleAutoDeckMenu:
 	add hl, bc
 	ld d, h
 	ld e, l
-	ld a, [hl]
+	ld a, [hli]
+	or [hl]
 	pop hl
 	call SafelySwitchToSRAM0
 	or a
@@ -1681,7 +1726,7 @@ HandleAutoDeckMenu:
 	call ClearMemory_Bank2
 	ld de, wMachineDeckPtrs
 	ld hl, sAutoDecks
-	ld bc, DECK_STRUCT_SIZE
+	ld bc, DECK_COMPRESSED_STRUCT_SIZE
 	ld a, NUM_DECK_MACHINE_SLOTS
 .loop
 	push af

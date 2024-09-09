@@ -241,7 +241,7 @@ BulbasaurCard:
 	tx BulbasaurName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db BULBASAUR
+	dw BULBASAUR
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -278,7 +278,7 @@ BulbasaurCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx SeedName ; category
-	dw 1 ; Pokedex number
+	db 1 ; Pokedex number
 	db 13 ; level
 	db 2, 4 ; length
 	dw 15 * 10 ; weight
@@ -291,7 +291,7 @@ IvysaurCard:
 	tx IvysaurName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db IVYSAUR
+	dw IVYSAUR
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx BulbasaurName ; pre-evo name
@@ -328,7 +328,7 @@ IvysaurCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx SeedName ; category
-	dw 2 ; Pokedex number
+	db 2 ; Pokedex number
 	db 20 ; level
 	db 3, 3 ; length
 	dw 29 * 10 ; weight
@@ -341,7 +341,7 @@ VenusaurLv64Card:
 	tx VenusaurName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
-	db VENUSAUR_LV64
+	dw VENUSAUR_LV64
 	db 100 ; hp
 	db STAGE2 ; stage
 	tx IvysaurName ; pre-evo name
@@ -378,7 +378,7 @@ VenusaurLv64Card:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx SeedName ; category
-	dw 3 ; Pokedex number
+	db 3 ; Pokedex number
 	db 64 ; level
 	db 6, 7 ; length
 	dw 221 * 10 ; weight
@@ -391,7 +391,7 @@ VenusaurLv67Card:
 	tx VenusaurName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db VENUSAUR_LV67
+	dw VENUSAUR_LV67
 	db 100 ; hp
 	db STAGE2 ; stage
 	tx IvysaurName ; pre-evo name
@@ -428,7 +428,7 @@ VenusaurLv67Card:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx SeedName ; category
-	dw 3 ; Pokedex number
+	db 3 ; Pokedex number
 	db 67 ; level
 	db 6, 7 ; length
 	dw 221 * 10 ; weight
@@ -441,7 +441,7 @@ CaterpieCard:
 	tx CaterpieName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db CATERPIE
+	dw CATERPIE
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -478,7 +478,7 @@ CaterpieCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx WormName ; category
-	dw 10 ; Pokedex number
+	db 10 ; Pokedex number
 	db 13 ; level
 	db 1, 0 ; length
 	dw 6 * 10 ; weight
@@ -491,7 +491,7 @@ MetapodCard:
 	tx MetapodName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db METAPOD
+	dw METAPOD
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx CaterpieName ; pre-evo name
@@ -528,7 +528,7 @@ MetapodCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx CocoonName ; category
-	dw 11 ; Pokedex number
+	db 11 ; Pokedex number
 	db 21 ; level
 	db 2, 4 ; length
 	dw 22 * 10 ; weight
@@ -541,7 +541,7 @@ ButterfreeCard:
 	tx ButterfreeName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db BUTTERFREE
+	dw BUTTERFREE
 	db 70 ; hp
 	db STAGE2 ; stage
 	tx MetapodName ; pre-evo name
@@ -578,7 +578,7 @@ ButterfreeCard:
 	db WR_FIRE ; weakness
 	db WR_FIGHTING ; resistance
 	tx ButterflyName ; category
-	dw 12 ; Pokedex number
+	db 12 ; Pokedex number
 	db 28 ; level
 	db 3, 7 ; length
 	dw 71 * 10 ; weight
@@ -591,7 +591,7 @@ WeedleCard:
 	tx WeedleName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db WEEDLE
+	dw WEEDLE
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -628,7 +628,7 @@ WeedleCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx HairyBugName ; category
-	dw 13 ; Pokedex number
+	db 13 ; Pokedex number
 	db 12 ; level
 	db 1, 0 ; length
 	dw 7 * 10 ; weight
@@ -641,7 +641,7 @@ KakunaCard:
 	tx KakunaName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db KAKUNA
+	dw KAKUNA
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx WeedleName ; pre-evo name
@@ -678,7 +678,7 @@ KakunaCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx CocoonName ; category
-	dw 14 ; Pokedex number
+	db 14 ; Pokedex number
 	db 23 ; level
 	db 2, 0 ; length
 	dw 22 * 10 ; weight
@@ -691,7 +691,7 @@ BeedrillCard:
 	tx BeedrillName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db BEEDRILL
+	dw BEEDRILL
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx KakunaName ; pre-evo name
@@ -728,7 +728,7 @@ BeedrillCard:
 	db WR_FIRE ; weakness
 	db WR_FIGHTING ; resistance
 	tx PoisonBeeName ; category
-	dw 15 ; Pokedex number
+	db 15 ; Pokedex number
 	db 32 ; level
 	db 3, 3 ; length
 	dw 65 * 10 ; weight
@@ -741,7 +741,7 @@ EkansCard:
 	tx EkansName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db EKANS
+	dw EKANS
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -778,7 +778,7 @@ EkansCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx SnakeName ; category
-	dw 23 ; Pokedex number
+	db 23 ; Pokedex number
 	db 10 ; level
 	db 6, 7 ; length
 	dw 15 * 10 ; weight
@@ -791,7 +791,7 @@ ArbokCard:
 	tx ArbokName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db ARBOK
+	dw ARBOK
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx EkansName ; pre-evo name
@@ -828,7 +828,7 @@ ArbokCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx CobraName ; category
-	dw 24 ; Pokedex number
+	db 24 ; Pokedex number
 	db 27 ; level
 	db 11, 6 ; length
 	dw 143 * 10 ; weight
@@ -841,7 +841,7 @@ NidoranFCard:
 	tx NidoranFName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db NIDORANF
+	dw NIDORANF
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -878,7 +878,7 @@ NidoranFCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PoisonPinName ; category
-	dw 29 ; Pokedex number
+	db 29 ; Pokedex number
 	db 13 ; level
 	db 1, 4 ; length
 	dw 15 * 10 ; weight
@@ -891,7 +891,7 @@ NidorinaCard:
 	tx NidorinaName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db NIDORINA
+	dw NIDORINA
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx NidoranFName ; pre-evo name
@@ -928,7 +928,7 @@ NidorinaCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PoisonPinName ; category
-	dw 30 ; Pokedex number
+	db 30 ; Pokedex number
 	db 24 ; level
 	db 2, 7 ; length
 	dw 44 * 10 ; weight
@@ -941,7 +941,7 @@ NidoqueenCard:
 	tx NidoqueenName ; name
 	db STAR ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db NIDOQUEEN
+	dw NIDOQUEEN
 	db 90 ; hp
 	db STAGE2 ; stage
 	tx NidorinaName ; pre-evo name
@@ -978,7 +978,7 @@ NidoqueenCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx DrillName ; category
-	dw 31 ; Pokedex number
+	db 31 ; Pokedex number
 	db 43 ; level
 	db 4, 3 ; length
 	dw 132 * 10 ; weight
@@ -991,7 +991,7 @@ NidoranMCard:
 	tx NidoranMName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db NIDORANM
+	dw NIDORANM
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1028,7 +1028,7 @@ NidoranMCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PoisonPinName ; category
-	dw 32 ; Pokedex number
+	db 32 ; Pokedex number
 	db 20 ; level
 	db 1, 4 ; length
 	dw 15 * 10 ; weight
@@ -1041,7 +1041,7 @@ NidorinoCard:
 	tx NidorinoName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db NIDORINO
+	dw NIDORINO
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx NidoranMName ; pre-evo name
@@ -1078,7 +1078,7 @@ NidorinoCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PoisonPinName ; category
-	dw 33 ; Pokedex number
+	db 33 ; Pokedex number
 	db 25 ; level
 	db 2, 11 ; length
 	dw 43 * 10 ; weight
@@ -1091,7 +1091,7 @@ NidokingCard:
 	tx NidokingName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db NIDOKING
+	dw NIDOKING
 	db 90 ; hp
 	db STAGE2 ; stage
 	tx NidorinoName ; pre-evo name
@@ -1128,7 +1128,7 @@ NidokingCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx DrillName ; category
-	dw 34 ; Pokedex number
+	db 34 ; Pokedex number
 	db 48 ; level
 	db 4, 7 ; length
 	dw 137 * 10 ; weight
@@ -1141,7 +1141,7 @@ ZubatCard:
 	tx ZubatName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db ZUBAT
+	dw ZUBAT
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1178,7 +1178,7 @@ ZubatCard:
 	db WR_PSYCHIC ; weakness
 	db WR_FIGHTING ; resistance
 	tx BatName ; category
-	dw 41 ; Pokedex number
+	db 41 ; Pokedex number
 	db 10 ; level
 	db 2, 7 ; length
 	dw 17 * 10 ; weight
@@ -1191,7 +1191,7 @@ GolbatCard:
 	tx GolbatName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db GOLBAT
+	dw GOLBAT
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx ZubatName ; pre-evo name
@@ -1228,7 +1228,7 @@ GolbatCard:
 	db WR_PSYCHIC ; weakness
 	db WR_FIGHTING ; resistance
 	tx BatName ; category
-	dw 42 ; Pokedex number
+	db 42 ; Pokedex number
 	db 29 ; level
 	db 5, 3 ; length
 	dw 121 * 10 ; weight
@@ -1241,7 +1241,7 @@ OddishCard:
 	tx OddishName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db ODDISH
+	dw ODDISH
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1278,7 +1278,7 @@ OddishCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx WeedName ; category
-	dw 43 ; Pokedex number
+	db 43 ; Pokedex number
 	db 8 ; level
 	db 1, 8 ; length
 	dw 12 * 10 ; weight
@@ -1291,7 +1291,7 @@ GloomCard:
 	tx GloomName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db GLOOM
+	dw GLOOM
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx OddishName ; pre-evo name
@@ -1328,7 +1328,7 @@ GloomCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx WeedName ; category
-	dw 44 ; Pokedex number
+	db 44 ; Pokedex number
 	db 22 ; level
 	db 2, 7 ; length
 	dw 19 * 10 ; weight
@@ -1341,7 +1341,7 @@ VileplumeCard:
 	tx VileplumeName ; name
 	db STAR ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db VILEPLUME
+	dw VILEPLUME
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx GloomName ; pre-evo name
@@ -1378,7 +1378,7 @@ VileplumeCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx FlowerName ; category
-	dw 45 ; Pokedex number
+	db 45 ; Pokedex number
 	db 35 ; level
 	db 3, 11 ; length
 	dw 41 * 10 ; weight
@@ -1391,7 +1391,7 @@ ParasCard:
 	tx ParasName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db PARAS
+	dw PARAS
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1428,7 +1428,7 @@ ParasCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx MushroomName ; category
-	dw 46 ; Pokedex number
+	db 46 ; Pokedex number
 	db 8 ; level
 	db 1, 0 ; length
 	dw 12 * 10 ; weight
@@ -1441,7 +1441,7 @@ ParasectCard:
 	tx ParasectName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db PARASECT
+	dw PARASECT
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx ParasName ; pre-evo name
@@ -1478,7 +1478,7 @@ ParasectCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx MushroomName ; category
-	dw 47 ; Pokedex number
+	db 47 ; Pokedex number
 	db 28 ; level
 	db 3, 3 ; length
 	dw 65 * 10 ; weight
@@ -1491,7 +1491,7 @@ VenonatCard:
 	tx VenonatName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db VENONAT
+	dw VENONAT
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1528,7 +1528,7 @@ VenonatCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx InsectName ; category
-	dw 48 ; Pokedex number
+	db 48 ; Pokedex number
 	db 12 ; level
 	db 3, 3 ; length
 	dw 66 * 10 ; weight
@@ -1541,7 +1541,7 @@ VenomothCard:
 	tx VenomothName ; name
 	db STAR ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db VENOMOTH
+	dw VENOMOTH
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx VenonatName ; pre-evo name
@@ -1578,7 +1578,7 @@ VenomothCard:
 	db WR_FIRE ; weakness
 	db WR_FIGHTING ; resistance
 	tx PoisonmothName ; category
-	dw 49 ; Pokedex number
+	db 49 ; Pokedex number
 	db 28 ; level
 	db 4, 11 ; length
 	dw 28 * 10 ; weight
@@ -1591,7 +1591,7 @@ BellsproutCard:
 	tx BellsproutName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db BELLSPROUT
+	dw BELLSPROUT
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1628,7 +1628,7 @@ BellsproutCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx FlowerName ; category
-	dw 69 ; Pokedex number
+	db 69 ; Pokedex number
 	db 11 ; level
 	db 2, 4 ; length
 	dw 9 * 10 ; weight
@@ -1641,7 +1641,7 @@ WeepinbellCard:
 	tx WeepinbellName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db WEEPINBELL
+	dw WEEPINBELL
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx BellsproutName ; pre-evo name
@@ -1678,7 +1678,7 @@ WeepinbellCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx FlycatcherName ; category
-	dw 70 ; Pokedex number
+	db 70 ; Pokedex number
 	db 28 ; level
 	db 3, 3 ; length
 	dw 14 * 10 ; weight
@@ -1691,7 +1691,7 @@ VictreebelCard:
 	tx VictreebelName ; name
 	db STAR ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db VICTREEBEL
+	dw VICTREEBEL
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx WeepinbellName ; pre-evo name
@@ -1728,7 +1728,7 @@ VictreebelCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx FlycatcherName ; category
-	dw 71 ; Pokedex number
+	db 71 ; Pokedex number
 	db 42 ; level
 	db 5, 7 ; length
 	dw 34 * 10 ; weight
@@ -1741,7 +1741,7 @@ GrimerCard:
 	tx GrimerName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db GRIMER
+	dw GRIMER
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1778,7 +1778,7 @@ GrimerCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx SludgeName ; category
-	dw 88 ; Pokedex number
+	db 88 ; Pokedex number
 	db 17 ; level
 	db 2, 11 ; length
 	dw 66 * 10 ; weight
@@ -1791,7 +1791,7 @@ MukCard:
 	tx MukName ; name
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db MUK
+	dw MUK
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx GrimerName ; pre-evo name
@@ -1828,7 +1828,7 @@ MukCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx SludgeName ; category
-	dw 89 ; Pokedex number
+	db 89 ; Pokedex number
 	db 34 ; level
 	db 3, 11 ; length
 	dw 66 * 10 ; weight
@@ -1841,7 +1841,7 @@ ExeggcuteCard:
 	tx ExeggcuteName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db EXEGGCUTE
+	dw EXEGGCUTE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1878,7 +1878,7 @@ ExeggcuteCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx EggName ; category
-	dw 102 ; Pokedex number
+	db 102 ; Pokedex number
 	db 14 ; level
 	db 1, 4 ; length
 	dw 6 * 10 ; weight
@@ -1891,7 +1891,7 @@ ExeggutorCard:
 	tx ExeggutorName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db EXEGGUTOR
+	dw EXEGGUTOR
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx ExeggcuteName ; pre-evo name
@@ -1928,7 +1928,7 @@ ExeggutorCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx CoconutName ; category
-	dw 103 ; Pokedex number
+	db 103 ; Pokedex number
 	db 35 ; level
 	db 6, 7 ; length
 	dw 265 * 10 ; weight
@@ -1941,7 +1941,7 @@ KoffingCard:
 	tx KoffingName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
-	db KOFFING
+	dw KOFFING
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1978,7 +1978,7 @@ KoffingCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PoisonGasName ; category
-	dw 109 ; Pokedex number
+	db 109 ; Pokedex number
 	db 13 ; level
 	db 2, 0 ; length
 	dw 2 * 10 ; weight
@@ -1991,7 +1991,7 @@ WeezingCard:
 	tx WeezingName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db WEEZING
+	dw WEEZING
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx KoffingName ; pre-evo name
@@ -2028,7 +2028,7 @@ WeezingCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PoisonGasName ; category
-	dw 110 ; Pokedex number
+	db 110 ; Pokedex number
 	db 27 ; level
 	db 3, 11 ; length
 	dw 21 * 10 ; weight
@@ -2041,7 +2041,7 @@ TangelaLv8Card:
 	tx TangelaName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
-	db TANGELA_LV8
+	dw TANGELA_LV8
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2078,7 +2078,7 @@ TangelaLv8Card:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx VineName ; category
-	dw 114 ; Pokedex number
+	db 114 ; Pokedex number
 	db 8 ; level
 	db 3, 3 ; length
 	dw 77 * 10 ; weight
@@ -2091,7 +2091,7 @@ TangelaLv12Card:
 	tx TangelaName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | GB ; sets
-	db TANGELA_LV12
+	dw TANGELA_LV12
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2128,7 +2128,7 @@ TangelaLv12Card:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx VineName ; category
-	dw 114 ; Pokedex number
+	db 114 ; Pokedex number
 	db 12 ; level
 	db 3, 3 ; length
 	dw 77 * 10 ; weight
@@ -2141,7 +2141,7 @@ ScytherCard:
 	tx ScytherName ; name
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db SCYTHER
+	dw SCYTHER
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2178,7 +2178,7 @@ ScytherCard:
 	db WR_FIRE ; weakness
 	db WR_FIGHTING ; resistance
 	tx MantisName ; category
-	dw 123 ; Pokedex number
+	db 123 ; Pokedex number
 	db 25 ; level
 	db 4, 11 ; length
 	dw 123 * 10 ; weight
@@ -2191,7 +2191,7 @@ PinsirCard:
 	tx PinsirName ; name
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db PINSIR
+	dw PINSIR
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2228,7 +2228,7 @@ PinsirCard:
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx StagbeetleName ; category
-	dw 127 ; Pokedex number
+	db 127 ; Pokedex number
 	db 24 ; level
 	db 4, 11 ; length
 	dw 121 * 10 ; weight
@@ -2241,7 +2241,7 @@ CharmanderCard:
 	tx CharmanderName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db CHARMANDER
+	dw CHARMANDER
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2278,7 +2278,7 @@ CharmanderCard:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx LizardName ; category
-	dw 4 ; Pokedex number
+	db 4 ; Pokedex number
 	db 10 ; level
 	db 2, 0 ; length
 	dw 19 * 10 ; weight
@@ -2291,7 +2291,7 @@ CharmeleonCard:
 	tx CharmeleonName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db CHARMELEON
+	dw CHARMELEON
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx CharmanderName ; pre-evo name
@@ -2328,7 +2328,7 @@ CharmeleonCard:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FlameName ; category
-	dw 5 ; Pokedex number
+	db 5 ; Pokedex number
 	db 32 ; level
 	db 3, 7 ; length
 	dw 42 * 10 ; weight
@@ -2341,7 +2341,7 @@ CharizardCard:
 	tx CharizardName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db CHARIZARD
+	dw CHARIZARD
 	db 120 ; hp
 	db STAGE2 ; stage
 	tx CharmeleonName ; pre-evo name
@@ -2378,7 +2378,7 @@ CharizardCard:
 	db WR_WATER ; weakness
 	db WR_FIGHTING ; resistance
 	tx FlameName ; category
-	dw 6 ; Pokedex number
+	db 6 ; Pokedex number
 	db 76 ; level
 	db 5, 7 ; length
 	dw 200 * 10 ; weight
@@ -2391,7 +2391,7 @@ VulpixCard:
 	tx VulpixName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | NONE ; sets
-	db VULPIX
+	dw VULPIX
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2428,7 +2428,7 @@ VulpixCard:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FoxName ; category
-	dw 37 ; Pokedex number
+	db 37 ; Pokedex number
 	db 11 ; level
 	db 2, 0 ; length
 	dw 22 * 10 ; weight
@@ -2441,7 +2441,7 @@ NinetalesLv32Card:
 	tx NinetalesName ; name
 	db STAR ; rarity
 	db MYSTERY | NONE ; sets
-	db NINETALES_LV32
+	dw NINETALES_LV32
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx VulpixName ; pre-evo name
@@ -2478,7 +2478,7 @@ NinetalesLv32Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FoxName ; category
-	dw 38 ; Pokedex number
+	db 38 ; Pokedex number
 	db 32 ; level
 	db 3, 7 ; length
 	dw 44 * 10 ; weight
@@ -2491,7 +2491,7 @@ NinetalesLv35Card:
 	tx NinetalesName ; name
 	db STAR ; rarity
 	db LABORATORY | GB ; sets
-	db NINETALES_LV35
+	dw NINETALES_LV35
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx VulpixName ; pre-evo name
@@ -2528,7 +2528,7 @@ NinetalesLv35Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FoxName ; category
-	dw 38 ; Pokedex number
+	db 38 ; Pokedex number
 	db 35 ; level
 	db 3, 7 ; length
 	dw 44 * 10 ; weight
@@ -2541,7 +2541,7 @@ GrowlitheCard:
 	tx GrowlitheName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db GROWLITHE
+	dw GROWLITHE
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2578,7 +2578,7 @@ GrowlitheCard:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx PuppyName ; category
-	dw 58 ; Pokedex number
+	db 58 ; Pokedex number
 	db 18 ; level
 	db 2, 4 ; length
 	dw 42 * 10 ; weight
@@ -2591,7 +2591,7 @@ ArcanineLv34Card:
 	tx ArcanineName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db ARCANINE_LV34
+	dw ARCANINE_LV34
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx GrowlitheName ; pre-evo name
@@ -2628,7 +2628,7 @@ ArcanineLv34Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx LegendaryName ; category
-	dw 59 ; Pokedex number
+	db 59 ; Pokedex number
 	db 34 ; level
 	db 6, 3 ; length
 	dw 342 * 10 ; weight
@@ -2641,7 +2641,7 @@ ArcanineLv45Card:
 	tx ArcanineName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db ARCANINE_LV45
+	dw ARCANINE_LV45
 	db 100 ; hp
 	db STAGE1 ; stage
 	tx GrowlitheName ; pre-evo name
@@ -2678,7 +2678,7 @@ ArcanineLv45Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx LegendaryName ; category
-	dw 59 ; Pokedex number
+	db 59 ; Pokedex number
 	db 45 ; level
 	db 6, 3 ; length
 	dw 342 * 10 ; weight
@@ -2691,7 +2691,7 @@ PonytaCard:
 	tx PonytaName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db PONYTA
+	dw PONYTA
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2728,7 +2728,7 @@ PonytaCard:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FireHorseName ; category
-	dw 77 ; Pokedex number
+	db 77 ; Pokedex number
 	db 10 ; level
 	db 3, 3 ; length
 	dw 66 * 10 ; weight
@@ -2741,7 +2741,7 @@ RapidashCard:
 	tx RapidashName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db RAPIDASH
+	dw RAPIDASH
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx PonytaName ; pre-evo name
@@ -2778,7 +2778,7 @@ RapidashCard:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FireHorseName ; category
-	dw 78 ; Pokedex number
+	db 78 ; Pokedex number
 	db 33 ; level
 	db 5, 7 ; length
 	dw 209 * 10 ; weight
@@ -2791,7 +2791,7 @@ MagmarLv24Card:
 	tx MagmarName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db MAGMAR_LV24
+	dw MAGMAR_LV24
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2828,7 +2828,7 @@ MagmarLv24Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx SpitfireName ; category
-	dw 126 ; Pokedex number
+	db 126 ; Pokedex number
 	db 24 ; level
 	db 4, 3 ; length
 	dw 98 * 10 ; weight
@@ -2841,7 +2841,7 @@ MagmarLv31Card:
 	tx MagmarName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db MAGMAR_LV31
+	dw MAGMAR_LV31
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -2878,7 +2878,7 @@ MagmarLv31Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx SpitfireName ; category
-	dw 126 ; Pokedex number
+	db 126 ; Pokedex number
 	db 31 ; level
 	db 4, 3 ; length
 	dw 98 * 10 ; weight
@@ -2891,7 +2891,7 @@ FlareonLv22Card:
 	tx FlareonName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | GB ; sets
-	db FLAREON_LV22
+	dw FLAREON_LV22
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx EeveeName ; pre-evo name
@@ -2928,7 +2928,7 @@ FlareonLv22Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FlameName ; category
-	dw 136 ; Pokedex number
+	db 136 ; Pokedex number
 	db 22 ; level
 	db 2, 11 ; length
 	dw 55 * 10 ; weight
@@ -2941,7 +2941,7 @@ FlareonLv28Card:
 	tx FlareonName ; name
 	db STAR ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db FLAREON_LV28
+	dw FLAREON_LV28
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx EeveeName ; pre-evo name
@@ -2978,7 +2978,7 @@ FlareonLv28Card:
 	db WR_WATER ; weakness
 	db NONE ; resistance
 	tx FlameName ; category
-	dw 136 ; Pokedex number
+	db 136 ; Pokedex number
 	db 28 ; level
 	db 2, 11 ; length
 	dw 55 * 10 ; weight
@@ -2991,7 +2991,7 @@ MoltresLv35Card:
 	tx MoltresName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db MOLTRES_LV35
+	dw MOLTRES_LV35
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3028,7 +3028,7 @@ MoltresLv35Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx FlameName ; category
-	dw 146 ; Pokedex number
+	db 146 ; Pokedex number
 	db 35 ; level
 	db 6, 7 ; length
 	dw 132 * 10 ; weight
@@ -3041,7 +3041,7 @@ MoltresLv37Card:
 	tx MoltresName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
-	db MOLTRES_LV37
+	dw MOLTRES_LV37
 	db 100 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3078,7 +3078,7 @@ MoltresLv37Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx FlameName ; category
-	dw 146 ; Pokedex number
+	db 146 ; Pokedex number
 	db 37 ; level
 	db 6, 7 ; length
 	dw 132 * 10 ; weight
@@ -3091,7 +3091,7 @@ SquirtleCard:
 	tx SquirtleName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db SQUIRTLE
+	dw SQUIRTLE
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3128,7 +3128,7 @@ SquirtleCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx TinyTurtleName ; category
-	dw 7 ; Pokedex number
+	db 7 ; Pokedex number
 	db 8 ; level
 	db 1, 8 ; length
 	dw 20 * 10 ; weight
@@ -3141,7 +3141,7 @@ WartortleCard:
 	tx WartortleName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db WARTORTLE
+	dw WARTORTLE
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx SquirtleName ; pre-evo name
@@ -3178,7 +3178,7 @@ WartortleCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx TurtleName ; category
-	dw 8 ; Pokedex number
+	db 8 ; Pokedex number
 	db 22 ; level
 	db 3, 3 ; length
 	dw 50 * 10 ; weight
@@ -3191,7 +3191,7 @@ BlastoiseCard:
 	tx BlastoiseName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db BLASTOISE
+	dw BLASTOISE
 	db 100 ; hp
 	db STAGE2 ; stage
 	tx WartortleName ; pre-evo name
@@ -3228,7 +3228,7 @@ BlastoiseCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx ShellfishName ; category
-	dw 9 ; Pokedex number
+	db 9 ; Pokedex number
 	db 52 ; level
 	db 5, 3 ; length
 	dw 189 * 10 ; weight
@@ -3241,7 +3241,7 @@ PsyduckCard:
 	tx PsyduckName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db PSYDUCK
+	dw PSYDUCK
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3278,7 +3278,7 @@ PsyduckCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx DuckName ; category
-	dw 54 ; Pokedex number
+	db 54 ; Pokedex number
 	db 15 ; level
 	db 2, 7 ; length
 	dw 43 * 10 ; weight
@@ -3291,7 +3291,7 @@ GolduckCard:
 	tx GolduckName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db GOLDUCK
+	dw GOLDUCK
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx PsyduckName ; pre-evo name
@@ -3328,7 +3328,7 @@ GolduckCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx DuckName ; category
-	dw 55 ; Pokedex number
+	db 55 ; Pokedex number
 	db 27 ; level
 	db 5, 7 ; length
 	dw 169 * 10 ; weight
@@ -3341,7 +3341,7 @@ PoliwagCard:
 	tx PoliwagName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
-	db POLIWAG
+	dw POLIWAG
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3378,7 +3378,7 @@ PoliwagCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx TadpoleName ; category
-	dw 60 ; Pokedex number
+	db 60 ; Pokedex number
 	db 13 ; level
 	db 2, 0 ; length
 	dw 27 * 10 ; weight
@@ -3391,7 +3391,7 @@ PoliwhirlCard:
 	tx PoliwhirlName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | NONE ; sets
-	db POLIWHIRL
+	dw POLIWHIRL
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx PoliwagName ; pre-evo name
@@ -3428,7 +3428,7 @@ PoliwhirlCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx TadpoleName ; category
-	dw 61 ; Pokedex number
+	db 61 ; Pokedex number
 	db 28 ; level
 	db 3, 4 ; length
 	dw 44 * 10 ; weight
@@ -3441,7 +3441,7 @@ PoliwrathCard:
 	tx PoliwrathName ; name
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
-	db POLIWRATH
+	dw POLIWRATH
 	db 90 ; hp
 	db STAGE2 ; stage
 	tx PoliwhirlName ; pre-evo name
@@ -3478,7 +3478,7 @@ PoliwrathCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx TadpoleName ; category
-	dw 62 ; Pokedex number
+	db 62 ; Pokedex number
 	db 48 ; level
 	db 4, 3 ; length
 	dw 119 * 10 ; weight
@@ -3491,7 +3491,7 @@ TentacoolCard:
 	tx TentacoolName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db TENTACOOL
+	dw TENTACOOL
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3528,7 +3528,7 @@ TentacoolCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx JellyfishName ; category
-	dw 72 ; Pokedex number
+	db 72 ; Pokedex number
 	db 10 ; level
 	db 2, 11 ; length
 	dw 100 * 10 ; weight
@@ -3541,7 +3541,7 @@ TentacruelCard:
 	tx TentacruelName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db TENTACRUEL
+	dw TENTACRUEL
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx TentacoolName ; pre-evo name
@@ -3578,7 +3578,7 @@ TentacruelCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx JellyfishName ; category
-	dw 73 ; Pokedex number
+	db 73 ; Pokedex number
 	db 21 ; level
 	db 5, 3 ; length
 	dw 121 * 10 ; weight
@@ -3591,7 +3591,7 @@ SeelCard:
 	tx SeelName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db SEEL
+	dw SEEL
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3628,7 +3628,7 @@ SeelCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx SeaLionName ; category
-	dw 86 ; Pokedex number
+	db 86 ; Pokedex number
 	db 12 ; level
 	db 3, 7 ; length
 	dw 198 * 10 ; weight
@@ -3641,7 +3641,7 @@ DewgongCard:
 	tx DewgongName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db DEWGONG
+	dw DEWGONG
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx SeelName ; pre-evo name
@@ -3678,7 +3678,7 @@ DewgongCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx SeaLionName ; category
-	dw 87 ; Pokedex number
+	db 87 ; Pokedex number
 	db 42 ; level
 	db 5, 7 ; length
 	dw 265 * 10 ; weight
@@ -3691,7 +3691,7 @@ ShellderCard:
 	tx ShellderName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db SHELLDER
+	dw SHELLDER
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3728,7 +3728,7 @@ ShellderCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx BivalveName ; category
-	dw 90 ; Pokedex number
+	db 90 ; Pokedex number
 	db 8 ; level
 	db 1, 0 ; length
 	dw 9 * 10 ; weight
@@ -3741,7 +3741,7 @@ CloysterCard:
 	tx CloysterName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db CLOYSTER
+	dw CLOYSTER
 	db 50 ; hp
 	db STAGE1 ; stage
 	tx ShellderName ; pre-evo name
@@ -3778,7 +3778,7 @@ CloysterCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx BivalveName ; category
-	dw 91 ; Pokedex number
+	db 91 ; Pokedex number
 	db 25 ; level
 	db 4, 11 ; length
 	dw 292 * 10 ; weight
@@ -3791,7 +3791,7 @@ KrabbyCard:
 	tx KrabbyName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db KRABBY
+	dw KRABBY
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3828,7 +3828,7 @@ KrabbyCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx RiverCrabName ; category
-	dw 98 ; Pokedex number
+	db 98 ; Pokedex number
 	db 20 ; level
 	db 1, 4 ; length
 	dw 14 * 10 ; weight
@@ -3841,7 +3841,7 @@ KinglerCard:
 	tx KinglerName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db KINGLER
+	dw KINGLER
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx KrabbyName ; pre-evo name
@@ -3878,7 +3878,7 @@ KinglerCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx PincerName ; category
-	dw 99 ; Pokedex number
+	db 99 ; Pokedex number
 	db 27 ; level
 	db 4, 3 ; length
 	dw 132 * 10 ; weight
@@ -3891,7 +3891,7 @@ HorseaCard:
 	tx HorseaName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db HORSEA
+	dw HORSEA
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -3928,7 +3928,7 @@ HorseaCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx DragonName ; category
-	dw 116 ; Pokedex number
+	db 116 ; Pokedex number
 	db 19 ; level
 	db 1, 4 ; length
 	dw 18 * 10 ; weight
@@ -3941,7 +3941,7 @@ SeadraCard:
 	tx SeadraName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db SEADRA
+	dw SEADRA
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx HorseaName ; pre-evo name
@@ -3978,7 +3978,7 @@ SeadraCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx DragonName ; category
-	dw 117 ; Pokedex number
+	db 117 ; Pokedex number
 	db 23 ; level
 	db 3, 1 ; length
 	dw 55 * 10 ; weight
@@ -3991,7 +3991,7 @@ GoldeenCard:
 	tx GoldeenName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db GOLDEEN
+	dw GOLDEEN
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4028,7 +4028,7 @@ GoldeenCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx GoldfishName ; category
-	dw 118 ; Pokedex number
+	db 118 ; Pokedex number
 	db 12 ; level
 	db 2, 0 ; length
 	dw 33 * 10 ; weight
@@ -4041,7 +4041,7 @@ SeakingCard:
 	tx SeakingName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db SEAKING
+	dw SEAKING
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx GoldeenName ; pre-evo name
@@ -4078,7 +4078,7 @@ SeakingCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx GoldfishName ; category
-	dw 119 ; Pokedex number
+	db 119 ; Pokedex number
 	db 28 ; level
 	db 4, 3 ; length
 	dw 86 * 10 ; weight
@@ -4091,7 +4091,7 @@ StaryuCard:
 	tx StaryuName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db STARYU
+	dw STARYU
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4128,7 +4128,7 @@ StaryuCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx StarshapeName ; category
-	dw 120 ; Pokedex number
+	db 120 ; Pokedex number
 	db 15 ; level
 	db 2, 7 ; length
 	dw 76 * 10 ; weight
@@ -4141,7 +4141,7 @@ StarmieCard:
 	tx StarmieName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db STARMIE
+	dw STARMIE
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx StaryuName ; pre-evo name
@@ -4178,7 +4178,7 @@ StarmieCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx MysteriousName ; category
-	dw 121 ; Pokedex number
+	db 121 ; Pokedex number
 	db 28 ; level
 	db 3, 7 ; length
 	dw 176 * 10 ; weight
@@ -4191,7 +4191,7 @@ MagikarpCard:
 	tx MagikarpName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db MAGIKARP
+	dw MAGIKARP
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4228,7 +4228,7 @@ MagikarpCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx FishName ; category
-	dw 129 ; Pokedex number
+	db 129 ; Pokedex number
 	db 8 ; level
 	db 2, 11 ; length
 	dw 22 * 10 ; weight
@@ -4241,7 +4241,7 @@ GyaradosCard:
 	tx GyaradosName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db GYARADOS
+	dw GYARADOS
 	db 100 ; hp
 	db STAGE1 ; stage
 	tx MagikarpName ; pre-evo name
@@ -4278,7 +4278,7 @@ GyaradosCard:
 	db WR_GRASS ; weakness
 	db WR_FIGHTING ; resistance
 	tx AtrociousName ; category
-	dw 130 ; Pokedex number
+	db 130 ; Pokedex number
 	db 41 ; level
 	db 21, 4 ; length
 	dw 518 * 10 ; weight
@@ -4291,7 +4291,7 @@ LaprasCard:
 	tx LaprasName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db LAPRAS
+	dw LAPRAS
 	db 80 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4328,7 +4328,7 @@ LaprasCard:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx TransportName ; category
-	dw 131 ; Pokedex number
+	db 131 ; Pokedex number
 	db 31 ; level
 	db 8, 2 ; length
 	dw 485 * 10 ; weight
@@ -4341,7 +4341,7 @@ VaporeonLv29Card:
 	tx VaporeonName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | GB ; sets
-	db VAPOREON_LV29
+	dw VAPOREON_LV29
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx EeveeName ; pre-evo name
@@ -4378,7 +4378,7 @@ VaporeonLv29Card:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx BubbleJetName ; category
-	dw 134 ; Pokedex number
+	db 134 ; Pokedex number
 	db 29 ; level
 	db 3, 3 ; length
 	dw 64 * 10 ; weight
@@ -4391,7 +4391,7 @@ VaporeonLv42Card:
 	tx VaporeonName ; name
 	db STAR ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db VAPOREON_LV42
+	dw VAPOREON_LV42
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx EeveeName ; pre-evo name
@@ -4428,7 +4428,7 @@ VaporeonLv42Card:
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
 	tx BubbleJetName ; category
-	dw 134 ; Pokedex number
+	db 134 ; Pokedex number
 	db 42 ; level
 	db 3, 3 ; length
 	dw 64 * 10 ; weight
@@ -4441,7 +4441,7 @@ OmanyteCard:
 	tx OmanyteName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db OMANYTE
+	dw OMANYTE
 	db 40 ; hp
 	db STAGE1 ; stage
 	tx MysteriousFossilName ; pre-evo name
@@ -4478,7 +4478,7 @@ OmanyteCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx SpiralName ; category
-	dw 138 ; Pokedex number
+	db 138 ; Pokedex number
 	db 19 ; level
 	db 1, 4 ; length
 	dw 17 * 10 ; weight
@@ -4491,7 +4491,7 @@ OmastarCard:
 	tx OmastarName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db OMASTAR
+	dw OMASTAR
 	db 70 ; hp
 	db STAGE2 ; stage
 	tx OmanyteName ; pre-evo name
@@ -4528,7 +4528,7 @@ OmastarCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx SpiralName ; category
-	dw 139 ; Pokedex number
+	db 139 ; Pokedex number
 	db 32 ; level
 	db 3, 3 ; length
 	dw 77 * 10 ; weight
@@ -4541,7 +4541,7 @@ ArticunoLv35Card:
 	tx ArticunoName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db ARTICUNO_LV35
+	dw ARTICUNO_LV35
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4578,7 +4578,7 @@ ArticunoLv35Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx FreezeName ; category
-	dw 144 ; Pokedex number
+	db 144 ; Pokedex number
 	db 35 ; level
 	db 5, 7 ; length
 	dw 122 * 10 ; weight
@@ -4591,7 +4591,7 @@ ArticunoLv37Card:
 	tx ArticunoName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
-	db ARTICUNO_LV37
+	dw ARTICUNO_LV37
 	db 100 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4628,7 +4628,7 @@ ArticunoLv37Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx FreezeName ; category
-	dw 144 ; Pokedex number
+	db 144 ; Pokedex number
 	db 37 ; level
 	db 5, 7 ; length
 	dw 122 * 10 ; weight
@@ -4641,7 +4641,7 @@ PikachuLv12Card:
 	tx PikachuName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db PIKACHU_LV12
+	dw PIKACHU_LV12
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4678,7 +4678,7 @@ PikachuLv12Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 12 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4691,7 +4691,7 @@ PikachuLv14Card:
 	tx PikachuName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db PIKACHU_LV14
+	dw PIKACHU_LV14
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4728,7 +4728,7 @@ PikachuLv14Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 14 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4741,7 +4741,7 @@ PikachuLv16Card:
 	tx PikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db PIKACHU_LV16
+	dw PIKACHU_LV16
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4778,7 +4778,7 @@ PikachuLv16Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 16 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4791,7 +4791,7 @@ PikachuAltLv16Card:
 	tx PikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db PIKACHU_ALT_LV16
+	dw PIKACHU_ALT_LV16
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4828,7 +4828,7 @@ PikachuAltLv16Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 16 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4841,7 +4841,7 @@ FlyingPikachuCard:
 	tx FlyingPikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db FLYING_PIKACHU
+	dw FLYING_PIKACHU
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4878,7 +4878,7 @@ FlyingPikachuCard:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 12 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4891,7 +4891,7 @@ SurfingPikachuLv13Card:
 	tx SurfingPikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SURFING_PIKACHU_LV13
+	dw SURFING_PIKACHU_LV13
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4928,7 +4928,7 @@ SurfingPikachuLv13Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 13 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4941,7 +4941,7 @@ SurfingPikachuAltLv13Card:
 	tx SurfingPikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SURFING_PIKACHU_ALT_LV13
+	dw SURFING_PIKACHU_ALT_LV13
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -4978,7 +4978,7 @@ SurfingPikachuAltLv13Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 25 ; Pokedex number
+	db 25 ; Pokedex number
 	db 13 ; level
 	db 1, 4 ; length
 	dw 13 * 10 ; weight
@@ -4991,7 +4991,7 @@ RaichuLv40Card:
 	tx RaichuName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db RAICHU_LV40
+	dw RAICHU_LV40
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx PikachuName ; pre-evo name
@@ -5028,7 +5028,7 @@ RaichuLv40Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 26 ; Pokedex number
+	db 26 ; Pokedex number
 	db 40 ; level
 	db 2, 7 ; length
 	dw 66 * 10 ; weight
@@ -5041,7 +5041,7 @@ RaichuLv45Card:
 	tx RaichuName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db RAICHU_LV45
+	dw RAICHU_LV45
 	db 90 ; hp
 	db STAGE1 ; stage
 	tx PikachuName ; pre-evo name
@@ -5078,7 +5078,7 @@ RaichuLv45Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MouseName ; category
-	dw 26 ; Pokedex number
+	db 26 ; Pokedex number
 	db 45 ; level
 	db 2, 7 ; length
 	dw 66 * 10 ; weight
@@ -5091,7 +5091,7 @@ MagnemiteLv13Card:
 	tx MagnemiteName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db MAGNEMITE_LV13
+	dw MAGNEMITE_LV13
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5128,7 +5128,7 @@ MagnemiteLv13Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MagnetName ; category
-	dw 81 ; Pokedex number
+	db 81 ; Pokedex number
 	db 13 ; level
 	db 1, 0 ; length
 	dw 13 * 10 ; weight
@@ -5141,7 +5141,7 @@ MagnemiteLv15Card:
 	tx MagnemiteName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | GB ; sets
-	db MAGNEMITE_LV15
+	dw MAGNEMITE_LV15
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5178,7 +5178,7 @@ MagnemiteLv15Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MagnetName ; category
-	dw 81 ; Pokedex number
+	db 81 ; Pokedex number
 	db 15 ; level
 	db 1, 0 ; length
 	dw 13 * 10 ; weight
@@ -5191,7 +5191,7 @@ MagnetonLv28Card:
 	tx MagnetonName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db MAGNETON_LV28
+	dw MAGNETON_LV28
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx MagnemiteName ; pre-evo name
@@ -5228,7 +5228,7 @@ MagnetonLv28Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MagnetName ; category
-	dw 82 ; Pokedex number
+	db 82 ; Pokedex number
 	db 28 ; level
 	db 3, 3 ; length
 	dw 132 * 10 ; weight
@@ -5241,7 +5241,7 @@ MagnetonLv35Card:
 	tx MagnetonName ; name
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db MAGNETON_LV35
+	dw MAGNETON_LV35
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx MagnemiteName ; pre-evo name
@@ -5278,7 +5278,7 @@ MagnetonLv35Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx MagnetName ; category
-	dw 82 ; Pokedex number
+	db 82 ; Pokedex number
 	db 35 ; level
 	db 3, 3 ; length
 	dw 132 * 10 ; weight
@@ -5291,7 +5291,7 @@ VoltorbCard:
 	tx VoltorbName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | NONE ; sets
-	db VOLTORB
+	dw VOLTORB
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5328,7 +5328,7 @@ VoltorbCard:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx BallName ; category
-	dw 100 ; Pokedex number
+	db 100 ; Pokedex number
 	db 10 ; level
 	db 1, 8 ; length
 	dw 23 * 10 ; weight
@@ -5341,7 +5341,7 @@ ElectrodeLv35Card:
 	tx ElectrodeName ; name
 	db STAR ; rarity
 	db LABORATORY | GB ; sets
-	db ELECTRODE_LV35
+	dw ELECTRODE_LV35
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx VoltorbName ; pre-evo name
@@ -5378,7 +5378,7 @@ ElectrodeLv35Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx BallName ; category
-	dw 101 ; Pokedex number
+	db 101 ; Pokedex number
 	db 35 ; level
 	db 3, 11 ; length
 	dw 147 * 10 ; weight
@@ -5391,7 +5391,7 @@ ElectrodeLv42Card:
 	tx ElectrodeName ; name
 	db STAR ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db ELECTRODE_LV42
+	dw ELECTRODE_LV42
 	db 90 ; hp
 	db STAGE1 ; stage
 	tx VoltorbName ; pre-evo name
@@ -5428,7 +5428,7 @@ ElectrodeLv42Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx BallName ; category
-	dw 101 ; Pokedex number
+	db 101 ; Pokedex number
 	db 42 ; level
 	db 3, 11 ; length
 	dw 147 * 10 ; weight
@@ -5441,7 +5441,7 @@ ElectabuzzLv20Card:
 	tx ElectabuzzName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db ELECTABUZZ_LV20
+	dw ELECTABUZZ_LV20
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5478,7 +5478,7 @@ ElectabuzzLv20Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx ElectricName ; category
-	dw 125 ; Pokedex number
+	db 125 ; Pokedex number
 	db 20 ; level
 	db 3, 7 ; length
 	dw 66 * 10 ; weight
@@ -5491,7 +5491,7 @@ ElectabuzzLv35Card:
 	tx ElectabuzzName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db ELECTABUZZ_LV35
+	dw ELECTABUZZ_LV35
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5528,7 +5528,7 @@ ElectabuzzLv35Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx ElectricName ; category
-	dw 125 ; Pokedex number
+	db 125 ; Pokedex number
 	db 35 ; level
 	db 3, 7 ; length
 	dw 66 * 10 ; weight
@@ -5541,7 +5541,7 @@ JolteonLv24Card:
 	tx JolteonName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | GB ; sets
-	db JOLTEON_LV24
+	dw JOLTEON_LV24
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx EeveeName ; pre-evo name
@@ -5578,7 +5578,7 @@ JolteonLv24Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx LightningName ; category
-	dw 135 ; Pokedex number
+	db 135 ; Pokedex number
 	db 24 ; level
 	db 2, 7 ; length
 	dw 54 * 10 ; weight
@@ -5591,7 +5591,7 @@ JolteonLv29Card:
 	tx JolteonName ; name
 	db STAR ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db JOLTEON_LV29
+	dw JOLTEON_LV29
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx EeveeName ; pre-evo name
@@ -5628,7 +5628,7 @@ JolteonLv29Card:
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx LightningName ; category
-	dw 135 ; Pokedex number
+	db 135 ; Pokedex number
 	db 29 ; level
 	db 2, 7 ; length
 	dw 54 * 10 ; weight
@@ -5641,7 +5641,7 @@ ZapdosLv40Card:
 	tx ZapdosName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db ZAPDOS_LV40
+	dw ZAPDOS_LV40
 	db 80 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5678,7 +5678,7 @@ ZapdosLv40Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx ElectricName ; category
-	dw 145 ; Pokedex number
+	db 145 ; Pokedex number
 	db 40 ; level
 	db 5, 3 ; length
 	dw 116 * 10 ; weight
@@ -5691,7 +5691,7 @@ ZapdosLv64Card:
 	tx ZapdosName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db ZAPDOS_LV64
+	dw ZAPDOS_LV64
 	db 90 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5728,7 +5728,7 @@ ZapdosLv64Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx ElectricName ; category
-	dw 145 ; Pokedex number
+	db 145 ; Pokedex number
 	db 64 ; level
 	db 5, 3 ; length
 	dw 116 * 10 ; weight
@@ -5741,7 +5741,7 @@ ZapdosLv68Card:
 	tx ZapdosName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
-	db ZAPDOS_LV68
+	dw ZAPDOS_LV68
 	db 100 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5778,7 +5778,7 @@ ZapdosLv68Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx ElectricName ; category
-	dw 145 ; Pokedex number
+	db 145 ; Pokedex number
 	db 68 ; level
 	db 5, 3 ; length
 	dw 116 * 10 ; weight
@@ -5791,7 +5791,7 @@ SandshrewCard:
 	tx SandshrewName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db SANDSHREW
+	dw SANDSHREW
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5828,7 +5828,7 @@ SandshrewCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx MouseName ; category
-	dw 27 ; Pokedex number
+	db 27 ; Pokedex number
 	db 12 ; level
 	db 2, 0 ; length
 	dw 26 * 10 ; weight
@@ -5841,7 +5841,7 @@ SandslashCard:
 	tx SandslashName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db SANDSLASH
+	dw SANDSLASH
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx SandshrewName ; pre-evo name
@@ -5878,7 +5878,7 @@ SandslashCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx MouseName ; category
-	dw 28 ; Pokedex number
+	db 28 ; Pokedex number
 	db 33 ; level
 	db 3, 3 ; length
 	dw 65 * 10 ; weight
@@ -5891,7 +5891,7 @@ DiglettCard:
 	tx DiglettName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db DIGLETT
+	dw DIGLETT
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -5928,7 +5928,7 @@ DiglettCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx MoleName ; category
-	dw 50 ; Pokedex number
+	db 50 ; Pokedex number
 	db 8 ; level
 	db 0, 8 ; length
 	dw 2 * 10 ; weight
@@ -5941,7 +5941,7 @@ DugtrioCard:
 	tx DugtrioName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db DUGTRIO
+	dw DUGTRIO
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx DiglettName ; pre-evo name
@@ -5978,7 +5978,7 @@ DugtrioCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx MoleName ; category
-	dw 51 ; Pokedex number
+	db 51 ; Pokedex number
 	db 36 ; level
 	db 2, 4 ; length
 	dw 73 * 10 ; weight
@@ -5991,7 +5991,7 @@ MankeyCard:
 	tx MankeyName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db MANKEY
+	dw MANKEY
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6028,7 +6028,7 @@ MankeyCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PigMonkeyName ; category
-	dw 56 ; Pokedex number
+	db 56 ; Pokedex number
 	db 7 ; level
 	db 1, 8 ; length
 	dw 62 * 10 ; weight
@@ -6041,7 +6041,7 @@ PrimeapeCard:
 	tx PrimeapeName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db PRIMEAPE
+	dw PRIMEAPE
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx MankeyName ; pre-evo name
@@ -6078,7 +6078,7 @@ PrimeapeCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PigMonkeyName ; category
-	dw 57 ; Pokedex number
+	db 57 ; Pokedex number
 	db 35 ; level
 	db 3, 3 ; length
 	dw 71 * 10 ; weight
@@ -6091,7 +6091,7 @@ MachopCard:
 	tx MachopName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db MACHOP
+	dw MACHOP
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6128,7 +6128,7 @@ MachopCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx SuperpowerName ; category
-	dw 66 ; Pokedex number
+	db 66 ; Pokedex number
 	db 20 ; level
 	db 2, 7 ; length
 	dw 43 * 10 ; weight
@@ -6141,7 +6141,7 @@ MachokeCard:
 	tx MachokeName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db MACHOKE
+	dw MACHOKE
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx MachopName ; pre-evo name
@@ -6178,7 +6178,7 @@ MachokeCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx SuperpowerName ; category
-	dw 67 ; Pokedex number
+	db 67 ; Pokedex number
 	db 40 ; level
 	db 4, 11 ; length
 	dw 155 * 10 ; weight
@@ -6191,7 +6191,7 @@ MachampCard:
 	tx MachampName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db MACHAMP
+	dw MACHAMP
 	db 100 ; hp
 	db STAGE2 ; stage
 	tx MachokeName ; pre-evo name
@@ -6228,7 +6228,7 @@ MachampCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx SuperpowerName ; category
-	dw 68 ; Pokedex number
+	db 68 ; Pokedex number
 	db 67 ; level
 	db 5, 3 ; length
 	dw 287 * 10 ; weight
@@ -6241,7 +6241,7 @@ GeodudeCard:
 	tx GeodudeName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db GEODUDE
+	dw GEODUDE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6278,7 +6278,7 @@ GeodudeCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx RockName ; category
-	dw 74 ; Pokedex number
+	db 74 ; Pokedex number
 	db 16 ; level
 	db 1, 4 ; length
 	dw 44 * 10 ; weight
@@ -6291,7 +6291,7 @@ GravelerCard:
 	tx GravelerName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db GRAVELER
+	dw GRAVELER
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx GeodudeName ; pre-evo name
@@ -6328,7 +6328,7 @@ GravelerCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx RockName ; category
-	dw 75 ; Pokedex number
+	db 75 ; Pokedex number
 	db 29 ; level
 	db 3, 3 ; length
 	dw 232 * 10 ; weight
@@ -6341,7 +6341,7 @@ GolemCard:
 	tx GolemName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db GOLEM
+	dw GOLEM
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx GravelerName ; pre-evo name
@@ -6378,7 +6378,7 @@ GolemCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx MegatonName ; category
-	dw 76 ; Pokedex number
+	db 76 ; Pokedex number
 	db 36 ; level
 	db 4, 7 ; length
 	dw 662 * 10 ; weight
@@ -6391,7 +6391,7 @@ OnixCard:
 	tx OnixName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
-	db ONIX
+	dw ONIX
 	db 90 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6428,7 +6428,7 @@ OnixCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx RockSnakeName ; category
-	dw 95 ; Pokedex number
+	db 95 ; Pokedex number
 	db 12 ; level
 	db 28, 10 ; length
 	dw 463 * 10 ; weight
@@ -6441,7 +6441,7 @@ CuboneCard:
 	tx CuboneName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db CUBONE
+	dw CUBONE
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6478,7 +6478,7 @@ CuboneCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx LonelyName ; category
-	dw 104 ; Pokedex number
+	db 104 ; Pokedex number
 	db 13 ; level
 	db 1, 4 ; length
 	dw 14 * 10 ; weight
@@ -6491,7 +6491,7 @@ MarowakLv26Card:
 	tx MarowakName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db MAROWAK_LV26
+	dw MAROWAK_LV26
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx CuboneName ; pre-evo name
@@ -6528,7 +6528,7 @@ MarowakLv26Card:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx BonekeeperName ; category
-	dw 105 ; Pokedex number
+	db 105 ; Pokedex number
 	db 26 ; level
 	db 3, 3 ; length
 	dw 99 * 10 ; weight
@@ -6541,7 +6541,7 @@ MarowakLv32Card:
 	tx MarowakName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | GB ; sets
-	db MAROWAK_LV32
+	dw MAROWAK_LV32
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx CuboneName ; pre-evo name
@@ -6578,7 +6578,7 @@ MarowakLv32Card:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx BonekeeperName ; category
-	dw 105 ; Pokedex number
+	db 105 ; Pokedex number
 	db 32 ; level
 	db 3, 3 ; length
 	dw 99 * 10 ; weight
@@ -6591,7 +6591,7 @@ HitmonleeCard:
 	tx HitmonleeName ; name
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db HITMONLEE
+	dw HITMONLEE
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6628,7 +6628,7 @@ HitmonleeCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx KickingName ; category
-	dw 106 ; Pokedex number
+	db 106 ; Pokedex number
 	db 30 ; level
 	db 4, 11 ; length
 	dw 110 * 10 ; weight
@@ -6641,7 +6641,7 @@ HitmonchanCard:
 	tx HitmonchanName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db HITMONCHAN
+	dw HITMONCHAN
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6678,7 +6678,7 @@ HitmonchanCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PunchingName ; category
-	dw 107 ; Pokedex number
+	db 107 ; Pokedex number
 	db 33 ; level
 	db 4, 7 ; length
 	dw 111 * 10 ; weight
@@ -6691,7 +6691,7 @@ RhyhornCard:
 	tx RhyhornName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db RHYHORN
+	dw RHYHORN
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6728,7 +6728,7 @@ RhyhornCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx SpikeName ; category
-	dw 111 ; Pokedex number
+	db 111 ; Pokedex number
 	db 18 ; level
 	db 3, 3 ; length
 	dw 254 * 10 ; weight
@@ -6741,7 +6741,7 @@ RhydonCard:
 	tx RhydonName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db RHYDON
+	dw RHYDON
 	db 100 ; hp
 	db STAGE1 ; stage
 	tx RhyhornName ; pre-evo name
@@ -6778,7 +6778,7 @@ RhydonCard:
 	db WR_GRASS ; weakness
 	db WR_LIGHTNING ; resistance
 	tx DrillName ; category
-	dw 112 ; Pokedex number
+	db 112 ; Pokedex number
 	db 48 ; level
 	db 6, 3 ; length
 	dw 265 * 10 ; weight
@@ -6791,7 +6791,7 @@ KabutoCard:
 	tx KabutoName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db KABUTO
+	dw KABUTO
 	db 30 ; hp
 	db STAGE1 ; stage
 	tx MysteriousFossilName ; pre-evo name
@@ -6828,7 +6828,7 @@ KabutoCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx ShellfishName ; category
-	dw 140 ; Pokedex number
+	db 140 ; Pokedex number
 	db 9 ; level
 	db 1, 8 ; length
 	dw 25 * 10 ; weight
@@ -6841,7 +6841,7 @@ KabutopsCard:
 	tx KabutopsName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db KABUTOPS
+	dw KABUTOPS
 	db 60 ; hp
 	db STAGE2 ; stage
 	tx KabutoName ; pre-evo name
@@ -6878,7 +6878,7 @@ KabutopsCard:
 	db WR_GRASS ; weakness
 	db NONE ; resistance
 	tx ShellfishName ; category
-	dw 141 ; Pokedex number
+	db 141 ; Pokedex number
 	db 30 ; level
 	db 4, 3 ; length
 	dw 89 * 10 ; weight
@@ -6891,7 +6891,7 @@ AerodactylCard:
 	tx AerodactylName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db AERODACTYL
+	dw AERODACTYL
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx MysteriousFossilName ; pre-evo name
@@ -6928,7 +6928,7 @@ AerodactylCard:
 	db WR_GRASS ; weakness
 	db WR_FIGHTING ; resistance
 	tx FossilName ; category
-	dw 142 ; Pokedex number
+	db 142 ; Pokedex number
 	db 28 ; level
 	db 5, 11 ; length
 	dw 130 * 10 ; weight
@@ -6941,7 +6941,7 @@ AbraCard:
 	tx AbraName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db ABRA
+	dw ABRA
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -6978,7 +6978,7 @@ AbraCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PsiName ; category
-	dw 63 ; Pokedex number
+	db 63 ; Pokedex number
 	db 10 ; level
 	db 2, 11 ; length
 	dw 43 * 10 ; weight
@@ -6991,7 +6991,7 @@ KadabraCard:
 	tx KadabraName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db KADABRA
+	dw KADABRA
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx AbraName ; pre-evo name
@@ -7028,7 +7028,7 @@ KadabraCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PsiName ; category
-	dw 64 ; Pokedex number
+	db 64 ; Pokedex number
 	db 38 ; level
 	db 4, 3 ; length
 	dw 125 * 10 ; weight
@@ -7041,7 +7041,7 @@ AlakazamCard:
 	tx AlakazamName ; name
 	db STAR ; rarity
 	db MYSTERY | NONE ; sets
-	db ALAKAZAM
+	dw ALAKAZAM
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx KadabraName ; pre-evo name
@@ -7078,7 +7078,7 @@ AlakazamCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PsiName ; category
-	dw 65 ; Pokedex number
+	db 65 ; Pokedex number
 	db 42 ; level
 	db 4, 11 ; length
 	dw 106 * 10 ; weight
@@ -7091,7 +7091,7 @@ SlowpokeLv9Card:
 	tx SlowpokeName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SLOWPOKE_LV9
+	dw SLOWPOKE_LV9
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7128,7 +7128,7 @@ SlowpokeLv9Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx DopeyName ; category
-	dw 79 ; Pokedex number
+	db 79 ; Pokedex number
 	db 9 ; level
 	db 3, 11 ; length
 	dw 79 * 10 ; weight
@@ -7141,7 +7141,7 @@ SlowpokeLv18Card:
 	tx SlowpokeName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db SLOWPOKE_LV18
+	dw SLOWPOKE_LV18
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7178,7 +7178,7 @@ SlowpokeLv18Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx DopeyName ; category
-	dw 79 ; Pokedex number
+	db 79 ; Pokedex number
 	db 18 ; level
 	db 3, 11 ; length
 	dw 79 * 10 ; weight
@@ -7191,7 +7191,7 @@ SlowbroCard:
 	tx SlowbroName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db SLOWBRO
+	dw SLOWBRO
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx SlowpokeName ; pre-evo name
@@ -7228,7 +7228,7 @@ SlowbroCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx HermitcrabName ; category
-	dw 80 ; Pokedex number
+	db 80 ; Pokedex number
 	db 26 ; level
 	db 5, 3 ; length
 	dw 173 * 10 ; weight
@@ -7241,7 +7241,7 @@ GastlyLv8Card:
 	tx GastlyName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db GASTLY_LV8
+	dw GASTLY_LV8
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7278,7 +7278,7 @@ GastlyLv8Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx GasName ; category
-	dw 92 ; Pokedex number
+	db 92 ; Pokedex number
 	db 8 ; level
 	db 4, 3 ; length
 	dw 2 ; weight
@@ -7291,7 +7291,7 @@ GastlyLv17Card:
 	tx GastlyName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db GASTLY_LV17
+	dw GASTLY_LV17
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7328,7 +7328,7 @@ GastlyLv17Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx GasName ; category
-	dw 92 ; Pokedex number
+	db 92 ; Pokedex number
 	db 17 ; level
 	db 4, 3 ; length
 	dw 2 ; weight
@@ -7341,7 +7341,7 @@ HaunterLv17Card:
 	tx HaunterName ; name
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db HAUNTER_LV17
+	dw HAUNTER_LV17
 	db 50 ; hp
 	db STAGE1 ; stage
 	tx GastlyName ; pre-evo name
@@ -7378,7 +7378,7 @@ HaunterLv17Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx GasName ; category
-	dw 93 ; Pokedex number
+	db 93 ; Pokedex number
 	db 17 ; level
 	db 5, 3 ; length
 	dw 2 ; weight
@@ -7391,7 +7391,7 @@ HaunterLv22Card:
 	tx HaunterName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db HAUNTER_LV22
+	dw HAUNTER_LV22
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx GastlyName ; pre-evo name
@@ -7428,7 +7428,7 @@ HaunterLv22Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx GasName ; category
-	dw 93 ; Pokedex number
+	db 93 ; Pokedex number
 	db 22 ; level
 	db 5, 3 ; length
 	dw 2 ; weight
@@ -7441,7 +7441,7 @@ GengarCard:
 	tx GengarName ; name
 	db STAR ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db GENGAR
+	dw GENGAR
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx HaunterName ; pre-evo name
@@ -7478,7 +7478,7 @@ GengarCard:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx ShadowName ; category
-	dw 94 ; Pokedex number
+	db 94 ; Pokedex number
 	db 38 ; level
 	db 4, 11 ; length
 	dw 89 * 10 ; weight
@@ -7491,7 +7491,7 @@ DrowzeeCard:
 	tx DrowzeeName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | NONE ; sets
-	db DROWZEE
+	dw DROWZEE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7528,7 +7528,7 @@ DrowzeeCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx HypnosisName ; category
-	dw 96 ; Pokedex number
+	db 96 ; Pokedex number
 	db 12 ; level
 	db 3, 3 ; length
 	dw 71 * 10 ; weight
@@ -7541,7 +7541,7 @@ HypnoCard:
 	tx HypnoName ; name
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db HYPNO
+	dw HYPNO
 	db 90 ; hp
 	db STAGE1 ; stage
 	tx DrowzeeName ; pre-evo name
@@ -7578,7 +7578,7 @@ HypnoCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx HypnosisName ; category
-	dw 97 ; Pokedex number
+	db 97 ; Pokedex number
 	db 36 ; level
 	db 5, 3 ; length
 	dw 167 * 10 ; weight
@@ -7591,7 +7591,7 @@ MrMimeCard:
 	tx MrMimeName ; name
 	db STAR ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db MR_MIME
+	dw MR_MIME
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7628,7 +7628,7 @@ MrMimeCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx BarrierName ; category
-	dw 122 ; Pokedex number
+	db 122 ; Pokedex number
 	db 28 ; level
 	db 4, 3 ; length
 	dw 120 * 10 ; weight
@@ -7641,7 +7641,7 @@ JynxCard:
 	tx JynxName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db JYNX
+	dw JYNX
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7678,7 +7678,7 @@ JynxCard:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx HumanShapeName ; category
-	dw 124 ; Pokedex number
+	db 124 ; Pokedex number
 	db 23 ; level
 	db 4, 7 ; length
 	dw 90 * 10 ; weight
@@ -7691,7 +7691,7 @@ MewtwoLv53Card:
 	tx MewtwoName ; name
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
-	db MEWTWO_LV53
+	dw MEWTWO_LV53
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7728,7 +7728,7 @@ MewtwoLv53Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx GeneticName ; category
-	dw 150 ; Pokedex number
+	db 150 ; Pokedex number
 	db 53 ; level
 	db 6, 7 ; length
 	dw 269 * 10 ; weight
@@ -7741,7 +7741,7 @@ MewtwoLv60Card:
 	tx MewtwoName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db MEWTWO_LV60
+	dw MEWTWO_LV60
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7778,7 +7778,7 @@ MewtwoLv60Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx GeneticName ; category
-	dw 150 ; Pokedex number
+	db 150 ; Pokedex number
 	db 60 ; level
 	db 6, 7 ; length
 	dw 269 * 10 ; weight
@@ -7791,7 +7791,7 @@ MewtwoAltLV60Card:
 	tx MewtwoName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db MEWTWO_ALT_LV60
+	dw MEWTWO_ALT_LV60
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7828,7 +7828,7 @@ MewtwoAltLV60Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx GeneticName ; category
-	dw 150 ; Pokedex number
+	db 150 ; Pokedex number
 	db 60 ; level
 	db 6, 7 ; length
 	dw 269 * 10 ; weight
@@ -7841,7 +7841,7 @@ MewLv8Card:
 	tx MewName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db MEW_LV8
+	dw MEW_LV8
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7878,7 +7878,7 @@ MewLv8Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx NewSpeciesName ; category
-	dw 151 ; Pokedex number
+	db 151 ; Pokedex number
 	db 8 ; level
 	db 1, 4 ; length
 	dw 9 * 10 ; weight
@@ -7891,7 +7891,7 @@ MewLv15Card:
 	tx MewName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
-	db MEW_LV15
+	dw MEW_LV15
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7928,7 +7928,7 @@ MewLv15Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx NewSpeciesName ; category
-	dw 151 ; Pokedex number
+	db 151 ; Pokedex number
 	db 15 ; level
 	db 1, 4 ; length
 	dw 9 * 10 ; weight
@@ -7941,7 +7941,7 @@ MewLv23Card:
 	tx MewName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db MEW_LV23
+	dw MEW_LV23
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -7978,7 +7978,7 @@ MewLv23Card:
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx NewSpeciesName ; category
-	dw 151 ; Pokedex number
+	db 151 ; Pokedex number
 	db 23 ; level
 	db 1, 4 ; length
 	dw 9 * 10 ; weight
@@ -7991,7 +7991,7 @@ PidgeyCard:
 	tx PidgeyName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db PIDGEY
+	dw PIDGEY
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8028,7 +8028,7 @@ PidgeyCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx TinyBirdName ; category
-	dw 16 ; Pokedex number
+	db 16 ; Pokedex number
 	db 8 ; level
 	db 1, 0 ; length
 	dw 4 * 10 ; weight
@@ -8041,7 +8041,7 @@ PidgeottoCard:
 	tx PidgeottoName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db PIDGEOTTO
+	dw PIDGEOTTO
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx PidgeyName ; pre-evo name
@@ -8078,7 +8078,7 @@ PidgeottoCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx BirdName ; category
-	dw 17 ; Pokedex number
+	db 17 ; Pokedex number
 	db 36 ; level
 	db 3, 7 ; length
 	dw 66 * 10 ; weight
@@ -8091,7 +8091,7 @@ PidgeotLv38Card:
 	tx PidgeotName ; name
 	db STAR ; rarity
 	db LABORATORY | GB ; sets
-	db PIDGEOT_LV38
+	dw PIDGEOT_LV38
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx PidgeottoName ; pre-evo name
@@ -8128,7 +8128,7 @@ PidgeotLv38Card:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx BirdName ; category
-	dw 18 ; Pokedex number
+	db 18 ; Pokedex number
 	db 38 ; level
 	db 4, 11 ; length
 	dw 87 * 10 ; weight
@@ -8141,7 +8141,7 @@ PidgeotLv40Card:
 	tx PidgeotName ; name
 	db STAR ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db PIDGEOT_LV40
+	dw PIDGEOT_LV40
 	db 80 ; hp
 	db STAGE2 ; stage
 	tx PidgeottoName ; pre-evo name
@@ -8178,7 +8178,7 @@ PidgeotLv40Card:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx BirdName ; category
-	dw 18 ; Pokedex number
+	db 18 ; Pokedex number
 	db 40 ; level
 	db 4, 11 ; length
 	dw 87 * 10 ; weight
@@ -8191,7 +8191,7 @@ RattataCard:
 	tx RattataName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db RATTATA
+	dw RATTATA
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8228,7 +8228,7 @@ RattataCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx RatName ; category
-	dw 19 ; Pokedex number
+	db 19 ; Pokedex number
 	db 9 ; level
 	db 1, 0 ; length
 	dw 8 * 10 ; weight
@@ -8241,7 +8241,7 @@ RaticateCard:
 	tx RaticateName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db RATICATE
+	dw RATICATE
 	db 60 ; hp
 	db STAGE1 ; stage
 	tx RattataName ; pre-evo name
@@ -8278,7 +8278,7 @@ RaticateCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx RatName ; category
-	dw 20 ; Pokedex number
+	db 20 ; Pokedex number
 	db 41 ; level
 	db 2, 4 ; length
 	dw 41 * 10 ; weight
@@ -8291,7 +8291,7 @@ SpearowCard:
 	tx SpearowName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db SPEAROW
+	dw SPEAROW
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8328,7 +8328,7 @@ SpearowCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx TinyBirdName ; category
-	dw 21 ; Pokedex number
+	db 21 ; Pokedex number
 	db 13 ; level
 	db 1, 0 ; length
 	dw 4 * 10 ; weight
@@ -8341,7 +8341,7 @@ FearowCard:
 	tx FearowName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db FEAROW
+	dw FEAROW
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx SpearowName ; pre-evo name
@@ -8378,7 +8378,7 @@ FearowCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx BeakName ; category
-	dw 22 ; Pokedex number
+	db 22 ; Pokedex number
 	db 27 ; level
 	db 3, 11 ; length
 	dw 84 * 10 ; weight
@@ -8391,7 +8391,7 @@ ClefairyCard:
 	tx ClefairyName ; name
 	db STAR ; rarity
 	db MYSTERY | NONE ; sets
-	db CLEFAIRY
+	dw CLEFAIRY
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8428,7 +8428,7 @@ ClefairyCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx FairyName ; category
-	dw 35 ; Pokedex number
+	db 35 ; Pokedex number
 	db 14 ; level
 	db 2, 0 ; length
 	dw 17 * 10 ; weight
@@ -8441,7 +8441,7 @@ ClefableCard:
 	tx ClefableName ; name
 	db STAR ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db CLEFABLE
+	dw CLEFABLE
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx ClefairyName ; pre-evo name
@@ -8478,7 +8478,7 @@ ClefableCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx FairyName ; category
-	dw 36 ; Pokedex number
+	db 36 ; Pokedex number
 	db 34 ; level
 	db 4, 3 ; length
 	dw 88 * 10 ; weight
@@ -8491,7 +8491,7 @@ JigglypuffLv12Card:
 	tx JigglypuffName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db JIGGLYPUFF_LV12
+	dw JIGGLYPUFF_LV12
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8528,7 +8528,7 @@ JigglypuffLv12Card:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx BalloonName ; category
-	dw 39 ; Pokedex number
+	db 39 ; Pokedex number
 	db 12 ; level
 	db 1, 8 ; length
 	dw 12 * 10 ; weight
@@ -8541,7 +8541,7 @@ JigglypuffLv13Card:
 	tx JigglypuffName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | GB ; sets
-	db JIGGLYPUFF_LV13
+	dw JIGGLYPUFF_LV13
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8578,7 +8578,7 @@ JigglypuffLv13Card:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx BalloonName ; category
-	dw 39 ; Pokedex number
+	db 39 ; Pokedex number
 	db 13 ; level
 	db 1, 8 ; length
 	dw 12 * 10 ; weight
@@ -8591,7 +8591,7 @@ JigglypuffLv14Card:
 	tx JigglypuffName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db JIGGLYPUFF_LV14
+	dw JIGGLYPUFF_LV14
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8628,7 +8628,7 @@ JigglypuffLv14Card:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx BalloonName ; category
-	dw 39 ; Pokedex number
+	db 39 ; Pokedex number
 	db 14 ; level
 	db 1, 8 ; length
 	dw 12 * 10 ; weight
@@ -8641,7 +8641,7 @@ WigglytuffCard:
 	tx WigglytuffName ; name
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db WIGGLYTUFF
+	dw WIGGLYTUFF
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx JigglypuffName ; pre-evo name
@@ -8678,7 +8678,7 @@ WigglytuffCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx BalloonName ; category
-	dw 40 ; Pokedex number
+	db 40 ; Pokedex number
 	db 36 ; level
 	db 3, 3 ; length
 	dw 26 * 10 ; weight
@@ -8691,7 +8691,7 @@ MeowthLv14Card:
 	tx MeowthName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | GB ; sets
-	db MEOWTH_LV14
+	dw MEOWTH_LV14
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8728,7 +8728,7 @@ MeowthLv14Card:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx ScratchCatName ; category
-	dw 52 ; Pokedex number
+	db 52 ; Pokedex number
 	db 14 ; level
 	db 1, 4 ; length
 	dw 9 * 10 ; weight
@@ -8741,7 +8741,7 @@ MeowthLv15Card:
 	tx MeowthName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db MEOWTH_LV15
+	dw MEOWTH_LV15
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8778,7 +8778,7 @@ MeowthLv15Card:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx ScratchCatName ; category
-	dw 52 ; Pokedex number
+	db 52 ; Pokedex number
 	db 15 ; level
 	db 1, 4 ; length
 	dw 9 * 10 ; weight
@@ -8791,7 +8791,7 @@ PersianCard:
 	tx PersianName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db PERSIAN
+	dw PERSIAN
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx MeowthName ; pre-evo name
@@ -8828,7 +8828,7 @@ PersianCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx ClassyCatName ; category
-	dw 53 ; Pokedex number
+	db 53 ; Pokedex number
 	db 25 ; level
 	db 3, 3 ; length
 	dw 71 * 10 ; weight
@@ -8841,7 +8841,7 @@ FarfetchdCard:
 	tx FarfetchdName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | NONE ; sets
-	db FARFETCHD
+	dw FARFETCHD
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8878,7 +8878,7 @@ FarfetchdCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx WildDuckName ; category
-	dw 83 ; Pokedex number
+	db 83 ; Pokedex number
 	db 20 ; level
 	db 2, 7 ; length
 	dw 33 * 10 ; weight
@@ -8891,7 +8891,7 @@ DoduoCard:
 	tx DoduoName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
-	db DODUO
+	dw DODUO
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8928,7 +8928,7 @@ DoduoCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx TwinBirdName ; category
-	dw 84 ; Pokedex number
+	db 84 ; Pokedex number
 	db 10 ; level
 	db 4, 7 ; length
 	dw 86 * 10 ; weight
@@ -8941,7 +8941,7 @@ DodrioCard:
 	tx DodrioName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | JUNGLE ; sets
-	db DODRIO
+	dw DODRIO
 	db 70 ; hp
 	db STAGE1 ; stage
 	tx DoduoName ; pre-evo name
@@ -8978,7 +8978,7 @@ DodrioCard:
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx TriplebirdName ; category
-	dw 85 ; Pokedex number
+	db 85 ; Pokedex number
 	db 28 ; level
 	db 5, 11 ; length
 	dw 188 * 10 ; weight
@@ -8991,7 +8991,7 @@ LickitungCard:
 	tx LickitungName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db LICKITUNG
+	dw LICKITUNG
 	db 90 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9028,7 +9028,7 @@ LickitungCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx LickingName ; category
-	dw 108 ; Pokedex number
+	db 108 ; Pokedex number
 	db 26 ; level
 	db 3, 11 ; length
 	dw 144 * 10 ; weight
@@ -9041,7 +9041,7 @@ ChanseyCard:
 	tx ChanseyName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db CHANSEY
+	dw CHANSEY
 	db 120 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9078,7 +9078,7 @@ ChanseyCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx EggName ; category
-	dw 113 ; Pokedex number
+	db 113 ; Pokedex number
 	db 55 ; level
 	db 3, 7 ; length
 	dw 76 * 10 ; weight
@@ -9091,7 +9091,7 @@ KangaskhanCard:
 	tx KangaskhanName ; name
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db KANGASKHAN
+	dw KANGASKHAN
 	db 90 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9128,7 +9128,7 @@ KangaskhanCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx ParentName ; category
-	dw 115 ; Pokedex number
+	db 115 ; Pokedex number
 	db 40 ; level
 	db 7, 3 ; length
 	dw 176 * 10 ; weight
@@ -9141,7 +9141,7 @@ TaurosCard:
 	tx TaurosName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
-	db TAUROS
+	dw TAUROS
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9178,7 +9178,7 @@ TaurosCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx WildBullName ; category
-	dw 128 ; Pokedex number
+	db 128 ; Pokedex number
 	db 32 ; level
 	db 4, 7 ; length
 	dw 195 * 10 ; weight
@@ -9191,7 +9191,7 @@ DittoCard:
 	tx DittoName ; name
 	db STAR ; rarity
 	db LABORATORY | GB ; sets
-	db DITTO
+	dw DITTO
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9228,7 +9228,7 @@ DittoCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx TransformName ; category
-	dw 132 ; Pokedex number
+	db 132 ; Pokedex number
 	db 19 ; level
 	db 1, 0 ; length
 	dw 9 * 10 ; weight
@@ -9241,7 +9241,7 @@ EeveeCard:
 	tx EeveeName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | JUNGLE ; sets
-	db EEVEE
+	dw EEVEE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9278,7 +9278,7 @@ EeveeCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx EvolutionName ; category
-	dw 133 ; Pokedex number
+	db 133 ; Pokedex number
 	db 12 ; level
 	db 1, 0 ; length
 	dw 14 * 10 ; weight
@@ -9291,7 +9291,7 @@ PorygonCard:
 	tx PorygonName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | NONE ; sets
-	db PORYGON
+	dw PORYGON
 	db 30 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9328,7 +9328,7 @@ PorygonCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx VirtualName ; category
-	dw 137 ; Pokedex number
+	db 137 ; Pokedex number
 	db 12 ; level
 	db 2, 7 ; length
 	dw 80 * 10 ; weight
@@ -9341,7 +9341,7 @@ SnorlaxCard:
 	tx SnorlaxName ; name
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db SNORLAX
+	dw SNORLAX
 	db 90 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9378,7 +9378,7 @@ SnorlaxCard:
 	db WR_FIGHTING ; weakness
 	db WR_PSYCHIC ; resistance
 	tx SleepingName ; category
-	dw 143 ; Pokedex number
+	db 143 ; Pokedex number
 	db 20 ; level
 	db 6, 11 ; length
 	dw 1014 * 10 ; weight
@@ -9391,7 +9391,7 @@ DratiniCard:
 	tx DratiniName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | NONE ; sets
-	db DRATINI
+	dw DRATINI
 	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -9428,7 +9428,7 @@ DratiniCard:
 	db NONE ; weakness
 	db WR_PSYCHIC ; resistance
 	tx DragonName ; category
-	dw 147 ; Pokedex number
+	db 147 ; Pokedex number
 	db 10 ; level
 	db 5, 11 ; length
 	dw 7 * 10 ; weight
@@ -9441,7 +9441,7 @@ DragonairCard:
 	tx DragonairName ; name
 	db STAR ; rarity
 	db MYSTERY | NONE ; sets
-	db DRAGONAIR
+	dw DRAGONAIR
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx DratiniName ; pre-evo name
@@ -9478,7 +9478,7 @@ DragonairCard:
 	db NONE ; weakness
 	db WR_PSYCHIC ; resistance
 	tx DragonName ; category
-	dw 148 ; Pokedex number
+	db 148 ; Pokedex number
 	db 33 ; level
 	db 13, 1 ; length
 	dw 36 * 10 ; weight
@@ -9491,7 +9491,7 @@ DragoniteLv41Card:
 	tx DragoniteName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
-	db DRAGONITE_LV41
+	dw DRAGONITE_LV41
 	db 100 ; hp
 	db STAGE2 ; stage
 	tx DragonairName ; pre-evo name
@@ -9528,7 +9528,7 @@ DragoniteLv41Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx DragonName ; category
-	dw 149 ; Pokedex number
+	db 149 ; Pokedex number
 	db 41 ; level
 	db 7, 3 ; length
 	dw 463 * 10 ; weight
@@ -9541,7 +9541,7 @@ DragoniteLv45Card:
 	tx DragoniteName ; name
 	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db DRAGONITE_LV45
+	dw DRAGONITE_LV45
 	db 100 ; hp
 	db STAGE2 ; stage
 	tx DragonairName ; pre-evo name
@@ -9578,7 +9578,7 @@ DragoniteLv45Card:
 	db NONE ; weakness
 	db WR_FIGHTING ; resistance
 	tx DragonName ; category
-	dw 149 ; Pokedex number
+	db 149 ; Pokedex number
 	db 45 ; level
 	db 7, 3 ; length
 	dw 463 * 10 ; weight
@@ -9591,7 +9591,7 @@ GrassEnergyCard:
 	tx GrassEnergyName ; name
 	db CIRCLE ; rarity
 	db ENERGY | NONE ; sets
-	db GRASS_ENERGY
+	dw GRASS_ENERGY
 	dw GrassEnergyEffectCommands ; effect commands
 	tx GrassEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9602,7 +9602,7 @@ FireEnergyCard:
 	tx FireEnergyName ; name
 	db CIRCLE ; rarity
 	db ENERGY | NONE ; sets
-	db FIRE_ENERGY
+	dw FIRE_ENERGY
 	dw FireEnergyEffectCommands ; effect commands
 	tx FireEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9613,7 +9613,7 @@ WaterEnergyCard:
 	tx WaterEnergyName ; name
 	db CIRCLE ; rarity
 	db ENERGY | NONE ; sets
-	db WATER_ENERGY
+	dw WATER_ENERGY
 	dw WaterEnergyEffectCommands ; effect commands
 	tx WaterEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9624,7 +9624,7 @@ LightningEnergyCard:
 	tx LightningEnergyName ; name
 	db CIRCLE ; rarity
 	db ENERGY | NONE ; sets
-	db LIGHTNING_ENERGY
+	dw LIGHTNING_ENERGY
 	dw LightningEnergyEffectCommands ; effect commands
 	tx LightningEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9635,7 +9635,7 @@ FightingEnergyCard:
 	tx FightingEnergyName ; name
 	db CIRCLE ; rarity
 	db ENERGY | NONE ; sets
-	db FIGHTING_ENERGY
+	dw FIGHTING_ENERGY
 	dw FightingEnergyEffectCommands ; effect commands
 	tx FightingEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9646,7 +9646,7 @@ PsychicEnergyCard:
 	tx PsychicEnergyName ; name
 	db CIRCLE ; rarity
 	db ENERGY | NONE ; sets
-	db PSYCHIC_ENERGY
+	dw PSYCHIC_ENERGY
 	dw PsychicEnergyEffectCommands ; effect commands
 	tx PsychicEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9656,8 +9656,8 @@ DoubleColorlessEnergyCard:
 	gfx DoubleColorlessEnergyCardGfx ; gfx
 	tx DoubleColorlessEnergyName ; name
 	db DIAMOND ; rarity
-	db MYSTERY | NONE ; sets
-	db DOUBLE_COLORLESS_ENERGY
+	db ENERGY | NONE ; sets
+	dw DOUBLE_COLORLESS_ENERGY
 	dw DoubleColorlessEnergyEffectCommands ; effect commands
 	tx DoubleColorlessEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -9668,7 +9668,7 @@ ProfessorOakCard:
 	tx ProfessorOakName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db PROFESSOR_OAK
+	dw PROFESSOR_OAK
 	dw ProfessorOakEffectCommands ; effect commands
 	tx ProfessorOakDescription ; description
 	dw NONE ; description (cont)
@@ -9679,7 +9679,7 @@ ImposterProfessorOakCard:
 	tx ImposterProfessorOakName ; name
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
-	db IMPOSTER_PROFESSOR_OAK
+	dw IMPOSTER_PROFESSOR_OAK
 	dw ImposterProfessorOakEffectCommands ; effect commands
 	tx ImposterProfessorOakDescription ; description
 	dw NONE ; description (cont)
@@ -9690,7 +9690,7 @@ BillCard:
 	tx BillName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db BILL
+	dw BILL
 	dw BillEffectCommands ; effect commands
 	tx BillDescription ; description
 	dw NONE ; description (cont)
@@ -9701,7 +9701,7 @@ MrFujiCard:
 	tx MrFujiName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db MR_FUJI
+	dw MR_FUJI
 	dw MrFujiEffectCommands ; effect commands
 	tx MrFujiDescription ; description
 	dw NONE ; description (cont)
@@ -9712,7 +9712,7 @@ LassCard:
 	tx LassName ; name
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
-	db LASS
+	dw LASS
 	dw LassEffectCommands ; effect commands
 	tx LassDescription ; description
 	dw NONE ; description (cont)
@@ -9723,7 +9723,7 @@ ImakuniCard:
 	tx ImakuniName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db IMAKUNI_CARD
+	dw IMAKUNI_CARD
 	dw ImakuniEffectCommands ; effect commands
 	tx ImakuniDescription ; description
 	dw NONE ; description (cont)
@@ -9734,7 +9734,7 @@ PokemonTraderCard:
 	tx PokemonTraderName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db POKEMON_TRADER
+	dw POKEMON_TRADER
 	dw PokemonTraderEffectCommands ; effect commands
 	tx PokemonTraderDescription ; description
 	dw NONE ; description (cont)
@@ -9745,7 +9745,7 @@ PokemonBreederCard:
 	tx PokemonBreederName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db POKEMON_BREEDER
+	dw POKEMON_BREEDER
 	dw PokemonBreederEffectCommands ; effect commands
 	tx PokemonBreederDescription ; description
 	dw NONE ; description (cont)
@@ -9756,7 +9756,7 @@ ClefairyDollCard:
 	tx ClefairyDollName ; name
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
-	db CLEFAIRY_DOLL
+	dw CLEFAIRY_DOLL
 	dw PlayThisAsBasicPokemonEffectCommands ; effect commands
 	tx ClefairyDollDescription ; description
 	tx ClefairyDollDescriptionCont ; description (cont)
@@ -9767,7 +9767,7 @@ MysteriousFossilCard:
 	tx MysteriousFossilName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | FOSSIL ; sets
-	db MYSTERIOUS_FOSSIL
+	dw MYSTERIOUS_FOSSIL
 	dw PlayThisAsBasicPokemonEffectCommands ; effect commands
 	tx MysteriousFossilDescription ; description
 	tx MysteriousFossilDescriptionCont ; description (cont)
@@ -9778,7 +9778,7 @@ EnergyRetrievalCard:
 	tx EnergyRetrievalName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db ENERGY_RETRIEVAL
+	dw ENERGY_RETRIEVAL
 	dw EnergyRetrievalEffectCommands ; effect commands
 	tx EnergyRetrievalDescription ; description
 	dw NONE ; description (cont)
@@ -9789,7 +9789,7 @@ SuperEnergyRetrievalCard:
 	tx SuperEnergyRetrievalName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SUPER_ENERGY_RETRIEVAL
+	dw SUPER_ENERGY_RETRIEVAL
 	dw SuperEnergyRetrievalEffectCommands ; effect commands
 	tx SuperEnergyRetrievalDescription ; description
 	dw NONE ; description (cont)
@@ -9800,7 +9800,7 @@ EnergySearchCard:
 	tx EnergySearchName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | FOSSIL ; sets
-	db ENERGY_SEARCH
+	dw ENERGY_SEARCH
 	dw EnergySearchEffectCommands ; effect commands
 	tx EnergySearchDescription ; description
 	dw NONE ; description (cont)
@@ -9811,7 +9811,7 @@ EnergyRemovalCard:
 	tx EnergyRemovalName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | NONE ; sets
-	db ENERGY_REMOVAL
+	dw ENERGY_REMOVAL
 	dw EnergyRemovalEffectCommands ; effect commands
 	tx EnergyRemovalDescription ; description
 	dw NONE ; description (cont)
@@ -9822,7 +9822,7 @@ SuperEnergyRemovalCard:
 	tx SuperEnergyRemovalName ; name
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
-	db SUPER_ENERGY_REMOVAL
+	dw SUPER_ENERGY_REMOVAL
 	dw SuperEnergyRemovalEffectCommands ; effect commands
 	tx SuperEnergyRemovalDescription ; description
 	dw NONE ; description (cont)
@@ -9833,7 +9833,7 @@ SwitchCard:
 	tx SwitchName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db SWITCH
+	dw SWITCH
 	dw SwitchEffectCommands ; effect commands
 	tx SwitchDescription ; description
 	dw NONE ; description (cont)
@@ -9844,7 +9844,7 @@ PokemonCenterCard:
 	tx PokemonCenterName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | NONE ; sets
-	db POKEMON_CENTER
+	dw POKEMON_CENTER
 	dw PokemonCenterEffectCommands ; effect commands
 	tx PokemonCenterDescription ; description
 	dw NONE ; description (cont)
@@ -9855,7 +9855,7 @@ PokeBallCard:
 	tx PokeBallName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | JUNGLE ; sets
-	db POKE_BALL
+	dw POKE_BALL
 	dw PokeBallEffectCommands ; effect commands
 	tx PokeBallDescription ; description
 	dw NONE ; description (cont)
@@ -9866,7 +9866,7 @@ ScoopUpCard:
 	tx ScoopUpName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db SCOOP_UP
+	dw SCOOP_UP
 	dw ScoopUpEffectCommands ; effect commands
 	tx ScoopUpDescription ; description
 	dw NONE ; description (cont)
@@ -9877,7 +9877,7 @@ ComputerSearchCard:
 	tx ComputerSearchName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db COMPUTER_SEARCH
+	dw COMPUTER_SEARCH
 	dw ComputerSearchEffectCommands ; effect commands
 	tx ComputerSearchDescription ; description
 	dw NONE ; description (cont)
@@ -9888,7 +9888,7 @@ PokedexCard:
 	tx PokedexName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | NONE ; sets
-	db POKEDEX
+	dw POKEDEX
 	dw PokedexEffectCommands ; effect commands
 	tx PokedexDescription ; description
 	dw NONE ; description (cont)
@@ -9899,7 +9899,7 @@ PlusPowerCard:
 	tx PlusPowerName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db PLUSPOWER
+	dw PLUSPOWER
 	dw PlusPowerEffectCommands ; effect commands
 	tx PlusPowerDescription ; description
 	dw NONE ; description (cont)
@@ -9910,7 +9910,7 @@ DefenderCard:
 	tx DefenderName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db DEFENDER
+	dw DEFENDER
 	dw DefenderEffectCommands ; effect commands
 	tx DefenderDescription ; description
 	dw NONE ; description (cont)
@@ -9921,7 +9921,7 @@ ItemFinderCard:
 	tx ItemFinderName ; name
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
-	db ITEM_FINDER
+	dw ITEM_FINDER
 	dw ItemFinderEffectCommands ; effect commands
 	tx ItemFinderDescription ; description
 	dw NONE ; description (cont)
@@ -9932,7 +9932,7 @@ GustOfWindCard:
 	tx GustOfWindName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
-	db GUST_OF_WIND
+	dw GUST_OF_WIND
 	dw GustOfWindEffectCommands ; effect commands
 	tx GustOfWindDescription ; description
 	dw NONE ; description (cont)
@@ -9943,7 +9943,7 @@ DevolutionSprayCard:
 	tx DevolutionSprayName ; name
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
-	db DEVOLUTION_SPRAY
+	dw DEVOLUTION_SPRAY
 	dw DevolutionSprayEffectCommands ; effect commands
 	tx DevolutionSprayDescription ; description
 	tx DevolutionSprayDescriptionCont ; description (cont)
@@ -9954,7 +9954,7 @@ PotionCard:
 	tx PotionName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db POTION
+	dw POTION
 	dw PotionEffectCommands ; effect commands
 	tx PotionDescription ; description
 	dw NONE ; description (cont)
@@ -9965,7 +9965,7 @@ SuperPotionCard:
 	tx SuperPotionName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db SUPER_POTION
+	dw SUPER_POTION
 	dw SuperPotionEffectCommands ; effect commands
 	tx SuperPotionDescription ; description
 	dw NONE ; description (cont)
@@ -9976,7 +9976,7 @@ FullHealCard:
 	tx FullHealName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db FULL_HEAL
+	dw FULL_HEAL
 	dw FullHealEffectCommands ; effect commands
 	tx FullHealDescription ; description
 	dw NONE ; description (cont)
@@ -9987,7 +9987,7 @@ ReviveCard:
 	tx ReviveName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db REVIVE
+	dw REVIVE
 	dw ReviveEffectCommands ; effect commands
 	tx ReviveDescription ; description
 	dw NONE ; description (cont)
@@ -9998,7 +9998,7 @@ MaintenanceCard:
 	tx MaintenanceName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | NONE ; sets
-	db MAINTENANCE
+	dw MAINTENANCE
 	dw MaintenanceEffectCommands ; effect commands
 	tx MaintenanceDescription ; description
 	dw NONE ; description (cont)
@@ -10009,7 +10009,7 @@ PokemonFluteCard:
 	tx PokemonFluteName ; name
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
-	db POKEMON_FLUTE
+	dw POKEMON_FLUTE
 	dw PokemonFluteEffectCommands ; effect commands
 	tx PokemonFluteDescription ; description
 	dw NONE ; description (cont)
@@ -10020,7 +10020,7 @@ GamblerCard:
 	tx GamblerName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db GAMBLER
+	dw GAMBLER
 	dw GamblerEffectCommands ; effect commands
 	tx GamblerDescription ; description
 	dw NONE ; description (cont)
@@ -10031,7 +10031,7 @@ RecycleCard:
 	tx RecycleName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db RECYCLE
+	dw RECYCLE
 	dw RecycleEffectCommands ; effect commands
 	tx RecycleDescription ; description
 	dw NONE ; description (cont)

@@ -44,10 +44,10 @@ LoadCardDataToBuffer1_FromName::
 	ret
 
 
-; loads the data of a card to wLoadedCard2 by using the card ID from e
+; loads the data of a card to wLoadedCard2 by using the card ID from de
 ; preserves all registers except af
 ; input:
-;	e = card ID
+;	de = card ID
 ; output:
 ;	[wLoadedCard1] = all of the card's data (65 bytes)
 LoadCardDataToBuffer2_FromCardID::
@@ -55,10 +55,10 @@ LoadCardDataToBuffer2_FromCardID::
 	ld hl, wLoadedCard2
 	jr LoadCardDataToHL_FromCardID
 
-; loads the data of a card to wLoadedCard1 by using the card ID from e
+; loads the data of a card to wLoadedCard1 by using the card ID from de
 ; preserves all registers except af
 ; input:
-;	e = card ID
+;	de = card ID
 ; output:
 ;	[wLoadedCard1] = all of the card's data (65 bytes)
 LoadCardDataToBuffer1_FromCardID::
@@ -88,7 +88,7 @@ LoadCardDataToHL_FromCardID::
 
 ; preserves all registers except af
 ; input:
-;	e = card ID
+;	de = card ID
 ; output:
 ;	a = type ID of the card from input (TYPE_* constant)
 GetCardType::
@@ -106,9 +106,9 @@ GetCardType::
 	ret
 
 
-; preserves bc and hl
+; return in de the 2-byte text id of the name of the card with id at de
 ; input:
-;	e = card ID
+;	de = card ID
 ; output:
 ;	de = 2-byte text ID of the name of the card from input
 GetCardName::
@@ -129,18 +129,15 @@ GetCardName::
 	ret
 
 
-; preserves de and hl
+; preserves hl
 ; input:
-;	a = card ID
+;	de = card ID
 ; output:
 ;	a = type of card from input (CARD_DATA_TYPE)
 ;	b = rarity of card from input (CARD_DATA_RARITY)
 ;	c = set of card from input (CARD_DATA_SET)
 GetCardTypeRarityAndSet::
 	push hl
-	push de
-	ld d, 0
-	ld e, a
 	call GetCardPointer
 	jr c, .done
 	ld a, BANK(CardPointers)
@@ -155,7 +152,6 @@ GetCardTypeRarityAndSet::
 	ld a, e
 	or a
 .done
-	pop de
 	pop hl
 	ret
 
@@ -170,7 +166,7 @@ GetCardPointer::
 	push de
 	push bc
 	ld l, e
-	ld h, $0
+	ld h, d
 	add hl, hl
 	ld bc, CardPointers
 	add hl, bc
