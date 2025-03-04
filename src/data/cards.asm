@@ -236,29 +236,29 @@ CardPointers::
 	assert_table_length NUM_CARDS + 2
 
 BulbasaurCard:
-	db TYPE_PKMN_GRASS ; type
-	gfx BulbasaurCardGfx ; gfx
-	tx BulbasaurName ; name
-	db CIRCLE ; rarity
-	db EVOLUTION | NONE ; sets
-	db BULBASAUR
-	db 40 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
+	db TYPE_PKMN_GRASS 		; type
+	gfx BulbasaurCardGfx 	; gfx
+	tx BulbasaurName 		; name
+	db CIRCLE 				; rarity
+	db EVOLUTION | NONE 	; sets
+	db BULBASAUR 			; ID
+	db 40 					; hp
+	db BASIC 				; stage
+	dw NONE 				; pre-evo name
 
 	; attack 1
-	energy GRASS, 2 ; energies
-	tx LeechSeedName ; name
+	energy GRASS, 2 		; energies
+	tx LeechSeedName 		; name
 	tx BulbasaursLeechSeedDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
+	dw NONE 				; description (cont)
+	db 20 					; damage
+	db DAMAGE_NORMAL 		; category
 	dw Drain10EffectCommands ; effect commands
-	db NONE ; flags 1
-	db HEAL_USER ; flags 2
-	db NONE ; flags 3
+	db NONE 				; flags 1
+	db HEAL_USER 			; flags 2
+	db NONE 				; flags 3
 	db HEAL_10_HP_IF_DAMAGE_IS_DEALT ; used to calculate the HEAL_USER attack score bonus
-	db ATK_ANIM_DRAIN ; animation
+	db ATK_ANIM_DRAIN 		; animation
 
 	; attack 2
 	energy 0 ; energies

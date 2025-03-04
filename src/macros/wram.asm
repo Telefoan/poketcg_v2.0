@@ -1,10 +1,10 @@
 MACRO card_data_struct
-\1Type::          ds 1
+\1Type::          ds 2
 \1Gfx::           ds 2
 \1Name::          ds 2
 \1Rarity::        ds 1
 \1Set::           ds 1
-\1ID::            ds 1
+\1ID::            ds 2
 \1EffectCommands:: ; ds 2
 \1HP::            ds 1
 \1Stage::         ds 1
@@ -13,14 +13,14 @@ MACRO card_data_struct
 \1Atk1::         atk_data_struct \1Atk1
 \1Atk2::         atk_data_struct \1Atk2
 \1RetreatCost::   ds 1
-\1Weakness::      ds 1
-\1Resistance::    ds 1
-\1Category::      ds 2
-\1PokedexNumber:: ds 2
-\1Level::         ds 1
-\1Length::        ds 2
-\1Weight::        ds 2
-\1Description::   ds 2
+\1Weakness::      ds 2
+;\1Resistance::    ds 1
+;\1Category::      ds 2
+;\1PokedexNumber:: ds 2
+;\1Level::         ds 1
+;\1Length::        ds 2
+;\1Weight::        ds 2
+;\1Description::   ds 2
 \1PokemonFlags::  ds 1
 ENDM
 
