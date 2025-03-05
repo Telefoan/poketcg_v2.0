@@ -601,7 +601,7 @@ HandleCardAlbumCardPage:
 	push de
 	bank1call OpenCardPage.input_loop
 	pop de
-	jr .handle_input
+	jp .handle_input
 
 .exit
 	ld a, $01

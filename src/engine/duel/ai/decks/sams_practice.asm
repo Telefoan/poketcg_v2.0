@@ -166,19 +166,6 @@ AIDecideForcedSwitch_SamsPractice:
 	jp c, AIDecideBenchPokemonToSwitchTo ; use default logic if no longer scripted
 ;	fallthrough
 
-; picks a random Pokémon on the Bench.
-; preserves bc and de
-; output:
-;	a = play area location offset of the Benched Pokémon that was chosen (PLAY_AREA_* constant)
-PickRandomBenchPokemon:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	get_turn_duelist_var
-	dec a
-	call Random
-	inc a
-	ret
-
-
 AIDecideSwitchAfterKO_SamsPractice:
 	call IsAIPracticeScriptedTurn
 	jp c, AIDecideBenchPokemonToSwitchTo ; use default logic if no longer scripted

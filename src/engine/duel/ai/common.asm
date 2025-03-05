@@ -123,65 +123,6 @@ FindBasicEnergyCardsInLocation:
 	scf
 	ret
 
-
-; checks if a given Energy card can be selected to be discarded from a given Pokémon.
-; preserves all registers except af
-; input:
-;	a = deck index of an Energy card (that's attached to the Pokémon being considered)
-;	[wTempCardType] = useful TYPE_ENERGY_* constant for the Pokémon being considered
-;	[wTempCardID] = card ID of the Pokémon being considered
-; output:
-;	carry = set:  if [wTempCardType] was Colorless
-;	           OR if the given Energy card is Double Colorless Energy
-;	           OR if the given Energy card provides the same type as [wTempCardType]
-;	           OR if the Pokémon has an attack that needs Energy from the given Energy card
-CheckIfEnergyIsUseful:
-	push de
-	call GetCardIDFromDeckIndex
-	ld a, e
-	cp16 DOUBLE_COLORLESS_ENERGY
-	jr z, .set_carry
-	ld a, [wTempCardType]
-	cp TYPE_ENERGY_DOUBLE_COLORLESS
-	jr z, .set_carry
-	ld a, [wTempCardID]
-
-	ld d, PSYCHIC_ENERGY
-	cp16 EXEGGCUTE
-	jr z, .check_energy
-	cp16 EXEGGUTOR
-	jr z, .check_energy
-	cp16 PSYDUCK
-	jr z, .check_energy
-	cp16 GOLDUCK
-	jr z, .check_energy
-
-	ld d, WATER_ENERGY
-	cp16 SURFING_PIKACHU_LV13
-	jr z, .check_energy
-	cp16 SURFING_PIKACHU_ALT_LV13
-	jr z, .check_energy
-
-.check_type
-	call GetCardType
-	ld d, a
-	ld a, [wTempCardType]
-	cp d
-	jr z, .set_carry
-	pop de
-	or a
-	ret
-
-.check_energy
-	ld a, d
-	cp e
-	jr nz, .check_type
-.set_carry
-	pop de
-	scf
-	ret
-
-
 ; chooses an Energy card attached to the Pokémon in the given location,
 ; to be discarded by the AI for an effect. tries to pick an Energy that isn't important.
 ; input:
@@ -544,7 +485,7 @@ LookForCardIDInHandList_Bank8:
 	cp e
 	jr nz, .loop
 	ld a, [wTempCardIDToLook + 1]
-	pc d 
+	cp d 
 	jr nz, .loop
 
 ; found a match, so return carry with the deck index in a.
@@ -618,120 +559,6 @@ LookForCardIDInHandAndPlayArea:
 	ret c
 	ld b, PLAY_AREA_ARENA
 ;	fallthrough
-
-; checks the AI's play area for a specific card.
-; preserves de
-; input:
-;	a = card ID
-;	b = play area location offset to start with (PLAY_AREA_* constant)
-; output:
-;	a = play area location offset of the first card found with the given ID (PLAY_AREA_* constant, -1 if none)
-;	carry = set:  if the given card ID was found in the turn holder's play area
-LookForCardIDInPlayArea_Bank8:
-	ld c, a
-.loop
-	ld a, DUELVARS_ARENA_CARD
-	add b
-	get_turn_duelist_var
-	cp -1 ; empty play area slot?
-	ret z ; return no carry if there are no more Pokémon to check
-	call _GetCardIDFromDeckIndex
-	cp c
-	jr z, .found
-	inc b
-	jr .loop
-
-.found
-	ld a, b
-	scf
-	ret
-
-
-; searches AI's deck for card ID #1 (a), and
-; if found, searches AI's hand and play area for card ID #2 (b), and
-; if found, searches AI's hand and play area for card ID #1 (a), and
-; if none found, return carry and output the deck index of the card found in the the deck.
-; input:
-;	a = card ID #1
-;	b = card ID #2
-; output:
-;	a & [wTempAIPokemonCard] = deck index of a card in the deck with ID #1:  if carry = set
-;	carry = set:  if AI has a card with ID #1 is in their deck but not in their hand or play area
-;	              and also a card with ID #2 in their hand or play area
-LookForCardIDInDeck_GivenCardIDInHandAndPlayArea:
-; store a in wCurCardCanAttack and b in wTempAI
-	ld [wCurCardCanAttack], a
-	ld hl, wTempAI
-	ld [hl], b
-
-; look for card ID #1 in the deck
-	ld e, a
-	ld a, CARD_LOCATION_DECK
-	call LookForCardIDInLocation_Bank8
-	ret nc
-
-; was found, store its deck index in memory
-	ld [wTempAIPokemonCard], a
-; look for card ID #2 in the hand and play area
-	ld a, [wTempAI]
-	call LookForCardIDInHandAndPlayArea
-	ret nc
-
-; look for card ID #1 in the hand and play area.
-; if no card is found, return carry.
-	ld a, [wCurCardCanAttack]
-	call LookForCardIDInHandAndPlayArea
-	ccf
-	ld a, [wTempAIPokemonCard]
-	ret
-; searches in deck for card ID 1 in a, and
-; if found, searches in Hand Area for card ID 2 in b, and
-; if found, searches for card ID 1 in Hand/Play Area, and
-; if none found, return carry and output deck index
-; of the card ID 1 in deck.
-; input:
-;   de = card ID 1
-;   bc = card ID 2
-; output:
-;   a = index of card ID 1 in deck
-LookForCardIDInDeck_GivenCardIDInHand:
-	ld hl, wTempAI
-	ld [hl], e
-	inc hl
-	ld [hl], d
-	inc hl
-	ld [hl], c ; wTempAI2
-	inc hl
-	ld [hl], b
-
-; look for the card ID 1 in deck
-	ld a, CARD_LOCATION_DECK
-	call LookForCardIDInLocation_Bank8
-	ret nc
-
-; was found, store its deck index in memory
-	ld [wTempAIPokemonCard], a
-
-; look for card ID #2 in the hand and play area
-	ld a, [wTempAI2 + 0]
-	ld e, a
-	ld a, [wTempAI2 + 1]
-	ld d, a
-	call LookForCardIDInHandAndPlayArea
-	ret nc
-
-; look for card ID #1 in the hand and play area.
-; if no card is found, return carry.
-	
-	ld a, [wTempAI + 0]
-	ld e, a
-	ld a, [wTempAI + 1]
-	ld d, a
-	call LookForCardIDInHandAndPlayArea
-	ccf
-	ld a, [wTempAIPokemonCard]
-	ret
-
 
 ; searches AI's deck for card ID #1 (a), and
 ; if found, searches AI's hand for card ID #2 (b), and

@@ -114,9 +114,12 @@
 	const EVENT_RECEIVED_ARTICUNO                      ; $70
 	const EVENT_RECEIVED_DRAGONITE                     ; $71
 	const EVENT_LEGENDARY_CARDS_RECEIVED_FLAGS         ; $72
+	const EVENT_GIFT_CENTER_MENU_CHOICE
 	const EVENT_AARON_BOOSTER_REWARD                   ; $73
+	const EVENT_CONSOLE
 	const EVENT_SAM_MENU_CHOICE                        ; $74
 	const EVENT_AARON_DECK_MENU_CHOICE                 ; $75
+	const EVENT_PLAYER_GENDER
 DEF NUM_EVENT_FLAGS EQU const_value
 
 DEF EVENT_VAR_BYTES EQU $40

@@ -105,7 +105,7 @@ _AIProcessHandTrainerCards:
 	jr nz, .relist_hand
 .next_hand_card
 	pop hl
-	jr .loop_hand
+	jp .loop_hand
 
 .relist_hand
 ; the hand was modified during the Trainer effect,

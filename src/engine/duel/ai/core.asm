@@ -129,44 +129,6 @@ LoadDefendingPokemonColorWRAndPrizeCards:
 	ld [wAIOpponentPrizeCount], a
 	ret
 
-; called when AI has chosen its attack.
-; executes all effects and damage.
-; handles AI choosing parameters for certain attacks as well.
-AITryUseAttack:
-	ld a, [wSelectedAttack]
-	ldh [hTemp_ffa0], a
-	ld e, a
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	ldh [hTempCardIndex_ff9f], a
-	ld d, a
-	call CopyAttackDataAndDamage_FromDeckIndex
-	ld a, OPPACTION_BEGIN_ATTACK
-	bank1call AIMakeDecision
-	ret c
-
-	call AISelectSpecialAttackParameters
-	jr c, .use_attack
-	ld a, EFFECTCMDTYPE_AI_SELECTION
-	call TryExecuteEffectCommandFunction
-
-.use_attack
-	ld a, [wSelectedAttack]
-	ld e, a
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	ld d, a
-	call CopyAttackDataAndDamage_FromDeckIndex
-	ld a, OPPACTION_USE_ATTACK
-	bank1call AIMakeDecision
-	ret c
-
-	ld a, EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN
-	call TryExecuteEffectCommandFunction
-	ld a, OPPACTION_ATTACK_ANIM_AND_DAMAGE
-	bank1call AIMakeDecision
-	ret
-
 ; return carry if any of the following is satisfied:
 ;	- deck index in a corresponds to a double colorless energy card;
 ;	- card type in wTempCardType is colorless;
@@ -2598,7 +2560,7 @@ HandleAIEnergyScoringForRepeatedBenchPokemon:
 .next
 	pop de
 	pop hl
-	jr .loop_bench
+	jp .loop_bench
 
 
 ; loads wSamePokemonEnergyScore + play area location in e

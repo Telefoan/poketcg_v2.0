@@ -119,7 +119,7 @@ HandleSpecialAIAttacks:
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score
-	ldde, CUBONE
+	ld de, CUBONE
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation_Bank5
 	jr c, .bench_space_bonus_score

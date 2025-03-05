@@ -1110,7 +1110,7 @@ DisplayRetreatScreen:
 	ld c, [hl]
 	inc [hl]
 	ldh a, [hTempCardIndex_ff98]
-	ld [$ff00+c], a
+	ldh [$ff00+c], a
 	; accumulate selected Energy card
 	ld c, 1
 	ld a, [wLoadedCard2ID]
@@ -1135,7 +1135,7 @@ DisplayRetreatScreen:
 	ld a, [wTempRetreatCostCardsPos]
 	ld c, a
 	ld a, $ff
-	ld [$ff00+c], a
+	ldh [$ff00+c], a
 	or a
 	ret
 
@@ -2879,7 +2879,7 @@ PracticeDuel_DrawSevenCards:
 ; output:
 ;	carry = set:  if the Player didn't choose Goldeen as their starting Pokemon
 PracticeDuel_PlayGoldeen:
-	ld hl, [wLoadedCard2ID]
+	ld hl, wLoadedCard2ID
 	cphl GOLDEEN
 	ret z
 	ldtx hl, ChooseGoldeenPracticeDuelText
@@ -3194,7 +3194,7 @@ PracticeDuelTurnVerificationPointerTable:
 ; output:
 ;	carry = set:  if the Player didn't follow all of the instructions for turn 1
 PracticeDuelVerify_Turn1:
-	ld hl, [wTempCardID_ccc2]
+	ld hl, wTempCardID_ccc2
 	cphl GOLDEEN
 	jr nz, ReturnWrongAction
 	ret
@@ -3203,7 +3203,7 @@ PracticeDuelVerify_Turn1:
 ; output:
 ;	carry = set:  if the Player didn't follow all of the instructions for turn 2
 PracticeDuelVerify_Turn2:
-	ld hl, [wTempCardID_ccc2] + 1
+	ld hl, wTempCardID_ccc2 + 1
 	cphl SEAKING
 	jr nz, ReturnWrongAction
 	ld a, [wSelectedAttack]

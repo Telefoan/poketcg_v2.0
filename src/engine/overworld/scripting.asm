@@ -1852,7 +1852,7 @@ ScriptCommand_PickLegendaryCard:
 	pop bc
 	ld hl, LegendaryCards
 	ld a, c
-	jr ScriptCommand_PickChallengeCupPrizeCard.get_card_from_list
+	jp ScriptCommand_PickChallengeCupPrizeCard.get_card_from_list
 
 LegendaryCards:
 	dw ZAPDOS_LV68

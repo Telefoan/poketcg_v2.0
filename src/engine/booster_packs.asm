@@ -379,16 +379,6 @@ AddBoosterEnergyToDrawnEnergies:
 	ld [wBoosterCurrentCard + 1], a
 	jp AddBoosterCardToDrawnEnergies
 
-; generates a random energy card
-; assumes grass energy is the first
-GenerateRandomEnergy:
-	ld a, NUM_COLORED_TYPES
-	call Random
-	add $01
-	ld e, a
-	ld d, HIGH(GRASS_ENERGY)
-	jr AddBoosterEnergyToDrawnEnergies
-
 ; generates a grass energy card
 GenerateGrassEnergy:
 	ld de, GRASS_ENERGY
@@ -418,61 +408,6 @@ GenerateFightingEnergy:
 GeneratePsychicEnergy:
 	ld de, PSYCHIC_ENERGY
 	jr AddBoosterEnergyToDrawnEnergies
-
-; generates a booster with 10 random energies
-GenerateRandomEnergyBooster:
-	ld a, NUM_CARDS_IN_BOOSTER
-.generate_energy_loop
-	push af
-	call GenerateRandomEnergy
-	pop af
-	dec a
-	jr nz, .generate_energy_loop
-	jr ZeroBoosterRarityData
-
-; generates a booster with 5 Lightning energies and 5 Fire energies
-GenerateEnergyBoosterLightningFire:
-	ld hl, EnergyBoosterLightningFireData
-	jr GenerateTwoTypesEnergyBooster
-
-; generates a booster with 5 Water energies and 5 Fighting energies
-GenerateEnergyBoosterWaterFighting:
-	ld hl, EnergyBoosterWaterFightingData
-	jr GenerateTwoTypesEnergyBooster
-
-; generates a booster with 5 Grass energies and 5 Psychic energies
-GenerateEnergyBoosterGrassPsychic:
-	ld hl, EnergyBoosterGrassPsychicData
-;	fallthrough
-
-; generates a booster with 5 energies of 2 different types each
-GenerateTwoTypesEnergyBooster:
-	ld b, 2
-.add_two_energies_to_booster_loop
-	ld c, NUM_CARDS_IN_BOOSTER / 2
-.add_energy_to_booster_loop
-	push hl
-	push bc
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	call AddBoosterEnergyToDrawnEnergies
-	pop bc
-	pop hl
-	dec c
-	jr nz, .add_energy_to_booster_loop
-	inc hl
-	inc hl
-	dec b
-	jr nz, .add_two_energies_to_booster_loop
-;	fallthrough
-
-ZeroBoosterRarityData:
-	xor a
-	ld [wBoosterData_CommonAmount], a
-	ld [wBoosterData_UncommonAmount], a
-	ld [wBoosterData_RareAmount], a
-	ret
 
 EnergyBoosterLightningFireData:
 	dw LIGHTNING_ENERGY, FIRE_ENERGY
@@ -551,14 +486,6 @@ GenerateRandomEnergy:
 	add GRASS_ENERGY
 ;	fallthrough
 
-; adds the (Energy) card at a to wBoosterTempEnergiesDrawn and wTempCardCollection
-; preserves all registers except af
-; input:
-;	a = card ID to add to wBoosterTempEnergiesDrawn
-AddBoosterEnergyToDrawnEnergies:
-	ld [wBoosterCurrentCard], a
-;	fallthrough
-
 ; adds the (Energy) card at [wBoosterCurrentCard] to wBoosterTempEnergiesDrawn and wTempCardCollection
 ; preserves all registers except af
 ; input:
@@ -632,25 +559,6 @@ PutEnergiesAndNonEnergiesTogether:
 	pop hl
 	jr .loop_through_extra_cards
 .end_of_cards
-	pop hl
-	ret
-
-; add the final cards drawn from the booster pack to the player's collection (sCardCollection)
-AddBoosterCardsToCollection:
-	push hl
-	ld hl, wBoosterCardsDrawn
-.add_cards_loop
-	ld a, [hli]
-	or [hl]
-	jr z, .no_cards_left
-	dec hl
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a
-	call AddCardToCollection
-	jr .add_cards_loop
-.no_cards_left
 	pop hl
 	ret
 

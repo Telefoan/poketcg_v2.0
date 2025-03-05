@@ -483,7 +483,7 @@ ShowReceivedCardsList:
 
 
 PrintFilteredCardList_UseDuelTempList:
-	ld a, CARD_COLLECTION_SIZE - 1 ; number of bytes that will be cleared
+	ld de, CARD_COLLECTION_SIZE - 1 ; number of bytes that will be cleared
 	ld hl, wTempCardCollection
 	call ClearMemory_Bank2
 	; add cards in wDuelTempList to wTempCardCollection

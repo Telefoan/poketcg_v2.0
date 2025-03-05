@@ -1736,9 +1736,6 @@ wCurDeckCards:: ; cf17
 wCurDeckCardsEnd::
 
 
-; list of each of the different cards in a deck configuration
-wUniqueDeckCardList:: ; cf68
-
 ; stores the number of cards owned
 ; can be 0 in the case that a card is not available (i.e. already inside a built deck)
 wOwnedCardsCountList:: ; cf68
