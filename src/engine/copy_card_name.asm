@@ -30,42 +30,7 @@ _CopyCardNameAndLevel::
 	ld h, d
 	ld l, e
 	; hl = byte immediately after the end of the last character from the card's name in wDefaultText
-	ld a, [wLoadedCard1Type]
-	cp TYPE_ENERGY
-	jr nc, .level_done ; skip level if Energy or Trainer card
-	ld a, [wLoadedCard1Level]
-	or a
-	jr z, .level_done
-	ld a, FW_SPACE
-	ld [hli], a
-	dec b
-	ld a, TX_SYMBOL
-	ld [hli], a
-	ld a, SYM_Lv
-	ld [hli], a
-	dec b
-	ld a, [wLoadedCard1Level]
-	cp 10
-	jr c, .copy_ones_digit
-	ld [hl], TX_SYMBOL
-	inc hl
-	push bc
-	ld b, SYM_0 - 1
-.tens_digit_loop
-	inc b
-	sub 10
-	jr nc, .tens_digit_loop
-	add 10
-	ld [hl], b ; tens digit
-	inc hl
-	pop bc
-	dec b
-.copy_ones_digit
-	ld [hl], TX_SYMBOL
-	inc hl
-	add SYM_0
-	ld [hli], a ; ones digit
-	dec b
+	
 .level_done
 	push hl
 	ld a, FW_SPACE
@@ -93,40 +58,7 @@ _CopyCardNameAndLevel_HalfwidthText:
 	or a ; TX_END
 	jr nz, .find_end_text_loop
 	dec hl
-	ld a, [wLoadedCard1Type]
-	cp TYPE_ENERGY
-	jr nc, .level_done
-	ld a, [wLoadedCard1Level]
-	or a
-	jr z, .level_done
-	ld a, " "
-	ld [hli], a
-	dec b
-	ld a, "L"
-	ld [hli], a
-	dec b
-	ld a, "v"
-	ld [hli], a
-	dec b
-	ld a, [wLoadedCard1Level]
-	cp 10
-	jr c, .copy_ones_digit
-	push bc
-	ld b, "0" - 1
-.tens_digit_loop
-	inc b
-	sub 10
-	jr nc, .tens_digit_loop
-	add 10
-	ld [hl], b ; first digit
-	inc hl
-	pop bc
-	dec b
-.copy_ones_digit
-	add "0"
-	ld [hli], a ; last (or only) digit
-	dec b
-.level_done
+	
 	push hl
 	ld a, " "
 .fill_spaces_loop

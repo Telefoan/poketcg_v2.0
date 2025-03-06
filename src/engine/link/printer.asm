@@ -175,12 +175,6 @@ RequestToPrintCard::
 	inc a ; symbol corresponding to card's type (color)
 	lb bc, 18, 65
 	call WriteByteToBGMap0
-	ld a, SYM_Lv
-	lb bc, 11, 66
-	call WriteByteToBGMap0
-	ld a, [wLoadedCard1Level]
-	inc b ; (bc = 12, 66)
-	call WriteTwoDigitNumberInTxSymbolFormat_TrimLeadingZero
 	ld a, SYM_HP
 	lb bc, 15, 66
 	call WriteByteToBGMap0
@@ -215,12 +209,12 @@ DrawBottomCardInfoInSRAMGfxBuffer0:
 	call PlaceTextItems
 	ld c, 66
 	bank1call DisplayCardPage_PokemonOverview.attacks
-	lb bc, 16, 72
-	ld hl, wLoadedCard1PokedexNumber
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	jp WriteThreeDigitNumberInTxSymbolFormat
+	;lb bc, 16, 72
+	;ld hl, wLoadedCard1PokedexNumber
+	;ld a, [hli]
+	;ld h, [hl]
+	;ld l, a
+	;jp WriteThreeDigitNumberInTxSymbolFormat
 
 .not_pkmn_card
 	ld a, SINGLE_SPACED

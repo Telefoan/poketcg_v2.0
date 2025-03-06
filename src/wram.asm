@@ -1130,6 +1130,7 @@ wAIPlayerColor:: ; cdcf
 wAIPlayerWeakness:: ; cdd0
 	ds $1
 
+
 ; resistance of the player's Active Pokémon
 wAIPlayerResistance:: ; cdd1
 	ds $1

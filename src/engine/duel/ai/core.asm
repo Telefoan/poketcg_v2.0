@@ -120,8 +120,8 @@ LoadDefendingPokemonColorWRAndPrizeCards:
 	ld [wAIPlayerColor], a
 	call GetArenaCardWeakness
 	ld [wAIPlayerWeakness], a
-	call GetArenaCardResistance
-	ld [wAIPlayerResistance], a
+	;call GetArenaCardResistance
+	;ld [wAIPlayerResistance], a
 	call CountPrizes
 	ld [wAIPlayerPrizeCount], a
 	rst SwapTurn

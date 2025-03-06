@@ -166,22 +166,10 @@ CalculateDamage_VersusDefendingPokemon:
 	call GetArenaCardWeakness
 	rst SwapTurn
 	and b
-	jr z, .not_weak
+	jr z, .not_resistant
 	; double de
 	sla e
 	rl d
-
-.not_weak
-; handle resistance
-	rst SwapTurn
-	call GetArenaCardResistance
-	rst SwapTurn
-	and b
-	jr z, .not_resistant
-	ld hl, -30
-	add hl, de
-	ld e, l
-	ld d, h
 
 .not_resistant
 ; account for any attached PlusPower or Defender cards.
@@ -372,21 +360,12 @@ CalculateDamage_FromDefendingPokemon:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call GetPlayAreaCardWeakness
 	and b
-	jr z, .not_weak
+	jr z, .not_resistant
 	; double de
 	sla e
 	rl d
 
-.not_weak
-; handle resistance
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	call GetPlayAreaCardResistance
-	and b
-	jr z, .not_resistant
-	ld hl, -30
-	add hl, de
-	ld e, l
-	ld d, h
+
 
 .not_resistant
 ; account for any attached Pluspower and Defender cards.

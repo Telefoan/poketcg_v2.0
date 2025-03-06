@@ -2481,19 +2481,19 @@ Conversion1_ChangeWeaknessEffect:
 	jp ApplySubstatus2ToDefendingCard
 
 
-; preserves bc and de
-; output:
-;	hl = ID for notification text:  if the below condition is true
-;	carry = set:  if the turn holder's Active Pokemon has no Resistance
+;; preserves bc and de
+;; output:
+;;	hl = ID for notification text:  if the below condition is true
+;;	carry = set:  if the turn holder's Active Pokemon has no Resistance
 Conversion2_ResistanceCheck:
-	ld a, DUELVARS_ARENA_CARD
-	get_turn_duelist_var
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Resistance]
-	or a
-	ret nz ; return if the Active Pokemon has a Resistance
-	ldtx hl, NoResistanceText
-	scf
+;	ld a, DUELVARS_ARENA_CARD
+;	get_turn_duelist_var
+;	call LoadCardDataToBuffer2_FromDeckIndex
+;	ld a, [wLoadedCard2Resistance]
+;	or a
+;	ret nz ; return if the Active Pokemon has a Resistance
+;	ldtx hl, NoResistanceText
+;	scf
 	ret
 
 
@@ -2658,10 +2658,10 @@ HandleColorChangeScreen:
 	call GetPlayAreaCardWeakness
 	lb bc, 15, 10
 	bank1call PrintCardPageWeaknessesOrResistances
-	ld a, [wTempPlayAreaLocation_cceb]
-	call GetPlayAreaCardResistance
-	lb bc, 15, 11
-	bank1call PrintCardPageWeaknessesOrResistances
+	;ld a, [wTempPlayAreaLocation_cceb]
+	;call GetPlayAreaCardResistance
+	;lb bc, 15, 11
+	;bank1call PrintCardPageWeaknessesOrResistances
 
 	call DrawWideTextBox
 

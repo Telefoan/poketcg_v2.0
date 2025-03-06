@@ -276,13 +276,13 @@ BulbasaurCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx SeedName ; category
-	dw 1 ; Pokedex number
-	db 13 ; level
-	db 2, 4 ; length
-	dw 15 * 10 ; weight
-	tx BulbasaurDescription ; description
+	;db NONE ; resistance
+	;tx SeedName ; category
+	;dw 1 ; Pokedex number
+	;db 13 ; level
+	;db 2, 4 ; length
+	;dw 15 * 10 ; weight
+	;tx BulbasaurDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 IvysaurCard:
@@ -326,13 +326,13 @@ IvysaurCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx SeedName ; category
-	dw 2 ; Pokedex number
-	db 20 ; level
-	db 3, 3 ; length
-	dw 29 * 10 ; weight
-	tx IvysaurDescription ; description
+	;db NONE ; resistance
+	;tx SeedName ; category
+	;dw 2 ; Pokedex number
+	;db 20 ; level
+	;db 3, 3 ; length
+	;dw 29 * 10 ; weight
+	;tx IvysaurDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 VenusaurLv64Card:
@@ -376,13 +376,13 @@ VenusaurLv64Card:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx SeedName ; category
-	dw 3 ; Pokedex number
-	db 64 ; level
-	db 6, 7 ; length
-	dw 221 * 10 ; weight
-	tx VenusaurLv64Description ; description
+	;db NONE ; resistance
+	;tx SeedName ; category
+	;dw 3 ; Pokedex number
+	;db 64 ; level
+	;db 6, 7 ; length
+	;dw 221 * 10 ; weight
+	;tx VenusaurLv64Description ; description
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 VenusaurLv67Card:
@@ -426,13 +426,13 @@ VenusaurLv67Card:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx SeedName ; category
-	dw 3 ; Pokedex number
-	db 67 ; level
-	db 6, 7 ; length
-	dw 221 * 10 ; weight
-	tx VenusaurLv67Description ; description
+	;db NONE ; resistance
+	;tx SeedName ; category
+	;dw 3 ; Pokedex number
+	;db 67 ; level
+	;db 6, 7 ; length
+	;dw 221 * 10 ; weight
+;tx VenusaurLv67Description ; description
 	db 0 ; pokemon flags
 
 CaterpieCard:
@@ -476,13 +476,13 @@ CaterpieCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx WormName ; category
-	dw 10 ; Pokedex number
-	db 13 ; level
-	db 1, 0 ; length
-	dw 6 * 10 ; weight
-	tx CaterpieDescription ; description
+	;db NONE ; resistance
+	;tx WormName ; category
+	;dw 10 ; Pokedex number
+	;db 13 ; level
+	;db 1, 0 ; length
+	;dw 6 * 10 ; weight
+	;tx CaterpieDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 MetapodCard:
@@ -526,13 +526,13 @@ MetapodCard:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx CocoonName ; category
-	dw 11 ; Pokedex number
-	db 21 ; level
-	db 2, 4 ; length
-	dw 22 * 10 ; weight
-	tx MetapodDescription ; description
+	;db NONE ; resistance
+	;tx CocoonName ; category
+	;dw 11 ; Pokedex number
+	;db 21 ; level
+	;db 2, 4 ; length
+	;dw 22 * 10 ; weight
+	;tx MetapodDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 ButterfreeCard:
@@ -576,13 +576,13 @@ ButterfreeCard:
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
-	db WR_FIGHTING ; resistance
-	tx ButterflyName ; category
-	dw 12 ; Pokedex number
-	db 28 ; level
-	db 3, 7 ; length
-	dw 71 * 10 ; weight
-	tx ButterfreeDescription ; description
+	;db WR_FIGHTING ; resistance
+	;tx ButterflyName ; category
+	;dw 12 ; Pokedex number
+	;db 28 ; level
+	;db 3, 7 ; length
+	;dw 71 * 10 ; weight
+	;tx ButterfreeDescription ; description
 	db 0 ; pokemon flags
 
 WeedleCard:
@@ -626,13 +626,13 @@ WeedleCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx HairyBugName ; category
-	dw 13 ; Pokedex number
-	db 12 ; level
-	db 1, 0 ; length
-	dw 7 * 10 ; weight
-	tx WeedleDescription ; description
+	;db NONE ; resistance
+	;tx HairyBugName ; category
+	;dw 13 ; Pokedex number
+	;db 12 ; level
+	;db 1, 0 ; length
+;	dw 7 * 10 ; weight
+;	tx WeedleDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 KakunaCard:
@@ -676,13 +676,13 @@ KakunaCard:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx CocoonName ; category
-	dw 14 ; Pokedex number
-	db 23 ; level
-	db 2, 0 ; length
-	dw 22 * 10 ; weight
-	tx KakunaDescription ; description
+	;db NONE ; resistance
+	;tx CocoonName ; category
+	;dw 14 ; Pokedex number
+	;db 23 ; level
+	;db 2, 0 ; length
+	;dw 22 * 10 ; weight
+	;tx KakunaDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 BeedrillCard:
@@ -726,13 +726,13 @@ BeedrillCard:
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
-	db WR_FIGHTING ; resistance
-	tx PoisonBeeName ; category
-	dw 15 ; Pokedex number
-	db 32 ; level
-	db 3, 3 ; length
-	dw 65 * 10 ; weight
-	tx BeedrillDescription ; description
+	;db WR_FIGHTING ; resistance
+	;tx PoisonBeeName ; category
+	;dw 15 ; Pokedex number
+	;db 32 ; level
+	;db 3, 3 ; length
+	;dw 65 * 10 ; weight
+	;tx BeedrillDescription ; description
 	db 0 ; pokemon flags
 
 EkansCard:
@@ -776,13 +776,13 @@ EkansCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx SnakeName ; category
-	dw 23 ; Pokedex number
-	db 10 ; level
-	db 6, 7 ; length
-	dw 15 * 10 ; weight
-	tx EkansDescription ; description
+	;db NONE ; resistance
+	;tx SnakeName ; category
+	;dw 23 ; Pokedex number
+	;db 10 ; level
+	;db 6, 7 ; length
+	;dw 15 * 10 ; weight
+	;tx EkansDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 ArbokCard:
@@ -826,13 +826,13 @@ ArbokCard:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx CobraName ; category
-	dw 24 ; Pokedex number
-	db 27 ; level
-	db 11, 6 ; length
-	dw 143 * 10 ; weight
-	tx ArbokDescription ; description
+	;db NONE ; resistance
+	;tx CobraName ; category
+	;dw 24 ; Pokedex number
+	;db 27 ; level
+	;db 11, 6 ; length
+	;dw 143 * 10 ; weight
+	;tx ArbokDescription ; description
 	db 0 ; pokemon flags
 
 NidoranFCard:
@@ -876,13 +876,13 @@ NidoranFCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PoisonPinName ; category
-	dw 29 ; Pokedex number
-	db 13 ; level
-	db 1, 4 ; length
-	dw 15 * 10 ; weight
-	tx NidoranFDescription ; description
+	;db NONE ; resistance
+	;tx PoisonPinName ; category
+	;dw 29 ; Pokedex number
+	;db 13 ; level
+	;db 1, 4 ; length
+	;dw 15 * 10 ; weight
+	;tx NidoranFDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 NidorinaCard:
@@ -926,13 +926,13 @@ NidorinaCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PoisonPinName ; category
-	dw 30 ; Pokedex number
-	db 24 ; level
-	db 2, 7 ; length
-	dw 44 * 10 ; weight
-	tx NidorinaDescription ; description
+	;db NONE ; resistance
+	;tx PoisonPinName ; category
+	;dw 30 ; Pokedex number
+	;db 24 ; level
+	;db 2, 7 ; length
+	;dw 44 * 10 ; weight
+	;tx NidorinaDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 NidoqueenCard:
@@ -976,13 +976,13 @@ NidoqueenCard:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx DrillName ; category
-	dw 31 ; Pokedex number
-	db 43 ; level
-	db 4, 3 ; length
-	dw 132 * 10 ; weight
-	tx NidoqueenDescription ; description
+	;db NONE ; resistance
+	;tx DrillName ; category
+	;dw 31 ; Pokedex number
+	;db 43 ; level
+	;db 4, 3 ; length
+	;dw 132 * 10 ; weight
+;	tx NidoqueenDescription ; description
 	db 0 ; pokemon flags
 
 NidoranMCard:
@@ -1026,13 +1026,13 @@ NidoranMCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PoisonPinName ; category
-	dw 32 ; Pokedex number
-	db 20 ; level
-	db 1, 4 ; length
-	dw 15 * 10 ; weight
-	tx NidoranMDescription ; description
+	;db NONE ; resistance
+	;tx PoisonPinName ; category
+	;dw 32 ; Pokedex number
+	;db 20 ; level
+	;db 1, 4 ; length
+	;dw 15 * 10 ; weight
+	;tx NidoranMDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 NidorinoCard:
@@ -1076,13 +1076,13 @@ NidorinoCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PoisonPinName ; category
-	dw 33 ; Pokedex number
-	db 25 ; level
-	db 2, 11 ; length
-	dw 43 * 10 ; weight
-	tx NidorinoDescription ; description
+	;db NONE ; resistance
+	;tx PoisonPinName ; category
+	;dw 33 ; Pokedex number
+	;db 25 ; level
+	;db 2, 11 ; length
+	;dw 43 * 10 ; weight
+	;tx NidorinoDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 NidokingCard:
@@ -1126,13 +1126,13 @@ NidokingCard:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx DrillName ; category
-	dw 34 ; Pokedex number
-	db 48 ; level
-	db 4, 7 ; length
-	dw 137 * 10 ; weight
-	tx NidokingDescription ; description
+	;db NONE ; resistance
+	;tx DrillName ; category
+	;dw 34 ; Pokedex number
+	;db 48 ; level
+	;db 4, 7 ; length
+	;dw 137 * 10 ; weight
+	;tx NidokingDescription ; description
 	db 0 ; pokemon flags
 
 ZubatCard:
@@ -1176,14 +1176,14 @@ ZubatCard:
 
 	db 0 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db WR_FIGHTING ; resistance
-	tx BatName ; category
-	dw 41 ; Pokedex number
-	db 10 ; level
-	db 2, 7 ; length
-	dw 17 * 10 ; weight
-	tx ZubatDescription ; description
-	db HAS_EVOLUTION ; pokemon flags
+	;db WR_FIGHTING ; resistance
+	;tx BatName ; category
+;	dw 41 ; Pokedex number
+;;	db 10 ; level
+	;db 2, 7 ; length
+	;dw 17 * 10 ; weight
+	;tx ZubatDescription ; description
+	;db HAS_EVOLUTION ; pokemon flags
 
 GolbatCard:
 	db TYPE_PKMN_GRASS ; type
@@ -1226,14 +1226,14 @@ GolbatCard:
 
 	db 0 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db WR_FIGHTING ; resistance
-	tx BatName ; category
-	dw 42 ; Pokedex number
-	db 29 ; level
-	db 5, 3 ; length
-	dw 121 * 10 ; weight
-	tx GolbatDescription ; description
-	db 0 ; pokemon flags
+	;db WR_FIGHTING ; resistance
+	;tx BatName ; category
+;	dw 42 ; Pokedex number
+	;db 29 ; level
+	;db 5, 3 ; length
+	;dw 121 * 10 ; weight
+	;tx GolbatDescription ; description
+	;db 0 ; pokemon flags
 
 OddishCard:
 	db TYPE_PKMN_GRASS ; type
@@ -1276,13 +1276,13 @@ OddishCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx WeedName ; category
-	dw 43 ; Pokedex number
-	db 8 ; level
-	db 1, 8 ; length
-	dw 12 * 10 ; weight
-	tx OddishDescription ; description
+	;db NONE ; resistance
+	;tx WeedName ; category
+	;dw 43 ; Pokedex number
+	;db 8 ; level
+	;db 1, 8 ; length
+	;dw 12 * 10 ; weight
+	;tx OddishDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 GloomCard:
@@ -1326,13 +1326,13 @@ GloomCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx WeedName ; category
-	dw 44 ; Pokedex number
-	db 22 ; level
-	db 2, 7 ; length
-	dw 19 * 10 ; weight
-	tx GloomDescription ; description
+	;db NONE ; resistance
+	;tx WeedName ; category
+	;dw 44 ; Pokedex number
+	;db 22 ; level
+	;db 2, 7 ; length
+	;dw 19 * 10 ; weight
+	;tx GloomDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 VileplumeCard:
@@ -1376,13 +1376,13 @@ VileplumeCard:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx FlowerName ; category
-	dw 45 ; Pokedex number
-	db 35 ; level
-	db 3, 11 ; length
-	dw 41 * 10 ; weight
-	tx VileplumeDescription ; description
+	;db NONE ; resistance
+	;tx FlowerName ; category
+	;dw 45 ; Pokedex number
+	;db 35 ; level
+	;db 3, 11 ; length
+	;dw 41 * 10 ; weight
+	;tx VileplumeDescription ; description
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 ParasCard:
@@ -1426,13 +1426,13 @@ ParasCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx MushroomName ; category
-	dw 46 ; Pokedex number
-	db 8 ; level
-	db 1, 0 ; length
-	dw 12 * 10 ; weight
-	tx ParasDescription ; description
+	;db NONE ; resistance
+	;tx MushroomName ; category
+	;dw 46 ; Pokedex number
+	;db 8 ; level
+	;db 1, 0 ; length
+	;dw 12 * 10 ; weight
+	;tx ParasDescription ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 ParasectCard:
@@ -1476,13 +1476,13 @@ ParasectCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx MushroomName ; category
-	dw 47 ; Pokedex number
-	db 28 ; level
-	db 3, 3 ; length
-	dw 65 * 10 ; weight
-	tx ParasectDescription ; description
+	;db NONE ; resistance
+	;tx MushroomName ; category
+	;dw 47 ; Pokedex number
+	;db 28 ; level
+	;db 3, 3 ; length
+	;dw 65 * 10 ; weight
+;	tx ParasectDescription ; description
 	db 0 ; pokemon flags
 
 VenonatCard:
@@ -1526,13 +1526,13 @@ VenonatCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx InsectName ; category
-	dw 48 ; Pokedex number
-	db 12 ; level
-	db 3, 3 ; length
-	dw 66 * 10 ; weight
-	tx VenonatDescription ; description
+	;db NONE ; resistance
+	;tx InsectName ; category
+	;dw 48 ; Pokedex number
+	;db 12 ; level
+	;db 3, 3 ; length
+	;dw 66 * 10 ; weight
+	;tx VenonatDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 VenomothCard:
@@ -1576,13 +1576,7 @@ VenomothCard:
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
-	db WR_FIGHTING ; resistance
-	tx PoisonmothName ; category
-	dw 49 ; Pokedex number
-	db 28 ; level
-	db 4, 11 ; length
-	dw 28 * 10 ; weight
-	tx VenomothDescription ; description
+;
 	db 0 ; pokemon flags
 
 BellsproutCard:
@@ -1626,13 +1620,7 @@ BellsproutCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx FlowerName ; category
-	dw 69 ; Pokedex number
-	db 11 ; level
-	db 2, 4 ; length
-	dw 9 * 10 ; weight
-	tx BellsproutDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 WeepinbellCard:
@@ -1676,13 +1664,7 @@ WeepinbellCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx FlycatcherName ; category
-	dw 70 ; Pokedex number
-	db 28 ; level
-	db 3, 3 ; length
-	dw 14 * 10 ; weight
-	tx WeepinbellDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 VictreebelCard:
@@ -1726,13 +1708,7 @@ VictreebelCard:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx FlycatcherName ; category
-	dw 71 ; Pokedex number
-	db 42 ; level
-	db 5, 7 ; length
-	dw 34 * 10 ; weight
-	tx VictreebelDescription ; description
+;
 	db 0 ; pokemon flags
 
 GrimerCard:
@@ -1776,13 +1752,7 @@ GrimerCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx SludgeName ; category
-	dw 88 ; Pokedex number
-	db 17 ; level
-	db 2, 11 ; length
-	dw 66 * 10 ; weight
-	tx GrimerDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 MukCard:
@@ -1826,13 +1796,7 @@ MukCard:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx SludgeName ; category
-	dw 89 ; Pokedex number
-	db 34 ; level
-	db 3, 11 ; length
-	dw 66 * 10 ; weight
-	tx MukDescription ; description
+	;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 ExeggcuteCard:
@@ -1876,13 +1840,7 @@ ExeggcuteCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx EggName ; category
-	dw 102 ; Pokedex number
-	db 14 ; level
-	db 1, 4 ; length
-	dw 6 * 10 ; weight
-	tx ExeggcuteDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 ExeggutorCard:
@@ -1926,13 +1884,7 @@ ExeggutorCard:
 
 	db 3 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx CoconutName ; category
-	dw 103 ; Pokedex number
-	db 35 ; level
-	db 6, 7 ; length
-	dw 265 * 10 ; weight
-	tx ExeggutorDescription ; description
+	;
 	db 0 ; pokemon flags
 
 KoffingCard:
@@ -1976,13 +1928,7 @@ KoffingCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PoisonGasName ; category
-	dw 109 ; Pokedex number
-	db 13 ; level
-	db 2, 0 ; length
-	dw 2 * 10 ; weight
-	tx KoffingDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 WeezingCard:
@@ -2026,13 +1972,7 @@ WeezingCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PoisonGasName ; category
-	dw 110 ; Pokedex number
-	db 27 ; level
-	db 3, 11 ; length
-	dw 21 * 10 ; weight
-	tx WeezingDescription ; description
+;
 	db 0 ; pokemon flags
 
 TangelaLv8Card:
@@ -2076,13 +2016,7 @@ TangelaLv8Card:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx VineName ; category
-	dw 114 ; Pokedex number
-	db 8 ; level
-	db 3, 3 ; length
-	dw 77 * 10 ; weight
-	tx TangelaLv8Description ; description
+;
 	db 0 ; pokemon flags
 
 TangelaLv12Card:
@@ -2126,13 +2060,7 @@ TangelaLv12Card:
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx VineName ; category
-	dw 114 ; Pokedex number
-	db 12 ; level
-	db 3, 3 ; length
-	dw 77 * 10 ; weight
-	tx TangelaLv12Description ; description
+;
 	db 0 ; pokemon flags
 
 ScytherCard:
@@ -2176,13 +2104,7 @@ ScytherCard:
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
-	db WR_FIGHTING ; resistance
-	tx MantisName ; category
-	dw 123 ; Pokedex number
-	db 25 ; level
-	db 4, 11 ; length
-	dw 123 * 10 ; weight
-	tx ScytherDescription ; description
+;
 	db 0 ; pokemon flags
 
 PinsirCard:
@@ -2226,13 +2148,7 @@ PinsirCard:
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx StagbeetleName ; category
-	dw 127 ; Pokedex number
-	db 24 ; level
-	db 4, 11 ; length
-	dw 121 * 10 ; weight
-	tx PinsirDescription ; description
+;
 	db 0 ; pokemon flags
 
 CharmanderCard:
@@ -2276,13 +2192,7 @@ CharmanderCard:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx LizardName ; category
-	dw 4 ; Pokedex number
-	db 10 ; level
-	db 2, 0 ; length
-	dw 19 * 10 ; weight
-	tx CharmanderDescription ; description
+;
 	db HAS_EVOLUTION ; pokemon flags
 
 CharmeleonCard:
@@ -2326,13 +2236,7 @@ CharmeleonCard:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FlameName ; category
-	dw 5 ; Pokedex number
-	db 32 ; level
-	db 3, 7 ; length
-	dw 42 * 10 ; weight
-	tx CharmeleonDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 CharizardCard:
@@ -2376,13 +2280,7 @@ CharizardCard:
 
 	db 3 ; retreat cost
 	db WR_WATER ; weakness
-	db WR_FIGHTING ; resistance
-	tx FlameName ; category
-	dw 6 ; Pokedex number
-	db 76 ; level
-	db 5, 7 ; length
-	dw 200 * 10 ; weight
-	tx CharizardDescription ; description
+	;
 	db 0 ; pokemon flags
 
 VulpixCard:
@@ -2426,13 +2324,7 @@ VulpixCard:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FoxName ; category
-	dw 37 ; Pokedex number
-	db 11 ; level
-	db 2, 0 ; length
-	dw 22 * 10 ; weight
-	tx VulpixDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 NinetalesLv32Card:
@@ -2476,13 +2368,7 @@ NinetalesLv32Card:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FoxName ; category
-	dw 38 ; Pokedex number
-	db 32 ; level
-	db 3, 7 ; length
-	dw 44 * 10 ; weight
-	tx NinetalesLv32Description ; description
+;
 	db 0 ; pokemon flags
 
 NinetalesLv35Card:
@@ -2526,13 +2412,7 @@ NinetalesLv35Card:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FoxName ; category
-	dw 38 ; Pokedex number
-	db 35 ; level
-	db 3, 7 ; length
-	dw 44 * 10 ; weight
-	tx NinetalesLv35Description ; description
+	;
 	db 0 ; pokemon flags
 
 GrowlitheCard:
@@ -2576,13 +2456,7 @@ GrowlitheCard:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx PuppyName ; category
-	dw 58 ; Pokedex number
-	db 18 ; level
-	db 2, 4 ; length
-	dw 42 * 10 ; weight
-	tx GrowlitheDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 ArcanineLv34Card:
@@ -2626,13 +2500,7 @@ ArcanineLv34Card:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx LegendaryName ; category
-	dw 59 ; Pokedex number
-	db 34 ; level
-	db 6, 3 ; length
-	dw 342 * 10 ; weight
-	tx ArcanineLv34Description ; description
+	;
 	db 0 ; pokemon flags
 
 ArcanineLv45Card:
@@ -2676,13 +2544,7 @@ ArcanineLv45Card:
 
 	db 3 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx LegendaryName ; category
-	dw 59 ; Pokedex number
-	db 45 ; level
-	db 6, 3 ; length
-	dw 342 * 10 ; weight
-	tx ArcanineLv45Description ; description
+;
 	db 0 ; pokemon flags
 
 PonytaCard:
@@ -2726,13 +2588,7 @@ PonytaCard:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FireHorseName ; category
-	dw 77 ; Pokedex number
-	db 10 ; level
-	db 3, 3 ; length
-	dw 66 * 10 ; weight
-	tx PonytaDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 RapidashCard:
@@ -2776,13 +2632,7 @@ RapidashCard:
 
 	db 0 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FireHorseName ; category
-	dw 78 ; Pokedex number
-	db 33 ; level
-	db 5, 7 ; length
-	dw 209 * 10 ; weight
-	tx RapidashDescription ; description
+	;
 	db 0 ; pokemon flags
 
 MagmarLv24Card:
@@ -2825,14 +2675,7 @@ MagmarLv24Card:
 	db ATK_ANIM_BIG_FLAME ; animation
 
 	db 2 ; retreat cost
-	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx SpitfireName ; category
-	dw 126 ; Pokedex number
-	db 24 ; level
-	db 4, 3 ; length
-	dw 98 * 10 ; weight
-	tx MagmarLv24Description ; description
+	;
 	db 0 ; pokemon flags
 
 MagmarLv31Card:
@@ -2876,13 +2719,7 @@ MagmarLv31Card:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx SpitfireName ; category
-	dw 126 ; Pokedex number
-	db 31 ; level
-	db 4, 3 ; length
-	dw 98 * 10 ; weight
-	tx MagmarLv31Description ; description
+	;
 	db 0 ; pokemon flags
 
 FlareonLv22Card:
@@ -2926,13 +2763,7 @@ FlareonLv22Card:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FlameName ; category
-	dw 136 ; Pokedex number
-	db 22 ; level
-	db 2, 11 ; length
-	dw 55 * 10 ; weight
-	tx FlareonLv22Description ; description
+	;
 	db 0 ; pokemon flags
 
 FlareonLv28Card:
@@ -2976,13 +2807,7 @@ FlareonLv28Card:
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
-	db NONE ; resistance
-	tx FlameName ; category
-	dw 136 ; Pokedex number
-	db 28 ; level
-	db 2, 11 ; length
-	dw 55 * 10 ; weight
-	tx FlareonLv28Description ; description
+	;
 	db 0 ; pokemon flags
 
 MoltresLv35Card:
@@ -3026,13 +2851,7 @@ MoltresLv35Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx FlameName ; category
-	dw 146 ; Pokedex number
-	db 35 ; level
-	db 6, 7 ; length
-	dw 132 * 10 ; weight
-	tx MoltresLv35Description ; description
+	;
 	db 0 ; pokemon flags
 
 MoltresLv37Card:
@@ -3076,13 +2895,7 @@ MoltresLv37Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx FlameName ; category
-	dw 146 ; Pokedex number
-	db 37 ; level
-	db 6, 7 ; length
-	dw 132 * 10 ; weight
-	tx MoltresLv37Description ; description
+	;
 	db 0 ; pokemon flags
 
 SquirtleCard:
@@ -3126,13 +2939,7 @@ SquirtleCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx TinyTurtleName ; category
-	dw 7 ; Pokedex number
-	db 8 ; level
-	db 1, 8 ; length
-	dw 20 * 10 ; weight
-	tx SquirtleDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 WartortleCard:
@@ -3176,13 +2983,7 @@ WartortleCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx TurtleName ; category
-	dw 8 ; Pokedex number
-	db 22 ; level
-	db 3, 3 ; length
-	dw 50 * 10 ; weight
-	tx WartortleDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 BlastoiseCard:
@@ -3226,13 +3027,7 @@ BlastoiseCard:
 
 	db 3 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx ShellfishName ; category
-	dw 9 ; Pokedex number
-	db 52 ; level
-	db 5, 3 ; length
-	dw 189 * 10 ; weight
-	tx BlastoiseDescription ; description
+	;
 	db 0 ; pokemon flags
 
 PsyduckCard:
@@ -3276,13 +3071,7 @@ PsyduckCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx DuckName ; category
-	dw 54 ; Pokedex number
-	db 15 ; level
-	db 2, 7 ; length
-	dw 43 * 10 ; weight
-	tx PsyduckDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 GolduckCard:
@@ -3326,13 +3115,7 @@ GolduckCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx DuckName ; category
-	dw 55 ; Pokedex number
-	db 27 ; level
-	db 5, 7 ; length
-	dw 169 * 10 ; weight
-	tx GolduckDescription ; description
+	;
 	db 0 ; pokemon flags
 
 PoliwagCard:
@@ -3376,13 +3159,7 @@ PoliwagCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx TadpoleName ; category
-	dw 60 ; Pokedex number
-	db 13 ; level
-	db 2, 0 ; length
-	dw 27 * 10 ; weight
-	tx PoliwagDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 PoliwhirlCard:
@@ -3426,13 +3203,7 @@ PoliwhirlCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx TadpoleName ; category
-	dw 61 ; Pokedex number
-	db 28 ; level
-	db 3, 4 ; length
-	dw 44 * 10 ; weight
-	tx PoliwhirlsDescription ; description
+;
 	db HAS_EVOLUTION ; pokemon flags
 
 PoliwrathCard:
@@ -3476,13 +3247,7 @@ PoliwrathCard:
 
 	db 3 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx TadpoleName ; category
-	dw 62 ; Pokedex number
-	db 48 ; level
-	db 4, 3 ; length
-	dw 119 * 10 ; weight
-	tx PoliwrathDescription ; description
+	;
 	db 0 ; pokemon flags
 
 TentacoolCard:
@@ -3526,13 +3291,7 @@ TentacoolCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx JellyfishName ; category
-	dw 72 ; Pokedex number
-	db 10 ; level
-	db 2, 11 ; length
-	dw 100 * 10 ; weight
-	tx TentacoolDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 TentacruelCard:
@@ -3576,13 +3335,7 @@ TentacruelCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx JellyfishName ; category
-	dw 73 ; Pokedex number
-	db 21 ; level
-	db 5, 3 ; length
-	dw 121 * 10 ; weight
-	tx TentacruelDescription ; description
+	;
 	db 0 ; pokemon flags
 
 SeelCard:
@@ -3626,13 +3379,7 @@ SeelCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx SeaLionName ; category
-	dw 86 ; Pokedex number
-	db 12 ; level
-	db 3, 7 ; length
-	dw 198 * 10 ; weight
-	tx SeelDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 DewgongCard:
@@ -3676,13 +3423,7 @@ DewgongCard:
 
 	db 3 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx SeaLionName ; category
-	dw 87 ; Pokedex number
-	db 42 ; level
-	db 5, 7 ; length
-	dw 265 * 10 ; weight
-	tx DewgongDescription ; description
+	;
 	db 0 ; pokemon flags
 
 ShellderCard:
@@ -3726,13 +3467,7 @@ ShellderCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx BivalveName ; category
-	dw 90 ; Pokedex number
-	db 8 ; level
-	db 1, 0 ; length
-	dw 9 * 10 ; weight
-	tx ShellderDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 CloysterCard:
@@ -3776,13 +3511,7 @@ CloysterCard:
 
 	db 2 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx BivalveName ; category
-	dw 91 ; Pokedex number
-	db 25 ; level
-	db 4, 11 ; length
-	dw 292 * 10 ; weight
-	tx CloysterDescription ; description
+	;
 	db 0 ; pokemon flags
 
 KrabbyCard:
@@ -3826,13 +3555,7 @@ KrabbyCard:
 
 	db 2 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx RiverCrabName ; category
-	dw 98 ; Pokedex number
-	db 20 ; level
-	db 1, 4 ; length
-	dw 14 * 10 ; weight
-	tx KrabbyDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 KinglerCard:
@@ -3876,13 +3599,7 @@ KinglerCard:
 
 	db 3 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx PincerName ; category
-	dw 99 ; Pokedex number
-	db 27 ; level
-	db 4, 3 ; length
-	dw 132 * 10 ; weight
-	tx KinglerDescription ; description
+	;
 	db 0 ; pokemon flags
 
 HorseaCard:
@@ -3926,13 +3643,7 @@ HorseaCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx DragonName ; category
-	dw 116 ; Pokedex number
-	db 19 ; level
-	db 1, 4 ; length
-	dw 18 * 10 ; weight
-	tx HorseaDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 SeadraCard:
@@ -3976,13 +3687,7 @@ SeadraCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx DragonName ; category
-	dw 117 ; Pokedex number
-	db 23 ; level
-	db 3, 1 ; length
-	dw 55 * 10 ; weight
-	tx SeadraDescription ; description
+	;
 	db 0 ; pokemon flags
 
 GoldeenCard:
@@ -4026,13 +3731,7 @@ GoldeenCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx GoldfishName ; category
-	dw 118 ; Pokedex number
-	db 12 ; level
-	db 2, 0 ; length
-	dw 33 * 10 ; weight
-	tx GoldeenDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 SeakingCard:
@@ -4076,13 +3775,7 @@ SeakingCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx GoldfishName ; category
-	dw 119 ; Pokedex number
-	db 28 ; level
-	db 4, 3 ; length
-	dw 86 * 10 ; weight
-	tx SeakingDescription ; description
+;
 	db 0 ; pokemon flags
 
 StaryuCard:
@@ -4126,13 +3819,7 @@ StaryuCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx StarshapeName ; category
-	dw 120 ; Pokedex number
-	db 15 ; level
-	db 2, 7 ; length
-	dw 76 * 10 ; weight
-	tx StaryuDescription ; description
+;
 	db HAS_EVOLUTION ; pokemon flags
 
 StarmieCard:
@@ -4176,13 +3863,7 @@ StarmieCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx MysteriousName ; category
-	dw 121 ; Pokedex number
-	db 28 ; level
-	db 3, 7 ; length
-	dw 176 * 10 ; weight
-	tx StarmieDescription ; description
+;
 	db 0 ; pokemon flags
 
 MagikarpCard:
@@ -4226,13 +3907,7 @@ MagikarpCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx FishName ; category
-	dw 129 ; Pokedex number
-	db 8 ; level
-	db 2, 11 ; length
-	dw 22 * 10 ; weight
-	tx MagikarpDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 GyaradosCard:
@@ -4276,13 +3951,7 @@ GyaradosCard:
 
 	db 3 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_FIGHTING ; resistance
-	tx AtrociousName ; category
-	dw 130 ; Pokedex number
-	db 41 ; level
-	db 21, 4 ; length
-	dw 518 * 10 ; weight
-	tx GyaradosDescription ; description
+;
 	db 0 ; pokemon flags
 
 LaprasCard:
@@ -4326,13 +3995,7 @@ LaprasCard:
 
 	db 2 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx TransportName ; category
-	dw 131 ; Pokedex number
-	db 31 ; level
-	db 8, 2 ; length
-	dw 485 * 10 ; weight
-	tx LaprasDescription ; description
+	;
 	db 0 ; pokemon flags
 
 VaporeonLv29Card:
@@ -4376,13 +4039,7 @@ VaporeonLv29Card:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx BubbleJetName ; category
-	dw 134 ; Pokedex number
-	db 29 ; level
-	db 3, 3 ; length
-	dw 64 * 10 ; weight
-	tx VaporeonLv29Description ; description
+	;
 	db 0 ; pokemon flags
 
 VaporeonLv42Card:
@@ -4426,13 +4083,7 @@ VaporeonLv42Card:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx BubbleJetName ; category
-	dw 134 ; Pokedex number
-	db 42 ; level
-	db 3, 3 ; length
-	dw 64 * 10 ; weight
-	tx VaporeonLv42Description ; description
+	;
 	db 0 ; pokemon flags
 
 OmanyteCard:
@@ -4476,13 +4127,7 @@ OmanyteCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx SpiralName ; category
-	dw 138 ; Pokedex number
-	db 19 ; level
-	db 1, 4 ; length
-	dw 17 * 10 ; weight
-	tx OmanyteDescription ; description
+	;
 	db HAS_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 OmastarCard:
@@ -4526,13 +4171,7 @@ OmastarCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx SpiralName ; category
-	dw 139 ; Pokedex number
-	db 32 ; level
-	db 3, 3 ; length
-	dw 77 * 10 ; weight
-	tx OmastarDescription ; description
+	;
 	db 0 ; pokemon flags
 
 ArticunoLv35Card:
@@ -4576,13 +4215,7 @@ ArticunoLv35Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx FreezeName ; category
-	dw 144 ; Pokedex number
-	db 35 ; level
-	db 5, 7 ; length
-	dw 122 * 10 ; weight
-	tx ArticunoLv35Description ; description
+	;
 	db 0 ; pokemon flags
 
 ArticunoLv37Card:
@@ -4626,13 +4259,7 @@ ArticunoLv37Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx FreezeName ; category
-	dw 144 ; Pokedex number
-	db 37 ; level
-	db 5, 7 ; length
-	dw 122 * 10 ; weight
-	tx ArticunoLv37Description ; description
+;
 	db 0 ; pokemon flags
 
 PikachuLv12Card:
@@ -4676,13 +4303,7 @@ PikachuLv12Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 12 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx PikachuLv12Description ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 PikachuLv14Card:
@@ -4726,13 +4347,7 @@ PikachuLv14Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 14 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx PikachuLv14Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 PikachuLv16Card:
@@ -4776,13 +4391,7 @@ PikachuLv16Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 16 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx PikachuLv16Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 PikachuAltLv16Card:
@@ -4826,13 +4435,7 @@ PikachuAltLv16Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 16 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx PikachuLv16Description ; description
+;
 	db HAS_EVOLUTION ; pokemon flags
 
 FlyingPikachuCard:
@@ -4876,13 +4479,7 @@ FlyingPikachuCard:
 
 	db 1 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 12 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx FlyingPikachuDescription ; description
+	;
 	db 0 ; pokemon flags
 
 SurfingPikachuLv13Card:
@@ -4926,13 +4523,7 @@ SurfingPikachuLv13Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 13 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx SurfingPikachuDescription ; description
+	;
 	db 0 ; pokemon flags
 
 SurfingPikachuAltLv13Card:
@@ -4976,13 +4567,7 @@ SurfingPikachuAltLv13Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 25 ; Pokedex number
-	db 13 ; level
-	db 1, 4 ; length
-	dw 13 * 10 ; weight
-	tx SurfingPikachuDescription ; description
+	;
 	db 0 ; pokemon flags
 
 RaichuLv40Card:
@@ -5026,13 +4611,7 @@ RaichuLv40Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 26 ; Pokedex number
-	db 40 ; level
-	db 2, 7 ; length
-	dw 66 * 10 ; weight
-	tx RaichuLv40Description ; description
+	;
 	db 0 ; pokemon flags
 
 RaichuLv45Card:
@@ -5076,13 +4655,7 @@ RaichuLv45Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MouseName ; category
-	dw 26 ; Pokedex number
-	db 45 ; level
-	db 2, 7 ; length
-	dw 66 * 10 ; weight
-	tx RaichuLv45Description ; description
+	;
 	db 0 ; pokemon flags
 
 MagnemiteLv13Card:
@@ -5126,13 +4699,7 @@ MagnemiteLv13Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MagnetName ; category
-	dw 81 ; Pokedex number
-	db 13 ; level
-	db 1, 0 ; length
-	dw 13 * 10 ; weight
-	tx MagnemiteLv13Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 MagnemiteLv15Card:
@@ -5176,13 +4743,7 @@ MagnemiteLv15Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MagnetName ; category
-	dw 81 ; Pokedex number
-	db 15 ; level
-	db 1, 0 ; length
-	dw 13 * 10 ; weight
-	tx MagnemiteLv15Description ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 MagnetonLv28Card:
@@ -5226,13 +4787,7 @@ MagnetonLv28Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MagnetName ; category
-	dw 82 ; Pokedex number
-	db 28 ; level
-	db 3, 3 ; length
-	dw 132 * 10 ; weight
-	tx MagnetonLv28Description ; description
+	;
 	db 0 ; pokemon flags
 
 MagnetonLv35Card:
@@ -5276,13 +4831,7 @@ MagnetonLv35Card:
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx MagnetName ; category
-	dw 82 ; Pokedex number
-	db 35 ; level
-	db 3, 3 ; length
-	dw 132 * 10 ; weight
-	tx MagnetonLv35Description ; description
+	;
 	db 0 ; pokemon flags
 
 VoltorbCard:
@@ -5326,13 +4875,7 @@ VoltorbCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx BallName ; category
-	dw 100 ; Pokedex number
-	db 10 ; level
-	db 1, 8 ; length
-	dw 23 * 10 ; weight
-	tx VoltorbDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 ElectrodeLv35Card:
@@ -5376,13 +4919,7 @@ ElectrodeLv35Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx BallName ; category
-	dw 101 ; Pokedex number
-	db 35 ; level
-	db 3, 11 ; length
-	dw 147 * 10 ; weight
-	tx ElectrodeLv35Description ; description
+	;
 	db 0 ; pokemon flags
 
 ElectrodeLv42Card:
@@ -5426,13 +4963,7 @@ ElectrodeLv42Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx BallName ; category
-	dw 101 ; Pokedex number
-	db 42 ; level
-	db 3, 11 ; length
-	dw 147 * 10 ; weight
-	tx ElectrodeLv42Description ; description
+	;
 	db 0 ; pokemon flags
 
 ElectabuzzLv20Card:
@@ -5476,13 +5007,7 @@ ElectabuzzLv20Card:
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx ElectricName ; category
-	dw 125 ; Pokedex number
-	db 20 ; level
-	db 3, 7 ; length
-	dw 66 * 10 ; weight
-	tx ElectabuzzLv20Description ; description
+;
 	db 0 ; pokemon flags
 
 ElectabuzzLv35Card:
@@ -5526,13 +5051,7 @@ ElectabuzzLv35Card:
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx ElectricName ; category
-	dw 125 ; Pokedex number
-	db 35 ; level
-	db 3, 7 ; length
-	dw 66 * 10 ; weight
-	tx ElectabuzzLv35Description ; description
+;
 	db 0 ; pokemon flags
 
 JolteonLv24Card:
@@ -5576,13 +5095,7 @@ JolteonLv24Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx LightningName ; category
-	dw 135 ; Pokedex number
-	db 24 ; level
-	db 2, 7 ; length
-	dw 54 * 10 ; weight
-	tx JolteonLv24Description ; description
+;
 	db 0 ; pokemon flags
 
 JolteonLv29Card:
@@ -5626,13 +5139,7 @@ JolteonLv29Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db NONE ; resistance
-	tx LightningName ; category
-	dw 135 ; Pokedex number
-	db 29 ; level
-	db 2, 7 ; length
-	dw 54 * 10 ; weight
-	tx JolteonLv29Description ; description
+;
 	db 0 ; pokemon flags
 
 ZapdosLv40Card:
@@ -5676,13 +5183,7 @@ ZapdosLv40Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx ElectricName ; category
-	dw 145 ; Pokedex number
-	db 40 ; level
-	db 5, 3 ; length
-	dw 116 * 10 ; weight
-	tx ZapdosLv40Description ; description
+;
 	db 0 ; pokemon flags
 
 ZapdosLv64Card:
@@ -5726,13 +5227,7 @@ ZapdosLv64Card:
 
 	db 3 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx ElectricName ; category
-	dw 145 ; Pokedex number
-	db 64 ; level
-	db 5, 3 ; length
-	dw 116 * 10 ; weight
-	tx ZapdosLv64Description ; description
+	;
 	db 0 ; pokemon flags
 
 ZapdosLv68Card:
@@ -5776,13 +5271,7 @@ ZapdosLv68Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx ElectricName ; category
-	dw 145 ; Pokedex number
-	db 68 ; level
-	db 5, 3 ; length
-	dw 116 * 10 ; weight
-	tx ZapdosLv68Description ; description
+	;
 	db 0 ; pokemon flags
 
 SandshrewCard:
@@ -5826,13 +5315,7 @@ SandshrewCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx MouseName ; category
-	dw 27 ; Pokedex number
-	db 12 ; level
-	db 2, 0 ; length
-	dw 26 * 10 ; weight
-	tx SandshrewDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 SandslashCard:
@@ -5876,13 +5359,7 @@ SandslashCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx MouseName ; category
-	dw 28 ; Pokedex number
-	db 33 ; level
-	db 3, 3 ; length
-	dw 65 * 10 ; weight
-	tx SandslashDescription ; description
+	;
 	db 0 ; pokemon flags
 
 DiglettCard:
@@ -5926,13 +5403,7 @@ DiglettCard:
 
 	db 0 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx MoleName ; category
-	dw 50 ; Pokedex number
-	db 8 ; level
-	db 0, 8 ; length
-	dw 2 * 10 ; weight
-	tx DiglettDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 DugtrioCard:
@@ -5976,13 +5447,7 @@ DugtrioCard:
 
 	db 2 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx MoleName ; category
-	dw 51 ; Pokedex number
-	db 36 ; level
-	db 2, 4 ; length
-	dw 73 * 10 ; weight
-	tx DugtrioDescription ; description
+	;
 	db 0 ; pokemon flags
 
 MankeyCard:
@@ -6026,13 +5491,7 @@ MankeyCard:
 
 	db 0 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PigMonkeyName ; category
-	dw 56 ; Pokedex number
-	db 7 ; level
-	db 1, 8 ; length
-	dw 62 * 10 ; weight
-	tx MankeyDescription ; description
+	;
 	db HAS_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 PrimeapeCard:
@@ -6076,13 +5535,7 @@ PrimeapeCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PigMonkeyName ; category
-	dw 57 ; Pokedex number
-	db 35 ; level
-	db 3, 3 ; length
-	dw 71 * 10 ; weight
-	tx PrimeapeDescription ; description
+	;
 	db 0 ; pokemon flags
 
 MachopCard:
@@ -6126,13 +5579,7 @@ MachopCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx SuperpowerName ; category
-	dw 66 ; Pokedex number
-	db 20 ; level
-	db 2, 7 ; length
-	dw 43 * 10 ; weight
-	tx MachopDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 MachokeCard:
@@ -6176,13 +5623,7 @@ MachokeCard:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx SuperpowerName ; category
-	dw 67 ; Pokedex number
-	db 40 ; level
-	db 4, 11 ; length
-	dw 155 * 10 ; weight
-	tx MachokeDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 MachampCard:
@@ -6226,13 +5667,7 @@ MachampCard:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx SuperpowerName ; category
-	dw 68 ; Pokedex number
-	db 67 ; level
-	db 5, 3 ; length
-	dw 287 * 10 ; weight
-	tx MachampDescription ; description
+	;
 	db 0 ; pokemon flags
 
 GeodudeCard:
@@ -6276,13 +5711,7 @@ GeodudeCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx RockName ; category
-	dw 74 ; Pokedex number
-	db 16 ; level
-	db 1, 4 ; length
-	dw 44 * 10 ; weight
-	tx GeodudeDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 GravelerCard:
@@ -6326,13 +5755,7 @@ GravelerCard:
 
 	db 2 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx RockName ; category
-	dw 75 ; Pokedex number
-	db 29 ; level
-	db 3, 3 ; length
-	dw 232 * 10 ; weight
-	tx GravelerDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 GolemCard:
@@ -6376,13 +5799,7 @@ GolemCard:
 
 	db 4 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx MegatonName ; category
-	dw 76 ; Pokedex number
-	db 36 ; level
-	db 4, 7 ; length
-	dw 662 * 10 ; weight
-	tx GolemDescription ; description
+	;
 	db 0 ; pokemon flags
 
 OnixCard:
@@ -6426,13 +5843,7 @@ OnixCard:
 
 	db 3 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx RockSnakeName ; category
-	dw 95 ; Pokedex number
-	db 12 ; level
-	db 28, 10 ; length
-	dw 463 * 10 ; weight
-	tx OnixDescription ; description
+	;
 	db 0 ; pokemon flags
 
 CuboneCard:
@@ -6476,13 +5887,7 @@ CuboneCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx LonelyName ; category
-	dw 104 ; Pokedex number
-	db 13 ; level
-	db 1, 4 ; length
-	dw 14 * 10 ; weight
-	tx CuboneDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 MarowakLv26Card:
@@ -6526,13 +5931,7 @@ MarowakLv26Card:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx BonekeeperName ; category
-	dw 105 ; Pokedex number
-	db 26 ; level
-	db 3, 3 ; length
-	dw 99 * 10 ; weight
-	tx MarowakLv26Description ; description
+;
 	db 0 ; pokemon flags
 
 MarowakLv32Card:
@@ -6576,13 +5975,7 @@ MarowakLv32Card:
 
 	db 2 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx BonekeeperName ; category
-	dw 105 ; Pokedex number
-	db 32 ; level
-	db 3, 3 ; length
-	dw 99 * 10 ; weight
-	tx MarowakLv32Description ; description
+	;
 	db 0 ; pokemon flags
 
 HitmonleeCard:
@@ -6626,13 +6019,7 @@ HitmonleeCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx KickingName ; category
-	dw 106 ; Pokedex number
-	db 30 ; level
-	db 4, 11 ; length
-	dw 110 * 10 ; weight
-	tx HitmonleeDescription ; description
+	;
 	db 0 ; pokemon flags
 
 HitmonchanCard:
@@ -6676,13 +6063,7 @@ HitmonchanCard:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PunchingName ; category
-	dw 107 ; Pokedex number
-	db 33 ; level
-	db 4, 7 ; length
-	dw 111 * 10 ; weight
-	tx HitmonchanDescription ; description
+	;
 	db 0 ; pokemon flags
 
 RhyhornCard:
@@ -6726,13 +6107,7 @@ RhyhornCard:
 
 	db 3 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx SpikeName ; category
-	dw 111 ; Pokedex number
-	db 18 ; level
-	db 3, 3 ; length
-	dw 254 * 10 ; weight
-	tx RhyhornDescription ; description
+;
 	db HAS_EVOLUTION ; pokemon flags
 
 RhydonCard:
@@ -6776,13 +6151,7 @@ RhydonCard:
 
 	db 3 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_LIGHTNING ; resistance
-	tx DrillName ; category
-	dw 112 ; Pokedex number
-	db 48 ; level
-	db 6, 3 ; length
-	dw 265 * 10 ; weight
-	tx RhydonDescription ; description
+;
 	db 0 ; pokemon flags
 
 KabutoCard:
@@ -6826,13 +6195,7 @@ KabutoCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx ShellfishName ; category
-	dw 140 ; Pokedex number
-	db 9 ; level
-	db 1, 8 ; length
-	dw 25 * 10 ; weight
-	tx KabutoDescription ; description
+;
 	db HAS_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 KabutopsCard:
@@ -6876,13 +6239,7 @@ KabutopsCard:
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness
-	db NONE ; resistance
-	tx ShellfishName ; category
-	dw 141 ; Pokedex number
-	db 30 ; level
-	db 4, 3 ; length
-	dw 89 * 10 ; weight
-	tx KabutopsDescription ; description
+	;
 	db 0 ; pokemon flags
 
 AerodactylCard:
@@ -6926,13 +6283,7 @@ AerodactylCard:
 
 	db 2 ; retreat cost
 	db WR_GRASS ; weakness
-	db WR_FIGHTING ; resistance
-	tx FossilName ; category
-	dw 142 ; Pokedex number
-	db 28 ; level
-	db 5, 11 ; length
-	dw 130 * 10 ; weight
-	tx AerodactylDescription ; description
+;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 AbraCard:
@@ -6976,13 +6327,7 @@ AbraCard:
 
 	db 0 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PsiName ; category
-	dw 63 ; Pokedex number
-	db 10 ; level
-	db 2, 11 ; length
-	dw 43 * 10 ; weight
-	tx AbraDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 KadabraCard:
@@ -7026,13 +6371,7 @@ KadabraCard:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PsiName ; category
-	dw 64 ; Pokedex number
-	db 38 ; level
-	db 4, 3 ; length
-	dw 125 * 10 ; weight
-	tx KadabraDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 AlakazamCard:
@@ -7076,13 +6415,7 @@ AlakazamCard:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx PsiName ; category
-	dw 65 ; Pokedex number
-	db 42 ; level
-	db 4, 11 ; length
-	dw 106 * 10 ; weight
-	tx AlakazamDescription ; description
+	;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 SlowpokeLv9Card:
@@ -7126,13 +6459,7 @@ SlowpokeLv9Card:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx DopeyName ; category
-	dw 79 ; Pokedex number
-	db 9 ; level
-	db 3, 11 ; length
-	dw 79 * 10 ; weight
-	tx SlowpokeLv9Description ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 SlowpokeLv18Card:
@@ -7176,13 +6503,7 @@ SlowpokeLv18Card:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx DopeyName ; category
-	dw 79 ; Pokedex number
-	db 18 ; level
-	db 3, 11 ; length
-	dw 79 * 10 ; weight
-	tx SlowpokeLv9Description ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 SlowbroCard:
@@ -7226,13 +6547,7 @@ SlowbroCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx HermitcrabName ; category
-	dw 80 ; Pokedex number
-	db 26 ; level
-	db 5, 3 ; length
-	dw 173 * 10 ; weight
-	tx SlowbroDescription ; description
+	;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 GastlyLv8Card:
@@ -7276,13 +6591,7 @@ GastlyLv8Card:
 
 	db 0 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx GasName ; category
-	dw 92 ; Pokedex number
-	db 8 ; level
-	db 4, 3 ; length
-	dw 2 ; weight
-	tx GastlyLv8Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 GastlyLv17Card:
@@ -7326,13 +6635,7 @@ GastlyLv17Card:
 
 	db 0 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx GasName ; category
-	dw 92 ; Pokedex number
-	db 17 ; level
-	db 4, 3 ; length
-	dw 2 ; weight
-	tx GastlyLv17Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 HaunterLv17Card:
@@ -7376,13 +6679,7 @@ HaunterLv17Card:
 
 	db 0 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx GasName ; category
-	dw 93 ; Pokedex number
-	db 17 ; level
-	db 5, 3 ; length
-	dw 2 ; weight
-	tx HaunterDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 HaunterLv22Card:
@@ -7426,13 +6723,7 @@ HaunterLv22Card:
 
 	db 1 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx GasName ; category
-	dw 93 ; Pokedex number
-	db 22 ; level
-	db 5, 3 ; length
-	dw 2 ; weight
-	tx HaunterDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 GengarCard:
@@ -7476,13 +6767,7 @@ GengarCard:
 
 	db 1 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx ShadowName ; category
-	dw 94 ; Pokedex number
-	db 38 ; level
-	db 4, 11 ; length
-	dw 89 * 10 ; weight
-	tx GengarDescription ; description
+	;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 DrowzeeCard:
@@ -7526,13 +6811,7 @@ DrowzeeCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx HypnosisName ; category
-	dw 96 ; Pokedex number
-	db 12 ; level
-	db 3, 3 ; length
-	dw 71 * 10 ; weight
-	tx DrowzeeDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 HypnoCard:
@@ -7576,13 +6855,7 @@ HypnoCard:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx HypnosisName ; category
-	dw 97 ; Pokedex number
-	db 36 ; level
-	db 5, 3 ; length
-	dw 167 * 10 ; weight
-	tx HypnoDescription ; description
+	;
 	db 0 ; pokemon flags
 
 MrMimeCard:
@@ -7626,13 +6899,7 @@ MrMimeCard:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx BarrierName ; category
-	dw 122 ; Pokedex number
-	db 28 ; level
-	db 4, 3 ; length
-	dw 120 * 10 ; weight
-	tx MrMimeDescription ; description
+	;
 	db 0 ; pokemon flags
 
 JynxCard:
@@ -7676,13 +6943,7 @@ JynxCard:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx HumanShapeName ; category
-	dw 124 ; Pokedex number
-	db 23 ; level
-	db 4, 7 ; length
-	dw 90 * 10 ; weight
-	tx JynxDescription ; description
+;
 	db 0 ; pokemon flags
 
 MewtwoLv53Card:
@@ -7726,13 +6987,7 @@ MewtwoLv53Card:
 
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx GeneticName ; category
-	dw 150 ; Pokedex number
-	db 53 ; level
-	db 6, 7 ; length
-	dw 269 * 10 ; weight
-	tx MewtwoLv53Description ; description
+	;
 	db 0 ; pokemon flags
 
 MewtwoLv60Card:
@@ -7776,13 +7031,7 @@ MewtwoLv60Card:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx GeneticName ; category
-	dw 150 ; Pokedex number
-	db 60 ; level
-	db 6, 7 ; length
-	dw 269 * 10 ; weight
-	tx MewtwoLv60Description ; description
+;
 	db 0 ; pokemon flags
 
 MewtwoAltLV60Card:
@@ -7826,13 +7075,7 @@ MewtwoAltLV60Card:
 
 	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx GeneticName ; category
-	dw 150 ; Pokedex number
-	db 60 ; level
-	db 6, 7 ; length
-	dw 269 * 10 ; weight
-	tx MewtwoLv60Description ; description
+;
 	db 0 ; pokemon flags
 
 MewLv8Card:
@@ -7876,13 +7119,7 @@ MewLv8Card:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx NewSpeciesName ; category
-	dw 151 ; Pokedex number
-	db 8 ; level
-	db 1, 4 ; length
-	dw 9 * 10 ; weight
-	tx MewLv8Description ; description
+;
 	db 0 ; pokemon flags
 
 MewLv15Card:
@@ -7926,13 +7163,7 @@ MewLv15Card:
 
 	db 0 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx NewSpeciesName ; category
-	dw 151 ; Pokedex number
-	db 15 ; level
-	db 1, 4 ; length
-	dw 9 * 10 ; weight
-	tx MewLv15Description ; description
+;
 	db 0 ; pokemon flags
 
 MewLv23Card:
@@ -7976,13 +7207,7 @@ MewLv23Card:
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
-	db NONE ; resistance
-	tx NewSpeciesName ; category
-	dw 151 ; Pokedex number
-	db 23 ; level
-	db 1, 4 ; length
-	dw 9 * 10 ; weight
-	tx MewLv8Description ; description
+	;
 	db 0 ; pokemon flags
 
 PidgeyCard:
@@ -8026,13 +7251,7 @@ PidgeyCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx TinyBirdName ; category
-	dw 16 ; Pokedex number
-	db 8 ; level
-	db 1, 0 ; length
-	dw 4 * 10 ; weight
-	tx PidgeyDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 PidgeottoCard:
@@ -8076,13 +7295,7 @@ PidgeottoCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx BirdName ; category
-	dw 17 ; Pokedex number
-	db 36 ; level
-	db 3, 7 ; length
-	dw 66 * 10 ; weight
-	tx PidgeottoDescription ; description
+;
 	db HAS_EVOLUTION ; pokemon flags
 
 PidgeotLv38Card:
@@ -8126,13 +7339,7 @@ PidgeotLv38Card:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx BirdName ; category
-	dw 18 ; Pokedex number
-	db 38 ; level
-	db 4, 11 ; length
-	dw 87 * 10 ; weight
-	tx PidgeotLv38Description ; description
+;
 	db 0 ; pokemon flags
 
 PidgeotLv40Card:
@@ -8176,13 +7383,7 @@ PidgeotLv40Card:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx BirdName ; category
-	dw 18 ; Pokedex number
-	db 40 ; level
-	db 4, 11 ; length
-	dw 87 * 10 ; weight
-	tx PidgeotLv40Description ; description
+;
 	db 0 ; pokemon flags
 
 RattataCard:
@@ -8226,13 +7427,7 @@ RattataCard:
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx RatName ; category
-	dw 19 ; Pokedex number
-	db 9 ; level
-	db 1, 0 ; length
-	dw 8 * 10 ; weight
-	tx RattataDescription ; description
+;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 RaticateCard:
@@ -8276,13 +7471,7 @@ RaticateCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx RatName ; category
-	dw 20 ; Pokedex number
-	db 41 ; level
-	db 2, 4 ; length
-	dw 41 * 10 ; weight
-	tx RaticateDescription ; description
+;
 	db 0 ; pokemon flags
 
 SpearowCard:
@@ -8326,13 +7515,7 @@ SpearowCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx TinyBirdName ; category
-	dw 21 ; Pokedex number
-	db 13 ; level
-	db 1, 0 ; length
-	dw 4 * 10 ; weight
-	tx SpearowDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 FearowCard:
@@ -8376,13 +7559,7 @@ FearowCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx BeakName ; category
-	dw 22 ; Pokedex number
-	db 27 ; level
-	db 3, 11 ; length
-	dw 84 * 10 ; weight
-	tx FearowDescription ; description
+	;
 	db 0 ; pokemon flags
 
 ClefairyCard:
@@ -8426,13 +7603,7 @@ ClefairyCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx FairyName ; category
-	dw 35 ; Pokedex number
-	db 14 ; level
-	db 2, 0 ; length
-	dw 17 * 10 ; weight
-	tx ClefairyDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 ClefableCard:
@@ -8476,13 +7647,7 @@ ClefableCard:
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx FairyName ; category
-	dw 36 ; Pokedex number
-	db 34 ; level
-	db 4, 3 ; length
-	dw 88 * 10 ; weight
-	tx ClefableDescription ; description
+	;
 	db 0 ; pokemon flags
 
 JigglypuffLv12Card:
@@ -8526,13 +7691,7 @@ JigglypuffLv12Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx BalloonName ; category
-	dw 39 ; Pokedex number
-	db 12 ; level
-	db 1, 8 ; length
-	dw 12 * 10 ; weight
-	tx JigglypuffLv12Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 JigglypuffLv13Card:
@@ -8576,13 +7735,7 @@ JigglypuffLv13Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx BalloonName ; category
-	dw 39 ; Pokedex number
-	db 13 ; level
-	db 1, 8 ; length
-	dw 12 * 10 ; weight
-	tx JigglypuffLv13Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 JigglypuffLv14Card:
@@ -8626,13 +7779,7 @@ JigglypuffLv14Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx BalloonName ; category
-	dw 39 ; Pokedex number
-	db 14 ; level
-	db 1, 8 ; length
-	dw 12 * 10 ; weight
-	tx JigglypuffLv14Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 WigglytuffCard:
@@ -8676,13 +7823,7 @@ WigglytuffCard:
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx BalloonName ; category
-	dw 40 ; Pokedex number
-	db 36 ; level
-	db 3, 3 ; length
-	dw 26 * 10 ; weight
-	tx WigglytuffDescription ; description
+	;
 	db 0 ; pokemon flags
 
 MeowthLv14Card:
@@ -8726,13 +7867,7 @@ MeowthLv14Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx ScratchCatName ; category
-	dw 52 ; Pokedex number
-	db 14 ; level
-	db 1, 4 ; length
-	dw 9 * 10 ; weight
-	tx MeowthLv14Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 MeowthLv15Card:
@@ -8776,13 +7911,7 @@ MeowthLv15Card:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx ScratchCatName ; category
-	dw 52 ; Pokedex number
-	db 15 ; level
-	db 1, 4 ; length
-	dw 9 * 10 ; weight
-	tx MeowthLv15Description ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 PersianCard:
@@ -8826,13 +7955,7 @@ PersianCard:
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx ClassyCatName ; category
-	dw 53 ; Pokedex number
-	db 25 ; level
-	db 3, 3 ; length
-	dw 71 * 10 ; weight
-	tx PersianDescription ; description
+;
 	db 0 ; pokemon flags
 
 FarfetchdCard:
@@ -8876,13 +7999,7 @@ FarfetchdCard:
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx WildDuckName ; category
-	dw 83 ; Pokedex number
-	db 20 ; level
-	db 2, 7 ; length
-	dw 33 * 10 ; weight
-	tx FarfetchdDescription ; description
+	;
 	db 0 ; pokemon flags
 
 DoduoCard:
@@ -8926,13 +8043,7 @@ DoduoCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx TwinBirdName ; category
-	dw 84 ; Pokedex number
-	db 10 ; level
-	db 4, 7 ; length
-	dw 86 * 10 ; weight
-	tx DoduoDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 DodrioCard:
@@ -8976,13 +8087,7 @@ DodrioCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx TriplebirdName ; category
-	dw 85 ; Pokedex number
-	db 28 ; level
-	db 5, 11 ; length
-	dw 188 * 10 ; weight
-	tx DodrioDescription ; description
+;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 LickitungCard:
@@ -9026,13 +8131,7 @@ LickitungCard:
 
 	db 3 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx LickingName ; category
-	dw 108 ; Pokedex number
-	db 26 ; level
-	db 3, 11 ; length
-	dw 144 * 10 ; weight
-	tx LickitungDescription ; description
+	;
 	db 0 ; pokemon flags
 
 ChanseyCard:
@@ -9076,13 +8175,7 @@ ChanseyCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx EggName ; category
-	dw 113 ; Pokedex number
-	db 55 ; level
-	db 3, 7 ; length
-	dw 76 * 10 ; weight
-	tx ChanseyDescription ; description
+	;
 	db 0 ; pokemon flags
 
 KangaskhanCard:
@@ -9126,13 +8219,7 @@ KangaskhanCard:
 
 	db 3 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx ParentName ; category
-	dw 115 ; Pokedex number
-	db 40 ; level
-	db 7, 3 ; length
-	dw 176 * 10 ; weight
-	tx KangaskhanDescription ; description
+	;
 	db 0 ; pokemon flags
 
 TaurosCard:
@@ -9176,13 +8263,7 @@ TaurosCard:
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx WildBullName ; category
-	dw 128 ; Pokedex number
-	db 32 ; level
-	db 4, 7 ; length
-	dw 195 * 10 ; weight
-	tx TaurosDescription ; description
+	;
 	db 0 ; pokemon flags
 
 DittoCard:
@@ -9226,13 +8307,7 @@ DittoCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx TransformName ; category
-	dw 132 ; Pokedex number
-	db 19 ; level
-	db 1, 0 ; length
-	dw 9 * 10 ; weight
-	tx DittoDescription ; description
+	;
 	db 0 ; pokemon flags
 
 EeveeCard:
@@ -9276,13 +8351,7 @@ EeveeCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx EvolutionName ; category
-	dw 133 ; Pokedex number
-	db 12 ; level
-	db 1, 0 ; length
-	dw 14 * 10 ; weight
-	tx EeveeDescription ; description
+	;
 	db HAS_EVOLUTION ; pokemon flags
 
 PorygonCard:
@@ -9326,13 +8395,7 @@ PorygonCard:
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx VirtualName ; category
-	dw 137 ; Pokedex number
-	db 12 ; level
-	db 2, 7 ; length
-	dw 80 * 10 ; weight
-	tx PorygonDescription ; description
+	;
 	db 0 ; pokemon flags
 
 SnorlaxCard:
@@ -9376,13 +8439,7 @@ SnorlaxCard:
 
 	db 4 ; retreat cost
 	db WR_FIGHTING ; weakness
-	db WR_PSYCHIC ; resistance
-	tx SleepingName ; category
-	dw 143 ; Pokedex number
-	db 20 ; level
-	db 6, 11 ; length
-	dw 1014 * 10 ; weight
-	tx SnorlaxDescription ; description
+	;
 	db 0 ; pokemon flags
 
 DratiniCard:
@@ -9426,12 +8483,7 @@ DratiniCard:
 
 	db 1 ; retreat cost
 	db NONE ; weakness
-	db WR_PSYCHIC ; resistance
-	tx DragonName ; category
-	dw 147 ; Pokedex number
-	db 10 ; level
-	db 5, 11 ; length
-	dw 7 * 10 ; weight
+	;
 	tx DratiniDescription ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
@@ -9476,13 +8528,7 @@ DragonairCard:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_PSYCHIC ; resistance
-	tx DragonName ; category
-	dw 148 ; Pokedex number
-	db 33 ; level
-	db 13, 1 ; length
-	dw 36 * 10 ; weight
-	tx DragonairDescription ; description
+	;
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION ; pokemon flags
 
 DragoniteLv41Card:
@@ -9526,13 +8572,7 @@ DragoniteLv41Card:
 
 	db 2 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx DragonName ; category
-	dw 149 ; Pokedex number
-	db 41 ; level
-	db 7, 3 ; length
-	dw 463 * 10 ; weight
-	tx DragoniteLv41Description ; description
+	;
 	db 0 ; pokemon flags
 
 DragoniteLv45Card:
@@ -9576,13 +8616,7 @@ DragoniteLv45Card:
 
 	db 1 ; retreat cost
 	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx DragonName ; category
-	dw 149 ; Pokedex number
-	db 45 ; level
-	db 7, 3 ; length
-	dw 463 * 10 ; weight
-	tx DragoniteDescription ; description
+	;
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 GrassEnergyCard:

@@ -4245,7 +4245,8 @@ CardPageDisplayPointerTable:
 	dw DisplayCardPage_PokemonAttack1Page2 ; CARDPAGE_POKEMON_ATTACK1_2
 	dw DisplayCardPage_PokemonAttack2Page1 ; CARDPAGE_POKEMON_ATTACK2_1
 	dw DisplayCardPage_PokemonAttack2Page2 ; CARDPAGE_POKEMON_ATTACK2_2
-	dw DisplayCardPage_PokemonDescription  ; CARDPAGE_POKEMON_DESCRIPTION
+	;dw DisplayCardPage_PokemonDescription  ; CARDPAGE_POKEMON_DESCRIPTION
+	dw NULL
 	dw DrawDuelMainScene
 	dw DrawDuelMainScene
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY
@@ -4739,9 +4740,7 @@ DisplayCardPage_PokemonOverview:
 	call InitTextPrinting_ProcessTextFromPointerToID
 .basic
 	; print card level and maximum HP
-	lb bc, 12, 2
-	ld a, [wLoadedCard1Level]
-	call WriteTwoDigitNumberInTxSymbolFormat_TrimLeadingZero
+	
 	lb bc, 16, 2
 	ld a, [wLoadedCard1HP]
 	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
@@ -4764,12 +4763,12 @@ DisplayCardPage_PokemonOverview:
 ; common for both card page types
 .print_numbers_and_energies
 	; print Pokedex number in the bottom right corner (16,16)
-	lb bc, 16, 16
-	ld hl, wLoadedCard1PokedexNumber
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call WriteThreeDigitNumberInTxSymbolFormat
+	;lb bc, 16, 16
+	;ld hl, wLoadedCard1PokedexNumber
+	;ld a, [hli]
+	;ld h, [hl]
+	;ld l, a
+	;call WriteThreeDigitNumberInTxSymbolFormat
 	; print the name, damage, and Energy cost of each attack and/or Pokemon Power that exists
 	; first attack at 5,10 and second at 5,12
 	lb bc, 5, 10
@@ -4808,14 +4807,14 @@ DisplayCardPage_PokemonOverview:
 	jr nz, .wr_from_loaded_card
 	call GetArenaCardWeakness
 	ld d, a
-	call GetArenaCardResistance
-	ld e, a
+	;call GetArenaCardResistance
+	;ld e, a
 	jr .got_wr
 .wr_from_loaded_card
 	ld a, [wLoadedCard1Weakness]
 	ld d, a
-	ld a, [wLoadedCard1Resistance]
-	ld e, a
+	;ld a, [wLoadedCard1Resistance]
+	;ld e, a
 .got_wr
 	ld a, d
 	ld b, 8
@@ -5142,74 +5141,72 @@ PrintAttackOrNonPokemonCardDescription:
 	jp PrintAttackOrCardDescription
 
 
-; input:
-;	[wLoadedCard1] = all of the Pokémon's data (card_data_struct)
-DisplayCardPage_PokemonDescription:
-	; print surrounding box, card name at 5,1, type, set 2, and rarity
-	call PrintPokemonCardPageGenericInformation
-	; print "LENGTH", "WEIGHT", "Lv", and "HP" where it corresponds in the page
-	ld hl, CardPageLengthWeightTextData
-	call PlaceTextItems
-	ld hl, CardPageLvHPTextTileData
-	call WriteDataBlocksToBGMap0
-	; draw the card symbol associated to its TYPE_* at 3,2
-	lb de, 3, 2
-	call DrawCardSymbol
-	; print the Level and HP numbers at 12,2 and 16,2 respectively
-	lb bc, 12, 2
-	ld a, [wLoadedCard1Level]
-	call WriteTwoDigitNumberInTxSymbolFormat_TrimLeadingZero
-	lb bc, 16, 2
-	ld a, [wLoadedCard1HP]
-	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
-	; print the Pokemon's category at 1,10 (just above the length and weight texts)
-	lb de, 1, 10
-	ld hl, wLoadedCard1Category
-	call InitTextPrinting_ProcessTextFromPointerToID
-	ld a, TX_KATAKANA
-	call ProcessSpecialTextCharacter
-	ldtx hl, PokemonText
-	call ProcessTextFromID
-	; print the length and weight values at 5,11 and 5,12 respectively
-	lb bc, 5, 11
-	ld hl, wLoadedCard1Length
-	ld a, [hli]
-	ld l, [hl]
-	ld h, a
-	call PrintPokemonCardLength
-	lb bc, 5, 12
-	ld hl, wLoadedCard1Weight
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call PrintPokemonCardWeight
-	ldtx hl, LbsText
-	call InitTextPrinting_ProcessTextFromID
-	; print the card's description without line separation
-	ld a, SINGLE_SPACED
-	ld [wLineSeparation], a
-	ld hl, wLoadedCard1Description
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call CountLinesOfTextFromID
-	lb de, 1, 13
-	cp 4
-	jr nc, .print_description
-	inc e ; move a line down, as the description is short enough to fit in three lines
-.print_description
-	ld a, 19 ; line length
-	call InitTextPrintingInTextbox
-	ld hl, wLoadedCard1Description
-	call ProcessTextFromPointerToID
-	xor a ; DOUBLE_SPACED
-	ld [wLineSeparation], a
-	ret
+;; input:
+;;	[wLoadedCard1] = all of the Pokémon's data (card_data_struct)
+;DisplayCardPage_PokemonDescription:
+;	; print surrounding box, card name at 5,1, type, set 2, and rarity
+;	call PrintPokemonCardPageGenericInformation
+;	; print "LENGTH", "WEIGHT", "Lv", and "HP" where it corresponds in the page
+;	ld hl, CardPageLengthWeightTextData
+;	call PlaceTextItems
+;	ld hl, CardPageLvHPTextTileData
+;	call WriteDataBlocksToBGMap0
+;	; draw the card symbol associated to its TYPE_* at 3,2
+;	lb de, 3, 2
+;	call DrawCardSymbol
+;	; print the HP numbers at 16,2
+;	
+;	lb bc, 16, 2
+;	ld a, [wLoadedCard1HP]
+;	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
+;	; print the Pokemon's category at 1,10 (just above the length and weight texts)
+;	lb de, 1, 10
+;	ld hl, wLoadedCard1Category
+;;	call InitTextPrinting_ProcessTextFromPointerToID
+;	ld a, TX_KATAKANA
+;	call ProcessSpecialTextCharacter
+;	ldtx hl, PokemonText
+;	call ProcessTextFromID
+;	; print the length and weight values at 5,11 and 5,12 respectively
+;	lb bc, 5, 11
+;	ld hl, wLoadedCard1Length
+;	ld a, [hli]
+;	ld l, [hl]
+;	ld h, a
+;	call PrintPokemonCardLength
+;	lb bc, 5, 12
+;	ld hl, wLoadedCard1Weight
+;	ld a, [hli]
+;	ld h, [hl]
+;	ld l, a
+;	call PrintPokemonCardWeight
+;	ldtx hl, LbsText
+;	call InitTextPrinting_ProcessTextFromID
+;	; print the card's description without line separation
+;	ld a, SINGLE_SPACED
+;	ld [wLineSeparation], a
+;;	ld hl, wLoadedCard1Description
+;	ld a, [hli]
+;	ld h, [hl]
+;	ld l, a
+;	call CountLinesOfTextFromID
+;	lb de, 1, 13
+;	cp 4
+;	jr nc, .print_description
+;	inc e ; move a line down, as the description is short enough to fit in three lines
+;.print_description
+;	ld a, 19 ; line length
+;	call InitTextPrintingInTextbox
+;	ld hl, wLoadedCard1Description
+;	call ProcessTextFromPointerToID
+;	xor a ; DOUBLE_SPACED
+;	ld [wLineSeparation], a
+;	ret
 
-CardPageLengthWeightTextData:
-	textitem 1, 11, LengthText
-	textitem 1, 12, WeightText
-	db $ff
+;CardPageLengthWeightTextData:
+;	textitem 1, 11, LengthText
+;	textitem 1, 12, WeightText
+;	db $ff
 
 
 ; input:
@@ -5920,7 +5917,7 @@ PrintPlayAreaCardHeader:
 	ld hl, wDefaultText
 	call ProcessText
 
-	; print the Pokemon's type/color and its level
+	; print the Pokemon's type/color
 	ld a, [wCurPlayAreaY]
 	ld c, a
 	ld b, 18
@@ -5928,13 +5925,7 @@ PrintPlayAreaCardHeader:
 	call GetPlayAreaCardColor
 	inc a ; Energy text symbol tiles start at 1, not 0
 	call WriteByteToBGMap0
-	ld b, 14
-	ld a, SYM_Lv
-	call WriteByteToBGMap0
-	ld b, 15
-	ld a, [wLoadedCard1Level]
-	call WriteTwoDigitNumberInTxSymbolFormat_TrimLeadingZero
-
+	
 	; print the 2x2 face down card image depending on the Pokemon's evolution stage
 	ld a, [wCurPlayAreaSlot]
 	add DUELVARS_ARENA_CARD_STAGE
@@ -9059,17 +9050,17 @@ ApplyDamageModifiers_DamageToTarget:
 	ld hl, wDamageEffectiveness
 	set WEAKNESS, [hl]
 .not_weak
-	rst SwapTurn
-	call GetArenaCardResistance
-	rst SwapTurn
+	;rst SwapTurn
+	;call GetArenaCardResistance
+	;rst SwapTurn
 	and b
 	jr z, .check_pluspower_and_defender ; jump if Pokemon has no Resistance
-	ld hl, -30 ; Resistance is always -30 in this game
+;	ld hl, -30 ; Resistance is always -30 in this game
 	add hl, de
 	ld e, l
 	ld d, h
 	ld hl, wDamageEffectiveness
-	set RESISTANCE, [hl]
+;	set RESISTANCE, [hl]
 .check_pluspower_and_defender
 	ld b, CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower
