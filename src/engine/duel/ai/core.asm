@@ -1391,7 +1391,7 @@ CheckEnergyFlagsNeededInList:
 .colorless
 	cp DOUBLE_COLORLESS_ENERGY
 	jr nz, .loop_cards
-	ld a, COLORLESS_F
+	ld de, COLORLESS_F
 	; fallthrough
 
 ; return carry if the Energy card matches the required Energy.
