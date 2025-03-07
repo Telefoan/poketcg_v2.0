@@ -4745,7 +4745,8 @@ DisplayCardPage_PokemonOverview:
 	lb bc, 16, 2
 	ld a, [wLoadedCard1HP]
 	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
-	jr .print_numbers_and_energies
+	ret
+	;jr .print_numbers_and_energies
 
 ; CARDPAGETYPE_PLAY_AREA
 .play_area_card_page
@@ -5163,13 +5164,13 @@ DisplayCardPage_PokemonDescription:
 	ld a, [wLoadedCard1HP]
 	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
 	; print the Pokemon's category at 1,10 (just above the length and weight texts)
-	lb de, 1, 10
-	ld hl, wLoadedCard1Category
-	call InitTextPrinting_ProcessTextFromPointerToID
-	ld a, TX_KATAKANA
-	call ProcessSpecialTextCharacter
-	ldtx hl, PokemonText
-	call ProcessTextFromID
+	;lb de, 1, 10
+	;ld hl, wLoadedCard1Category
+	;call InitTextPrinting_ProcessTextFromPointerToID
+	;ld a, TX_KATAKANA
+	;call ProcessSpecialTextCharacter
+	;ldtx hl, PokemonText
+	;call ProcessTextFromID
 	; print the length and weight values at 5,11 and 5,12 respectively
 	lb bc, 5, 11
 	ld hl, wLoadedCard1Length

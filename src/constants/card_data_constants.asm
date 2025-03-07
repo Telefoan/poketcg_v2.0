@@ -67,8 +67,7 @@ DEF CARD_DATA_ATTACK2_ANIMATION       EQU $31 ; 1 byte
 DEF CARD_DATA_RETREAT_COST            EQU $32 ; 1 byte 
 DEF CARD_DATA_WEAKNESS                EQU $33 ; 1 byte 
 ;DEF CARD_DATA_RESISTANCE              EQU $34 ; 1 byte  
-DEF CARD_DATA_CATEGORY                EQU $35 ; 2 bytes 
-DEF CARD_DATA_POKEDEX_NUMBER          EQU $37 ; 2 bytes
+;DEF CARD_DATA_CATEGORY                EQU $35 ; 2 bytes 
 DEF CARD_DATA_LEVEL                   EQU $39 ; 1 byte 
 DEF CARD_DATA_LENGTH                  EQU $3a ; 2 bytes (1 for ft, 1 for inches)
 DEF CARD_DATA_WEIGHT                  EQU $3c ; 2 bytes 
