@@ -2486,14 +2486,14 @@ Conversion1_ChangeWeaknessEffect:
 ;	hl = ID for notification text:  if the below condition is true
 ;	carry = set:  if the turn holder's Active Pokemon has no Resistance
 Conversion2_ResistanceCheck:
-	ld a, DUELVARS_ARENA_CARD
-	get_turn_duelist_var
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Resistance]
-	or a
-	ret nz ; return if the Active Pokemon has a Resistance
-	ldtx hl, NoResistanceText
-	scf
+;	ld a, DUELVARS_ARENA_CARD
+;	get_turn_duelist_var
+;	call LoadCardDataToBuffer2_FromDeckIndex
+;	ld a, [wLoadedCard2Resistance]
+;	or a
+;	ret nz ; return if the Active Pokemon has a Resistance
+;	ldtx hl, NoResistanceText
+;	scf
 	ret
 
 
@@ -2501,11 +2501,11 @@ Conversion2_ResistanceCheck:
 ;	carry = set:  if the operation was cancelled by the Player (with B button)
 ;	[hTemp_ffa0] & a = selected type/color (TYPE_PKMN_* constant)
 Conversion2_PlayerSelection:
-	ldtx hl, ChooseResistanceYouWishToChangeText
-	ld a, $80
-	call HandleColorChangeScreen
+;	ldtx hl, ChooseResistanceYouWishToChangeText
+;	ld a, $80
+;	call HandleColorChangeScreen
 ;	ret c ; exit if the B button was pressed
-	ldh [hTemp_ffa0], a
+;	ldh [hTemp_ffa0], a
 	ret
 
 
@@ -2531,12 +2531,12 @@ Conversion2_AISelection:
 ; input:
 ;	[hTemp_ffa0] = selected type/color (TYPE_PKMN_* constant)
 Conversion2_ChangeResistanceEffect:
-	ld a, DUELVARS_ARENA_CARD_CHANGED_RESISTANCE
-	get_turn_duelist_var
-	ldh a, [hTemp_ffa0]
-	call TranslateColorToWR
-	ld [hl], a
-	ldtx hl, ChangedTheResistanceOfPokemonToColorText
+;	ld a, DUELVARS_ARENA_CARD_CHANGED_RESISTANCE
+;	get_turn_duelist_var
+;	ldh a, [hTemp_ffa0]
+;	call TranslateColorToWR
+;	ld [hl], a
+;	ldtx hl, ChangedTheResistanceOfPokemonToColorText
 ;	fallthrough
 
 ; prints text that requires card name and color,
@@ -2658,10 +2658,10 @@ HandleColorChangeScreen:
 	call GetPlayAreaCardWeakness
 	lb bc, 15, 10
 	bank1call PrintCardPageWeaknessesOrResistances
-	ld a, [wTempPlayAreaLocation_cceb]
-	call GetPlayAreaCardResistance
-	lb bc, 15, 11
-	bank1call PrintCardPageWeaknessesOrResistances
+	;ld a, [wTempPlayAreaLocation_cceb]
+	;call GetPlayAreaCardResistance
+	;lb bc, 15, 11
+	;bank1call PrintCardPageWeaknessesOrResistances
 
 	call DrawWideTextBox
 
@@ -2723,7 +2723,7 @@ ShiftMenuData:
 	; x, y, text ID
 	textitem 10,  9, TypeText
 	textitem 10, 10, WeaknessText
-	textitem 10, 11, ResistanceText
+;	textitem 10, 11, ResistanceText
 	db $ff
 
 ColorTileAndBGP:

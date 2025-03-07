@@ -56,7 +56,7 @@ AIDecideWhetherToRetreat:
 ; then allow the AI to attach an Energy card from its hand
 ; to the Active Pokémon in order to pay its Retreat Cost.
 	call CheckIfNotABossDeckID
-	jr c, .check_resistance_1
+	;jr c, .check_resistance_1
 	ld a, [wAIPlayerPrizeCount]
 	cp 1
 	jr nz, .check_prize_count
@@ -66,7 +66,7 @@ AIDecideWhetherToRetreat:
 ; increase the score by 2 if AI is using a boss deck
 ; and the Player only has 1 remaining Prize card.
 	call CheckIfNotABossDeckID
-	jr c, .check_resistance_1
+	;jr c, .check_resistance_1
 	ld a, [wAIPlayerPrizeCount]
 	dec a ; cp 1
 	ld a, 2
@@ -79,38 +79,38 @@ AIDecideWhetherToRetreat:
 	ld a, 2
 	call z, AIDiscourage ; subtract 2 if on last prize
 
-.check_resistance_1
+;.check_resistance_1
 ; increase the score by 1 if the Defending Pokémon
 ; has a Resistance to the AI's Active Pokémon.
-	call GetArenaCardColor
-	call TranslateColorToWR
-	ld b, a
-	ld a, [wAIPlayerResistance]
-	and b
-	jr z, .check_weakness_1
-	ld a, 1
-	call AIEncourage
+;	call GetArenaCardColor
+;	call TranslateColorToWR
+;	ld b, a
+;	ld a, [wAIPlayerResistance]
+;	and b
+;	jr z, .check_weakness_1
+;	ld a, 1
+;	call AIEncourage
 
 ; look for a Pokémon on the AI's Bench with a type that
 ; the Defending Pokémon doesn't have a Resistance to.
 ; if none were found, decrease the AI score by 2.
-	ld a, [wAIPlayerResistance]
-	ld b, a
-	ld a, DUELVARS_BENCH
-	get_turn_duelist_var
-.loop_resistance_1
-	ld a, [hli]
-	cp -1 ; empty play area slot?
-	jr z, .exit_loop_resistance_1
-	call LoadCardDataToBuffer1_FromDeckIndex
-	ld a, [wLoadedCard1Type]
-	call TranslateColorToWR
-	and b
-	jr nz, .loop_resistance_1
+;	ld a, [wAIPlayerResistance]
+;	ld b, a
+;	ld a, DUELVARS_BENCH
+;	get_turn_duelist_var
+;.loop_resistance_1
+;	ld a, [hli]
+;	cp -1 ; empty play area slot?
+;	jr z, .exit_loop_resistance_1
+;	call LoadCardDataToBuffer1_FromDeckIndex
+;	ld a, [wLoadedCard1Type]
+;	call TranslateColorToWR
+;	and b
+;	jr nz, .loop_resistance_1
 	jr .check_weakness_1
-.exit_loop_resistance_1
-	ld a, 2
-	call AIDiscourage
+;.exit_loop_resistance_1
+;	ld a, 2
+;	call AIDiscourage
 
 .check_weakness_1
 ; increase the score by 2 if the AI's Active Pokémon
@@ -119,7 +119,7 @@ AIDecideWhetherToRetreat:
 	ld b, a
 	call GetArenaCardWeakness
 	and b
-	jr z, .check_resistance_2
+;	jr z, .check_resistance_2
 	ld a, 2
 	call AIEncourage
 
@@ -139,20 +139,20 @@ AIDecideWhetherToRetreat:
 	and b
 	jr nz, .loop_weakness_1
 	; found a Benched Pokémon that isn't weak to the Defending Pokémon
-	jr .check_resistance_2
+;	jr .check_resistance_2
 .exit_loop_weakness_1
 	ld a, 3
 	call AIDiscourage
 
-.check_resistance_2
+;.check_resistance_2
 ; decrease the score by 3 if the AI's Active Pokémon
 ; has a Resistance to the Defending Pokémon's type.
 ;	ld a, [wAIPlayerColor]
 ;	ld b, a ; Defending Pokémon's type is already in b
-	call GetArenaCardResistance
-	and b
-	ld a, 3
-	call nz, AIDiscourage ; subtract 3 if it has a useful Resistance
+;	call GetArenaCardResistance
+;	and b
+;	ld a, 3
+;	call nz, AIDiscourage ; subtract 3 if it has a useful Resistance
 
 ; look for a Pokémon on the AI's Bench with a type
 ; that matches the Defending Pokémon's Weakness.
@@ -165,7 +165,7 @@ AIDecideWhetherToRetreat:
 .loop_weakness_2
 	ld a, [hli]
 	cp -1 ; empty play area slot?
-	jr z, .check_resistance_3
+	;jr z, .check_resistance_3
 	inc e
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld a, [wLoadedCard1Type]
@@ -190,7 +190,7 @@ AIDecideWhetherToRetreat:
 	jr nc, .check_weakness_3
 	ld a, 10
 	call AIEncourage
-	jr .check_resistance_3
+;	jr .check_resistance_3
 
 .check_weakness_3
 ; decrease the score by 3 if the Defending Pokémon has
@@ -206,21 +206,21 @@ AIDecideWhetherToRetreat:
 ; look for a Pokémon on the AI's Bench with
 ; a Resistance to the Defending Pokémon's type.
 ; if any were found, increase the AI score by 1.
-.check_resistance_3
-	ld a, [wAIPlayerColor]
-	ld b, a
-	ld a, DUELVARS_BENCH
-	get_turn_duelist_var
-.loop_resistance_2
-	ld a, [hli]
-	cp -1 ; empty play area slot?
-	jr z, .check_ko_2
-	call LoadCardDataToBuffer1_FromDeckIndex
-	ld a, [wLoadedCard1Resistance]
-	and b
-	jr z, .loop_resistance_2
-	ld a, 1
-	call AIEncourage
+;.check_resistance_3
+;	ld a, [wAIPlayerColor]
+;	ld b, a
+;	ld a, DUELVARS_BENCH
+;	get_turn_duelist_var
+;.loop_resistance_2
+;	ld a, [hli]
+;	cp -1 ; empty play area slot?
+;	jr z, .check_ko_2
+;	call LoadCardDataToBuffer1_FromDeckIndex
+;	ld a, [wLoadedCard1Resistance]
+;	and b
+;	jr z, .loop_resistance_2
+;	ld a, 1
+;	call AIEncourage
 
 ; look for a Pokémon on the AI's Bench that can KO the Defending Pokémon.
 ; if any were found, increase the AI score by 2.
@@ -556,18 +556,18 @@ AIDecideBenchPokemonToSwitchTo:
 
 ; decrease this Pokémon's score by 2 if the Defending Pokémon
 ; has a Resistance to this Pokémon's type.
-	ld a, [wAIPlayerResistance]
-	and c
-	ld a, 2
-	call nz, AIDiscourage ; subtract 2 if it will be affected by Resistance
+;	ld a, [wAIPlayerResistance]
+;	and c
+;	ld a, 2
+;	call nz, AIDiscourage ; subtract 2 if it will be affected by Resistance
 
 ; increase this Pokémon's score by 2 if it has a Resistance to the Defending Pokémon's type.
-	ld a, [wAIPlayerColor]
-	ld c, a
-	ld a, [wLoadedCard1Resistance]
-	and c
-	ld a, 2
-	call nz, AIEncourage ; add 2 if it has a useful Resistance
+;	ld a, [wAIPlayerColor]
+;	ld c, a
+;	ld a, [wLoadedCard1Resistance]
+;	and c
+;	ld a, 2
+;	call nz, AIEncourage ; add 2 if it has a useful Resistance
 
 ; decrease this Pokémon's score by 3 if it has a Weakness to the Defending Pokémon's type.
 	ld a, [wLoadedCard1Weakness]

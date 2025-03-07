@@ -347,15 +347,15 @@ GetDamageText:
 	call LoadTxRam3
 	ld a, [wDamageAnimEffectiveness]
 	ldtx hl, AttackDamageText
-	and (1 << RESISTANCE) | (1 << WEAKNESS)
+	and (1 << WEAKNESS)
 	ret z ; not weak or resistant
 	ldtx hl, WeaknessMoreDamageText
-	cp (1 << RESISTANCE) | (1 << WEAKNESS)
+	cp  (1 << WEAKNESS)
 	ret z ; weak and resistant
 	and (1 << WEAKNESS)
 	ldtx hl, WeaknessMoreDamageText
-	ret nz ; weak
-	ldtx hl, ResistanceLessDamageText
+	;ret nz ; weak
+	;ldtx hl, ResistanceLessDamageText
 	ret ; resistant
 
 .no_damage
@@ -363,10 +363,10 @@ GetDamageText:
 	ret c
 	ldtx hl, NoDamageText
 	ld a, [wDamageAnimEffectiveness]
-	and (1 << RESISTANCE)
-	ret z ; not resistant
-	ldtx hl, ResistanceNoDamageText
-	ret ; resistant
+	;and (1 << RESISTANCE)
+	ret ; not resistant
+	;ldtx hl, ResistanceNoDamageText
+	;ret ; resistant
 
 
 UpdateMainSceneHUD:

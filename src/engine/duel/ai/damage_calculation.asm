@@ -155,7 +155,7 @@ CalculateDamage_VersusDefendingPokemon:
 	; skips the weak/res checks if unaffected.
 	bit UNAFFECTED_BY_WEAKNESS_RESISTANCE_F, d
 	res UNAFFECTED_BY_WEAKNESS_RESISTANCE_F, d
-	jr nz, .not_resistant
+	jr nz, .apply_pluspower_or_defender
 
 ; handle weakness
 	ldh a, [hTempPlayAreaLocation_ff9d]
@@ -166,24 +166,24 @@ CalculateDamage_VersusDefendingPokemon:
 	call GetArenaCardWeakness
 	rst SwapTurn
 	and b
-	jr z, .not_weak
+	jr z, .apply_pluspower_or_defender
 	; double de
 	sla e
 	rl d
 
-.not_weak
+;.not_weak
 ; handle resistance
-	rst SwapTurn
-	call GetArenaCardResistance
-	rst SwapTurn
-	and b
-	jr z, .not_resistant
-	ld hl, -30
-	add hl, de
-	ld e, l
-	ld d, h
+;	rst SwapTurn
+;	call GetArenaCardResistance
+;	rst SwapTurn
+;	and b
+;	jr z, .not_resistant
+;	ld hl, -30
+;	add hl, de
+;	ld e, l
+;	ld d, h
 
-.not_resistant
+.apply_pluspower_or_defender
 ; account for any attached PlusPower or Defender cards.
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	add CARD_LOCATION_ARENA
@@ -361,7 +361,7 @@ CalculateDamage_FromDefendingPokemon:
 
 	bit UNAFFECTED_BY_WEAKNESS_RESISTANCE_F, d
 	res UNAFFECTED_BY_WEAKNESS_RESISTANCE_F, d
-	jr nz, .not_resistant
+	jr nz, .apply_pluspower_or_defender
 
 ; handle weakness
 	rst SwapTurn
@@ -372,23 +372,23 @@ CalculateDamage_FromDefendingPokemon:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call GetPlayAreaCardWeakness
 	and b
-	jr z, .not_weak
+	jr z, .apply_pluspower_or_defender
 	; double de
 	sla e
 	rl d
 
-.not_weak
+;.not_weak
 ; handle resistance
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	call GetPlayAreaCardResistance
-	and b
-	jr z, .not_resistant
-	ld hl, -30
-	add hl, de
-	ld e, l
-	ld d, h
+;	ldh a, [hTempPlayAreaLocation_ff9d]
+;	call GetPlayAreaCardResistance
+;	and b
+;	jr z, .not_resistant
+;	ld hl, -30
+;	add hl, de
+;	ld e, l
+;	ld d, h
 
-.not_resistant
+.apply_pluspower_or_defender
 ; account for any attached Pluspower and Defender cards.
 	rst SwapTurn
 	ld b, CARD_LOCATION_ARENA

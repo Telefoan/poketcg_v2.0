@@ -1530,21 +1530,21 @@ ApplyDamageModifiers_DamageToSelf::
 	ld b, a
 	call GetArenaCardWeakness
 	and b
-	jr z, .not_weak
+	jr z, .not_resistant
 	sla e
 	rl d
 	ld hl, wDamageEffectiveness
 	set WEAKNESS, [hl]
-.not_weak
-	call GetArenaCardResistance
-	and b
-	jr z, .not_resistant
-	ld hl, -30 ; Resistance is always -30 in this game
-	add hl, de
-	ld e, l
-	ld d, h
-	ld hl, wDamageEffectiveness
-	set RESISTANCE, [hl]
+;.not_weak
+;	call GetArenaCardResistance
+;	and b
+;	jr z, .not_resistant
+;	ld hl, -30 ; Resistance is always -30 in this game
+;	add hl, de
+;	ld e, l
+;	ld d, h
+;	ld hl, wDamageEffectiveness
+;	set RESISTANCE, [hl]
 .not_resistant
 	ld b, CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower

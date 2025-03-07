@@ -13,8 +13,8 @@ MACRO card_data_struct
 \1Atk1::         atk_data_struct \1Atk1
 \1Atk2::         atk_data_struct \1Atk2
 \1RetreatCost::   ds 1
-\1Weakness::      ds 1
-\1Resistance::    ds 1
+\1Weakness::      ds 2
+;\1Resistance::    ds 1
 \1Category::      ds 2
 \1PokedexNumber:: ds 2
 \1Level::         ds 1

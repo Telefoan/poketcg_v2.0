@@ -580,23 +580,23 @@ AIDecide_Defender_Phase14:
 	ld b, a
 	call GetArenaCardWeakness
 	and b
-	jr z, .check_resist
+	jr z, .subtract
 	sla d ; double the amount of recoil damage
 
 ; reduce the recoil damage by 30 if the Active Pokémon has a Resistance to its own type/color.
 ; don't play Defender if this causes an underflow (i.e. the recoil damage is now a negative number).
-.check_resist
-	call GetArenaCardColor
-	call TranslateColorToWR
-	ld b, a
-	call GetArenaCardResistance
-	and b
-	jr z, .subtract
-	ld a, d
-	sub 30
-	ccf
-	ret nc
-	ld d, a
+;.check_resist
+;	call GetArenaCardColor
+;	call TranslateColorToWR
+;	ld b, a
+;	call GetArenaCardResistance
+;	and b
+;	jr z, .subtract
+;	ld a, d
+;	sub 30
+;	ccf
+;	ret nc
+;	ld d, a
 
 ; don't play Defender if the current recoil damage is 0 or
 ; if the Active Pokémon will still be KO'd after playing the Defender,
@@ -1101,7 +1101,7 @@ FindBenchCardToKnockOut:
 	farcall CheckIfActiveWillNotBeAbleToKODefending
 
 ; restore all of the Defending Pokémon variables while preserving the status of the carry flag.
-	pop hl ; DUELVARS_ARENA_CARD_CHANGED_RESISTANCE
+;	pop hl ; DUELVARS_ARENA_CARD_CHANGED_RESISTANCE
 	pop bc ; Defending Pokémon's changed Weakness/Resistance
 	ld [hl], c
 	dec l ; DUELVARS_ARENA_CARD_CHANGED_WEAKNESS

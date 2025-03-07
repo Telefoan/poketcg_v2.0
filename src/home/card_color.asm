@@ -81,31 +81,31 @@ GetCardWeakness::
 ;	a = Pokémon's play area location offset (PLAY_AREA_* constant)
 ; output:
 ;	a = Resistance of the Pokemon from input
-GetPlayAreaCardResistance::
-	or a
-	jr z, GetArenaCardResistance ; it's the Active Pokemon
-	; it's a Benched Pokemon
-	add DUELVARS_ARENA_CARD
-	jr GetCardResistance
+;GetPlayAreaCardResistance::
+;	or a
+;	jr z, GetArenaCardResistance ; it's the Active Pokemon
+;	; it's a Benched Pokemon
+;	add DUELVARS_ARENA_CARD
+;	jr GetCardResistance
 
 ; finds the Resistance of the turn holder's Active Pokemon's, either what's
 ; printed on the card or whatever it might have become via a card effect
 ; preserves bc and de
 ; output:
 ;	a = Resistance of the turn holder's Active Pokemon
-GetArenaCardResistance::
-	ld a, DUELVARS_ARENA_CARD_CHANGED_RESISTANCE
-	get_turn_duelist_var
-	or a
-	ret nz
-	ld a, DUELVARS_ARENA_CARD
+;GetArenaCardResistance::
+;	ld a, DUELVARS_ARENA_CARD_CHANGED_RESISTANCE
+;	get_turn_duelist_var
+;	or a
+;	ret nz
+;	ld a, DUELVARS_ARENA_CARD
 ;	fallthrough
 
-GetCardResistance::
-	get_turn_duelist_var
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Resistance]
-	ret
+;GetCardResistance::
+;	get_turn_duelist_var
+;	call LoadCardDataToBuffer2_FromDeckIndex
+;	ld a, [wLoadedCard2Resistance]
+;	ret
 
 
 ; converts a color to its equivalent WR_* (weakness/resistance) value

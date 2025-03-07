@@ -194,7 +194,7 @@ DEF EFFECTCMDTYPE_AI                       EQU $09
 
 ; wDamageEffectiveness constants
 DEF WEAKNESS   EQU 1
-DEF RESISTANCE EQU 2
+;DEF RESISTANCE EQU 2
 
 ; wNoDamageOrEffect constants
 DEF NO_DAMAGE_OR_EFFECT_ATTACK       EQU $01

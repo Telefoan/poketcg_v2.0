@@ -4808,14 +4808,14 @@ DisplayCardPage_PokemonOverview:
 	jr nz, .wr_from_loaded_card
 	call GetArenaCardWeakness
 	ld d, a
-	call GetArenaCardResistance
-	ld e, a
+	;call GetArenaCardResistance
+	;ld e, a
 	jr .got_wr
 .wr_from_loaded_card
 	ld a, [wLoadedCard1Weakness]
 	ld d, a
-	ld a, [wLoadedCard1Resistance]
-	ld e, a
+	;ld a, [wLoadedCard1Resistance]
+	;ld e, a
 .got_wr
 	ld a, d
 	ld b, 8
@@ -5043,7 +5043,7 @@ DrawCardPageSurroundingBox:
 CardPageRetreatWRTextData:
 	textitem 1, 14, RetreatCostText
 	textitem 1, 15, WeaknessText
-	textitem 1, 16, ResistanceText
+;	textitem 1, 16, ResistanceText
 	textitem 15, 16, NumberSymbolText
 	db $ff
 
@@ -9053,23 +9053,23 @@ ApplyDamageModifiers_DamageToTarget:
 	call GetArenaCardWeakness
 	rst SwapTurn
 	and b
-	jr z, .not_weak
+	jr z, .check_pluspower_and_defender
 	sla e
 	rl d
 	ld hl, wDamageEffectiveness
 	set WEAKNESS, [hl]
-.not_weak
-	rst SwapTurn
-	call GetArenaCardResistance
-	rst SwapTurn
-	and b
-	jr z, .check_pluspower_and_defender ; jump if Pokemon has no Resistance
-	ld hl, -30 ; Resistance is always -30 in this game
-	add hl, de
-	ld e, l
-	ld d, h
+;.not_weak
+	;rst SwapTurn
+	;call GetArenaCardResistance
+	;rst SwapTurn
+	;and b
+	;jr z, .check_pluspower_and_defender ; jump if Pokemon has no Resistance
+	;ld hl, -30 ; Resistance is always -30 in this game
+	;add hl, de
+	;ld e, l
+	;ld d, h
 	ld hl, wDamageEffectiveness
-	set RESISTANCE, [hl]
+	;set RESISTANCE, [hl]
 .check_pluspower_and_defender
 	ld b, CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower
