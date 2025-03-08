@@ -70,6 +70,8 @@ DEF CARD_DATA_WEAKNESS                EQU $33 ; 1 byte
 ;DEF CARD_DATA_CATEGORY                EQU $35 ; 2 bytes 
 ;DEF CARD_DATA_POKEDEX_NUMBER          EQU $37 ; 2 bytes
 DEF CARD_DATA_LEVEL                   EQU $39 ; 1 byte 
+;DEF CARD_DATA_LENGTH                  EQU $3a ; 2 bytes (1 for ft, 1 for inches)
+;DEF CARD_DATA_WEIGHT                  EQU $3c ; 2 bytes 
 DEF CARD_DATA_PKMN_DESCRIPTION        EQU $3e ; 2 bytes 
 DEF CARD_DATA_PKMN_FLAGS              EQU $40 ; 1 byte 
 
