@@ -4764,12 +4764,12 @@ DisplayCardPage_PokemonOverview:
 ; common for both card page types
 .print_numbers_and_energies
 	; print Pokedex number in the bottom right corner (16,16)
-	lb bc, 16, 16
-	ld hl, wLoadedCard1PokedexNumber
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call WriteThreeDigitNumberInTxSymbolFormat
+	;lb bc, 16, 16
+	;ld hl, wLoadedCard1PokedexNumber
+	;ld a, [hli]
+	;ld h, [hl]
+	;ld l, a
+	;call WriteThreeDigitNumberInTxSymbolFormat
 	; print the name, damage, and Energy cost of each attack and/or Pokemon Power that exists
 	; first attack at 5,10 and second at 5,12
 	lb bc, 5, 10
@@ -5044,7 +5044,7 @@ CardPageRetreatWRTextData:
 	textitem 1, 14, RetreatCostText
 	textitem 1, 15, WeaknessText
 ;	textitem 1, 16, ResistanceText
-	textitem 15, 16, NumberSymbolText
+;	textitem 15, 16, NumberSymbolText
 	db $ff
 
 
