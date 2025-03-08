@@ -5148,8 +5148,8 @@ DisplayCardPage_PokemonDescription:
 	; print surrounding box, card name at 5,1, type, set 2, and rarity
 	call PrintPokemonCardPageGenericInformation
 	; print "LENGTH", "WEIGHT", "Lv", and "HP" where it corresponds in the page
-	ld hl, CardPageLengthWeightTextData
-	call PlaceTextItems
+	;ld hl, CardPageLengthWeightTextData
+	;call PlaceTextItems
 	ld hl, CardPageLvHPTextTileData
 	call WriteDataBlocksToBGMap0
 	; draw the card symbol associated to its TYPE_* at 3,2
@@ -5171,20 +5171,20 @@ DisplayCardPage_PokemonDescription:
 	;ldtx hl, PokemonText
 	;call ProcessTextFromID
 	; print the length and weight values at 5,11 and 5,12 respectively
-	lb bc, 5, 11
-	ld hl, wLoadedCard1Length
-	ld a, [hli]
-	ld l, [hl]
-	ld h, a
-	call PrintPokemonCardLength
-	lb bc, 5, 12
-	ld hl, wLoadedCard1Weight
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call PrintPokemonCardWeight
-	ldtx hl, LbsText
-	call InitTextPrinting_ProcessTextFromID
+	;lb bc, 5, 11
+	;ld hl, wLoadedCard1Length
+	;ld a, [hli]
+	;ld l, [hl]
+	;ld h, a
+	;call PrintPokemonCardLength
+	;lb bc, 5, 12
+	;ld hl, wLoadedCard1Weight
+	;ld a, [hli]
+	;ld h, [hl]
+	;ld l, a
+	;call PrintPokemonCardWeight
+	;ldtx hl, LbsText
+	;call InitTextPrinting_ProcessTextFromID
 	; print the card's description without line separation
 	ld a, SINGLE_SPACED
 	ld [wLineSeparation], a

@@ -215,12 +215,12 @@ DrawBottomCardInfoInSRAMGfxBuffer0:
 	call PlaceTextItems
 	ld c, 66
 	bank1call DisplayCardPage_PokemonOverview.attacks
-	lb bc, 16, 72
-	ld hl, wLoadedCard1PokedexNumber
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	jp WriteThreeDigitNumberInTxSymbolFormat
+	;lb bc, 16, 72
+	;ld hl, wLoadedCard1PokedexNumber
+	;ld a, [hli]
+	;ld h, [hl]
+	;ld l, a
+	;jp WriteThreeDigitNumberInTxSymbolFormat
 
 .not_pkmn_card
 	ld a, SINGLE_SPACED
