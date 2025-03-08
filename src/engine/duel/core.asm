@@ -5186,24 +5186,24 @@ DisplayCardPage_PokemonDescription:
 	;ldtx hl, LbsText
 	;call InitTextPrinting_ProcessTextFromID
 	; print the card's description without line separation
-	ld a, SINGLE_SPACED
-	ld [wLineSeparation], a
-	ld hl, wLoadedCard1Description
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call CountLinesOfTextFromID
-	lb de, 1, 13
-	cp 4
-	jr nc, .print_description
-	inc e ; move a line down, as the description is short enough to fit in three lines
-.print_description
-	ld a, 19 ; line length
-	call InitTextPrintingInTextbox
-	ld hl, wLoadedCard1Description
-	call ProcessTextFromPointerToID
-	xor a ; DOUBLE_SPACED
-	ld [wLineSeparation], a
+	;ld a, SINGLE_SPACED
+	;ld [wLineSeparation], a
+	;ld hl, wLoadedCard1Description
+	;ld a, [hli]
+	;ld h, [hl]
+	;ld l, a
+	;call CountLinesOfTextFromID
+	;lb de, 1, 13
+	;cp 4
+	;jr nc, .print_description
+	;inc e ; move a line down, as the description is short enough to fit in three lines
+;.print_description
+;	ld a, 19 ; line length
+;	call InitTextPrintingInTextbox
+;	ld hl, wLoadedCard1Description
+;	call ProcessTextFromPointerToID
+;	xor a ; DOUBLE_SPACED
+;	ld [wLineSeparation], a
 	ret
 
 CardPageLengthWeightTextData:

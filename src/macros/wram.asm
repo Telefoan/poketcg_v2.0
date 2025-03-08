@@ -17,10 +17,10 @@ MACRO card_data_struct
 ;\1Resistance::    ds 1 
 ;\1Category::      ds 2
 ;\1PokedexNumber:: ds 2
-\1Level::         ds 5 ; 1+2+2
+\1Level::         ds 7 ; 1+2+2+2
 ;\1Length::        ds 2
 ;\1Weight::        ds 2
-\1Description::   ds 2
+;\1Description::   ds 2
 \1PokemonFlags::  ds 1
 ENDM
 
