@@ -4245,7 +4245,7 @@ CardPageDisplayPointerTable:
 	dw DisplayCardPage_PokemonAttack1Page2 ; CARDPAGE_POKEMON_ATTACK1_2
 	dw DisplayCardPage_PokemonAttack2Page1 ; CARDPAGE_POKEMON_ATTACK2_1
 	dw DisplayCardPage_PokemonAttack2Page2 ; CARDPAGE_POKEMON_ATTACK2_2
-	dw DisplayCardPage_PokemonDescription  ; CARDPAGE_POKEMON_DESCRIPTION
+	;dw DisplayCardPage_PokemonDescription  ; CARDPAGE_POKEMON_DESCRIPTION
 	dw DrawDuelMainScene
 	dw DrawDuelMainScene
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY
@@ -4348,7 +4348,7 @@ CardPageSwitchPointerTable:
 	dw CardPageSwitch_PokemonAttack1Page2          ; CARDPAGE_POKEMON_ATTACK1_2
 	dw CardPageSwitch_PokemonAttack2Page1          ; CARDPAGE_POKEMON_ATTACK2_1
 	dw CardPageSwitch_PokemonAttack2Page2          ; CARDPAGE_POKEMON_ATTACK2_2
-	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_DESCRIPTION
+	;dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_DESCRIPTION
 	dw CardPageSwitch_PokemonEnd
 	dw CardPageSwitch_08
 	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_ENERGY
@@ -4363,7 +4363,7 @@ CardPageSwitchPointerTable:
 ; output:
 ;	carry = set
 CardPageSwitch_00:
-	ld a, CARDPAGE_POKEMON_DESCRIPTION
+	ld a, CARDPAGE_POKEMON_OVERVIEW
 	scf
 	ret
 
@@ -5144,24 +5144,24 @@ PrintAttackOrNonPokemonCardDescription:
 
 ; input:
 ;	[wLoadedCard1] = all of the Pokémon's data (card_data_struct)
-DisplayCardPage_PokemonDescription:
+;DisplayCardPage_PokemonDescription:
 	; print surrounding box, card name at 5,1, type, set 2, and rarity
-	call PrintPokemonCardPageGenericInformation
+;	call PrintPokemonCardPageGenericInformation
 	; print "LENGTH", "WEIGHT", "Lv", and "HP" where it corresponds in the page
 	;ld hl, CardPageLengthWeightTextData
 	;call PlaceTextItems
 	ld hl, CardPageLvHPTextTileData
-	call WriteDataBlocksToBGMap0
+;	call WriteDataBlocksToBGMap0
 	; draw the card symbol associated to its TYPE_* at 3,2
-	lb de, 3, 2
-	call DrawCardSymbol
+;	lb de, 3, 2
+;	call DrawCardSymbol
 	; print the Level and HP numbers at 12,2 and 16,2 respectively
-	lb bc, 12, 2
-	ld a, [wLoadedCard1Level]
-	call WriteTwoDigitNumberInTxSymbolFormat_TrimLeadingZero
-	lb bc, 16, 2
-	ld a, [wLoadedCard1HP]
-	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
+;	lb bc, 12, 2
+;	ld a, [wLoadedCard1Level]
+;	call WriteTwoDigitNumberInTxSymbolFormat_TrimLeadingZero
+;	lb bc, 16, 2
+;	ld a, [wLoadedCard1HP]
+;	call WriteOneByteNumberInTxSymbolFormat_TrimLeadingZeros
 	; print the Pokemon's category at 1,10 (just above the length and weight texts)
 	;lb de, 1, 10
 	;ld hl, wLoadedCard1Category
@@ -5204,12 +5204,12 @@ DisplayCardPage_PokemonDescription:
 ;	call ProcessTextFromPointerToID
 ;	xor a ; DOUBLE_SPACED
 ;	ld [wLineSeparation], a
-	ret
+;	ret
 
-CardPageLengthWeightTextData:
-	textitem 1, 11, LengthText
-	textitem 1, 12, WeightText
-	db $ff
+;CardPageLengthWeightTextData:
+;	textitem 1, 11, LengthText
+;	textitem 1, 12, WeightText
+;	db $ff
 
 
 ; input:
