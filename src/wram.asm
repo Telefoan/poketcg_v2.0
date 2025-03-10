@@ -1792,6 +1792,7 @@ wNumUniqueCards:: ; ced9
 ; stores the list of all card IDs that filtered by its card type
 ; (Fire, Water, ..., Energy card, Trainer card)
 wFilteredCardList:: ; ceda
+	ds (MAX_NUM_CARDS_PER_TYPE + 1) * 2
 
 ; stores AI temporary hand card list
 wHandTempList:: ; ceda

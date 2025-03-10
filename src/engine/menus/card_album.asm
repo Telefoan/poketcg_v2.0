@@ -7,7 +7,7 @@
 ;	wOwnedCardsCountList = $ff-terminated list with card counts of every card in the given set
 CreateCardSetList:
 	push af
-	ld a, DECK_SIZE ; number of bytes that will be cleared (max number of cards in a set = 60)
+	ld a, (MAX_NUM_CARDS_PER_TYPE + 1) * 2 ; number of bytes that will be cleared (max number of cards in a set = 60)
 	ld hl, wFilteredCardList
 	call ClearMemory_Bank2
 	ld a, DECK_SIZE ; number of bytes that will be cleared (max number of cards in a set = 60)

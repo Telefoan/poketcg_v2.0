@@ -1283,7 +1283,7 @@ CreateFilteredCardList:
 	ld a, DECK_SIZE ; number of bytes that will be cleared (60)
 	ld hl, wOwnedCardsCountList
 	call ClearMemory_Bank2
-;	ld a, DECK_SIZE ; number of bytes that will be cleared (60)
+;	ld a, (MAX_NUM_CARDS_PER_TYPE + 1) * 2 ; number of bytes that will be cleared (60)
 	ld hl, wFilteredCardList
 	call ClearMemory_Bank2
 	pop af

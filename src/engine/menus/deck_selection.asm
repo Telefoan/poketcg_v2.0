@@ -34,7 +34,7 @@ CopyDeckFromSRAM:
 WriteCardListsTerminatorBytes:
 	xor a ; both lists are null-terminated
 	ld hl, wFilteredCardList
-	ld bc, DECK_SIZE
+	ld bc, MAX_NUM_CARDS_PER_TYPE * 2
 	add hl, bc
 	ld [hl], a ; add terminating byte to wFilteredCardList
 	ld hl, wCurDeckCards
