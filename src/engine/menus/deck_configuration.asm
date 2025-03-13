@@ -3350,7 +3350,7 @@ DrawCardTypeIcons:
 
 .CardTypeIcons
 ; icon tile, x coordinate, y coordinate
-	db ICON_TILE_GRASS,      1, 2
+	db ICON_TILE_GRASS,      0, 1
 	db ICON_TILE_FIRE,       3, 2
 	db ICON_TILE_WATER,      5, 2
 	db ICON_TILE_LIGHTNING,  7, 2
