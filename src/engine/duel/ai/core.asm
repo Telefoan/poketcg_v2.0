@@ -1385,10 +1385,15 @@ CheckEnergyFlagsNeededInList:
 	jr .check_energy
 .psychic
 	cp PSYCHIC_ENERGY
-	jr nz, .colorless
+	jr nz, .double_colorless
 	ld a, PSYCHIC_F
 	jr .check_energy
 .colorless
+	cp COLORLESS_ENERGY
+	jr nz, .colorless
+	ld a, COLORLESS_F
+	jr .check_energy
+.double_colorless
 	cp DOUBLE_COLORLESS_ENERGY
 	jr nz, .loop_cards
 	ld a, COLORLESS_F
