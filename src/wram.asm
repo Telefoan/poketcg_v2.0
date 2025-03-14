@@ -907,7 +907,7 @@ wUppercaseHalfWidthLetters:: ; cd0d
 	ds $1
 
 ; Unused wram byte?
-	ds $1
+;	ds $1
 
 ; handles timing of (horizontal or vertical) arrow blinking while waiting for user input.
 wCursorBlinkCounter:: ; cd0f
@@ -960,7 +960,7 @@ wListFunctionPointer:: ; cd1d
 	ds $2
 
 ; Unused wram bytes?
-	ds $77
+;	ds $77
 
 ; indicates that an alternate format should be used when displaying a card list.
 ; currently only used when opening a booster pack (if = USE_BOOSTER_PACK_DISPLAY).
@@ -1006,7 +1006,7 @@ wCoinTossNumTossed:: ; cd9f
 	ds $1
 
 ; Unused wram bytes?
-	ds $5
+;	ds $5
 
 wAIDuelVars::
 ; saves the Prize cards that the AI has already selected with the Peek Pokemon Power
@@ -1097,7 +1097,7 @@ wTempCardType:: ; cdba
 	ds $1
 
 ; Unused wram bytes?
-	ds $3
+;	ds $3
 
 ; used for AI to score decisions for actions
 wAIScore:: ; cdbe
@@ -1118,7 +1118,7 @@ wFirstAttackAIScore:: ; cdbf
 ENDU
 
 ; Unused wram bytes?
-	ds $4
+;	ds $4
 
 ; information about the Defending Pokémon and
 ; the Prize card count on both sides for AI:
@@ -1234,7 +1234,7 @@ wCurCardCanKO:: ; cdf4
 	ds $1
 
 ; Unused wram bytes?
-	ds $4
+;	ds $4
 
 wSamePokemonCardID:: ; cdf9
 	ds $1
@@ -1539,7 +1539,7 @@ wTempPokemonID_ce7c:: ; ce7c
 	ds $1
 
 ; Unused wram byte?
-	ds $1
+;	ds $1
 
 wce7e:: ; ce7e
 	ds $1
@@ -1593,7 +1593,7 @@ wCurDeckEnergyCardCount:: ; ce95
 	ds $1
 
 ; Unused wram byte
-	ds $1
+;	ds $1
 
 NEXTU
 
@@ -1657,7 +1657,7 @@ wCardListVisibleOffset:: ; cea1
 	ds $1
 
 ; Unused wram byte?
-	ds $1
+;	ds $1
 
 ; it's used when the player enters the check menu or one of its sub-menus.
 ; increases from 0x00 to 0xff. the game makes its blinking cursor by this.
@@ -1725,7 +1725,7 @@ wValidDecks:: ; ceb2
 	ds $1
 
 ; Unused wram bytes
-	ds $3
+;	ds $3
 
 ; holds symbols for representing a number in decimal
 ; goes up in magnitude (first byte is ones place,
@@ -1906,6 +1906,8 @@ wNamingScreenBuffer:: ; cfe7
 ; current name length in the naming screen.
 wNamingScreenBufferLength:: ; cfff
 	ds $1
+
+	ds $64
 
 SECTION "WRAM1", WRAMX
 wNamingScreenDestPointer:: ; d000

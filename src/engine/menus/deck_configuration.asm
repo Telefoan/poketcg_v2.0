@@ -589,10 +589,10 @@ HandleDeckBuildScreen:
 	jp .print_card_list
 
 FiltersCardSelectionParams:
-	db 1 ; x position
-	db 1 ; y position
+	db 0 ; x position
+	db 0 ; y position
 	db 0 ; y spacing
-	db 2 ; x spacing
+	db 3 ; x spacing
 	db NUM_FILTERS ; number of entries
 	db SYM_CURSOR_D ; visible cursor tile
 	db SYM_SPACE ; invisible cursor tile
@@ -600,7 +600,7 @@ FiltersCardSelectionParams:
 
 FilteredCardListSelectionParams:
 	db 0 ; x position
-	db 7 ; y position
+	db 9 ; y position
 	db 2 ; y spacing
 	db 0 ; x spacing
 	db NUM_FILTERED_LIST_VISIBLE_CARDS ; number of entries
@@ -1183,14 +1183,14 @@ CheckCardListForBasicPokemonUsingCardID:
 DrawCardTypeIconsAndPrintCardCounts:
 	call Set_OBJ_8x8
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
-	lb bc, 0, 5
+	lb bc, 0, 7
 	ld a, SYM_BOX_TOP
 	call FillBGMapLineWithA
 	call DrawCardTypeIcons
 	call PrintCardTypeCounts
-	lb de, 15, 0
+	lb de, 18, 0
 	call PrintTotalCardCount
-	lb bc, 17, 0
+	lb bc, 17, 1
 	call PrintSlashSixty
 	jp EnableLCD
 
@@ -1663,11 +1663,12 @@ PrintCardTypeCounts:
 .loop
 	ld a, [de]
 	inc de
+	inc de
 	call ConvertToNumericalDigits
 	dec c
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 1, 4
+	lb de, 0, 3
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
@@ -3091,7 +3092,7 @@ HandlePlayersCardsScreen:
 
 CardsScreenSelectionParams:
 	db 1 ; x position
-	db 5 ; y position
+	db 7 ; y position
 	db 2 ; y spacing
 	db 0 ; x spacing
 	db 7 ; number of entries
@@ -3350,15 +3351,18 @@ DrawCardTypeIcons:
 
 .CardTypeIcons
 ; icon tile, x coordinate, y coordinate
-	db ICON_TILE_GRASS,      1, 2
-	db ICON_TILE_FIRE,       3, 2
-	db ICON_TILE_WATER,      5, 2
-	db ICON_TILE_LIGHTNING,  7, 2
-	db ICON_TILE_FIGHTING,   9, 2
-	db ICON_TILE_PSYCHIC,   11, 2
-	db ICON_TILE_COLORLESS, 13, 2
-	db ICON_TILE_TRAINER,   15, 2
-	db ICON_TILE_ENERGY,    17, 2
+	db ICON_TILE_GRASS,      0, 1
+	db ICON_TILE_FIRE,       3, 1
+	db ICON_TILE_WATER,      6, 1
+	db ICON_TILE_LIGHTNING,  9, 1
+	db ICON_TILE_FIGHTING,   12, 1
+	db ICON_TILE_PSYCHIC,   15, 1
+	db ICON_TILE_COLORLESS, 0, 4
+	;db ICON_TILE_DARK, 	3, 4 
+	;db ICON_TILE_STEEL, 	6, 4 
+	;db ICON_TILE_DRAGON,	9, 4  
+	db ICON_TILE_TRAINER,   12, 4
+	db ICON_TILE_ENERGY,    15, 4
 	db $00
 
 
