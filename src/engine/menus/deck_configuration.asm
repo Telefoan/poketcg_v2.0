@@ -106,8 +106,8 @@ AddDeckToCollection:
 DrawDecksScreen:
 	ldh [hffb5], a
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
-	lb de, 0,  0
-	lb bc, 20, 13
+	lb de, 0,  0 ; x,y coords for start of box
+	lb bc, 20, 13 ; x,y coords for end of box
 	call DrawRegularTextBox
 	ld b, SCREEN_WIDTH
 	lb de, 0, 3
@@ -594,13 +594,13 @@ FiltersCardSelectionParams:
 	db 0 ; y spacing
 	db 3 ; x spacing
 	db NUM_FILTERS ; number of entries
-	db SYM_CURSOR_D ; visible cursor tile
+	db SYM_CURSOR_R ; visible cursor tile
 	db SYM_SPACE ; invisible cursor tile
 	dw NULL ; wCardListHandlerFunction
 
 FilteredCardListSelectionParams:
-	db 0 ; x position
-	db 9 ; y position
+	db DB_FILTERED_CARD_LIST_START_X - 1 ; x position
+	db DB_FILTERED_CARD_LIST_START_Y ; y position
 	db 2 ; y spacing
 	db 0 ; x spacing
 	db NUM_FILTERED_LIST_VISIBLE_CARDS ; number of entries
@@ -1183,14 +1183,23 @@ CheckCardListForBasicPokemonUsingCardID:
 DrawCardTypeIconsAndPrintCardCounts:
 	call Set_OBJ_8x8
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
-	lb bc, 0, 7
-	ld a, SYM_BOX_TOP
-	call FillBGMapLineWithA
+	; screen divider
+	;lb bc, 6, 0
+	;ld a, SYM_BOX_RIGHT
+	;call FillBGMapColumnWithA
+
+	;lb de, 0, 0 ; x,y coords for start of box
+	;lb bc, 6, 18 ; x,y coords for end of box
+	;call DrawRegularTextBox
+
+	; type icons and count
 	call DrawCardTypeIcons
-	call PrintCardTypeCounts
-	lb de, 18, 0
+	call PrintCardTypeCountsAll12
+	;call PrintCardTypeCountsBottomRow
+	; deck total and deck max
+	lb de, DB_TOTAL_CARD_COUNT_X, DB_TOTAL_CARD_COUNT_Y ; x, y coords
 	call PrintTotalCardCount
-	lb bc, 17, 1
+	lb bc, 17, 0 ; x, y coords
 	call PrintSlashSixty
 	jp EnableLCD
 
@@ -1202,13 +1211,14 @@ DrawCardTypeIconsAndPrintCardCounts:
 ;	bc = coordinates to print line
 FillBGMapLineWithA::
 	call BCCoordToBGMap0Address
-	ld b, SCREEN_WIDTH
+	ld b, SCREEN_HEIGHT
 	call FillDEWithA
+	; palette
 	ld a, [wConsole]
 	cp CONSOLE_CGB
 	ret nz ; return if not CGB
 	ld a, $04 ; CGB Background Palette 4 (orange/red)
-	ld b, SCREEN_WIDTH
+	ld b, SCREEN_HEIGHT
 	call BankswitchVRAM1
 	call FillDEWithA
 	jp BankswitchVRAM0
@@ -1228,6 +1238,65 @@ FillDEWithA:
 	dec b
 	jr nz, .loop
 	ret
+
+; draws the same tile across an entire column in BG Map
+; if CGB, also fills the line with background palette 4 in VRAM1
+; input:
+;	a = TX_SYMBOL (SYM_* constant)
+;	bc = coordinates to print line
+FillBGMapColumnWithA:
+	ld hl, ColumnTileData
+	call WriteDataBlocksToBGMap0
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	ret nz
+	call BankswitchVRAM1
+	ld hl, ColumnTileCGBPalData
+	call WriteDataBlocksToBGMap0
+	jp BankswitchVRAM0
+
+ColumnTileData:
+; x, y, (tile marked in a), 0
+	db 6, 0, $00, 0
+	db 6, 1, $00, 0
+	db 6, 2, $00, 0
+	db 6, 3, $00, 0
+	db 6, 4, $00, 0
+	db 6, 5, $00, 0
+	db 6, 6, $00, 0
+	db 6, 7, $00, 0
+	db 6, 8, $00, 0
+	db 6, 9, $00, 0
+	db 6, 10, $00, 0
+	db 6, 11, $00, 0
+	db 6, 12, $00, 0
+	db 6, 13, $00, 0
+	db 6, 14, $00, 0
+	db 6, 15, $00, 0
+	db 6, 16, $00, 0
+	db 6, 17, $00, 0
+
+
+ColumnTileCGBPalData:
+;x, y, palette, 0
+	db 6, 0, $02, 0
+	db 6, 1, $02, 0
+	db 6, 2, $02, 0
+	db 6, 3, $02, 0
+	db 6, 4, $02, 0
+	db 6, 5, $02, 0
+	db 6, 6, $02, 0
+	db 6, 7, $02, 0
+	db 6, 8, $02, 0
+	db 6, 9, $02, 0
+	db 6, 10, $02, 0
+	db 6, 11, $02, 0
+	db 6, 12, $02, 0
+	db 6, 13, $02, 0
+	db 6, 14, $02, 0
+	db 6, 15, $02, 0
+	db 6, 16, $02, 0
+	db 6, 17, $02, 0
 
 
 ; saves the count of each type of card that is in wCurDeckCards
@@ -1595,7 +1664,6 @@ ConvertToNumericalDigits:
 	ld [hli], a
 	ret
 
-
 ; counts the number of cards in wCurDeckCards
 ; that are the same type as the input in register a.
 ; if input is $20, counts all Energy cards instead.
@@ -1656,22 +1724,293 @@ CountNumberOfCardsOfType:
 ; prints the card count of each individual card type.
 ; assumes CountNumberOfCardsForEachCardType was already called.
 ; this is done by processing text in a single line and concatenating all digits.
-PrintCardTypeCounts:
-	ld c, NUM_FILTERS
+PrintCardTypeCountsTopRow:
+	ld c, NUM_FILTERS/2
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
 .loop
 	ld a, [de]
-	inc de
-	inc de
+	inc de ;next type
 	call ConvertToNumericalDigits
-	dec c
+	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
 	lb de, 0, 3
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
+; prints the card count of each individual card type.
+; assumes CountNumberOfCardsForEachCardType was already called.
+; instead of concatenating all the digits, print each one in a designated place
+PrintCardTypeCounts1of12:
+	ld c, 1
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+.loop
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	dec c ; count down
+	jr nz, .loop
+	ld [hl], c ; $00 (TX_END)
+	lb de, 1, 2
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+	
+PrintCardTypeCounts2of12:
+	ld c, 1
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+.loop
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	dec c ; count down
+	jr nz, .loop
+	ld [hl], c ; $00 (TX_END)
+	lb de, 4, 2
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts3of12:
+	ld c, 1
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+.loop
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	dec c ; count down
+	jr nz, .loop
+	ld [hl], c ; $00 (TX_END)
+	lb de, 1, 5
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts4of12:
+	ld c, 1
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+.loop
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	dec c ; count down
+	jr nz, .loop
+	ld [hl], c ; $00 (TX_END)
+	lb de, 4, 5
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts5of12:
+	ld c, 1
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+.loop
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	dec c ; count down
+	jr nz, .loop
+	ld [hl], c ; $00 (TX_END)
+	lb de, 1, 8
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts6of12:
+	ld c, 1
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+.loop
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	dec c ; count down
+	jr nz, .loop
+	ld [hl], c ; $00 (TX_END)
+	lb de, 4, 8
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts7of12:
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, 1, 11
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts8of12:
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, 4, 11
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts9of12:
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, 1, 14
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts10of12:
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, 4, 14
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts11of12:
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, 1, 17
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts12of12:
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, 4, 17
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCountsAll12:
+	call PrintCardTypeCounts1of12
+	call PrintCardTypeCounts2of12
+	call PrintCardTypeCounts3of12
+	call PrintCardTypeCounts4of12
+	call PrintCardTypeCounts5of12
+	call PrintCardTypeCounts6of12
+	call PrintCardTypeCounts7of12
+	call PrintCardTypeCounts8of12
+	call PrintCardTypeCounts9of12
+	call PrintCardTypeCounts10of12
+	call PrintCardTypeCounts11of12
+	call PrintCardTypeCounts12of12
+
+;.CardTypeCountCoords:
+;	db 0, 3 	; Grass 
+;	db 3, 3 	; Fire 
+;	db 6, 3 	; Water
+;	db 9, 3 	; Lightning 
+;	db 12, 3 	; Fighting 
+;	db 15, 3 	; Psychic 
+;	db 0, 7 	; Dark 
+;	db 3, 7		; Steel 
+;	db 6, 7		; Dragon 
+;	db 9, 7		; Colorless 
+;	db 12, 7	; Trainers 
+;	db 15, 7	; Energies
+
+
+
+; prints the card count of each individual card type.
+; assumes CountNumberOfCardsForEachCardType was already called.
+; this is done by processing text in a single line and concatenating all digits.
+;PrintCardTypeCountsBottomRow:
+;	ld c, NUM_FILTERS/2
+;	ld de, wCardFilterCounts
+;	ld hl, wDefaultText
+;	inc de
+;	inc de
+;	inc de
+;	inc de
+;	inc de
+;	inc de
+;.loop
+;	ld a, [de]
+;	inc de
+;	call ConvertToNumericalDigits
+;	dec c
+;	jr nz, .loop
+;	ld [hl], c ; $00 (TX_END)
+;	lb de, 0, 7
+;	ld hl, wDefaultText
+;	jp InitTextPrinting_ProcessText
 
 ; prints the list of cards, applying the filter from register a.
 ; the counts of each card displayed is taken from wCurDeck.
@@ -1706,9 +2045,9 @@ PrintFilteredCardList:
 	ld a, NUM_FILTERED_LIST_VISIBLE_CARDS
 	ld [wNumVisibleCardListEntries], a
 	ld hl, wCardListCoords
-	ld [hl], 7 ; initial y coordinate
+	ld [hl], DB_FILTERED_CARD_LIST_START_Y ; initial y coordinate ; 8, 1
 	inc hl
-	ld [hl], 1 ; initial x coordinate
+	ld [hl], DB_FILTERED_CARD_LIST_START_X ; initial x coordinate
 	call PrintDeckBuildingCardList
 	pop af
 	ret
@@ -1721,6 +2060,9 @@ CardTypeFilters:
 	db FILTER_LIGHTNING
 	db FILTER_FIGHTING
 	db FILTER_PSYCHIC
+	;db FILTER_DARK
+	;db FILTER_STEEL
+	;db FILTER_DRAGON
 	db FILTER_COLORLESS
 	db FILTER_TRAINER
 	db FILTER_ENERGY
@@ -1751,7 +2093,7 @@ PrintDeckBuildingCardList:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	ld b, 19 ; x coordinate
+	ld b, 19 ; x coordinate of the up arrow
 	ld c, e
 	dec c
 	ld a, [wCardListVisibleOffset]
@@ -1813,7 +2155,7 @@ PrintDeckBuildingCardList:
 	ld [wUnableToScrollDown], a
 	xor a ; SYM_SPACE
 .draw_cursor
-	ld b, 19 ; x coordinate
+	ld b, 19 ; x coordinate of the down arrow
 	ld c, e
 	dec c
 	dec c
@@ -2431,8 +2773,9 @@ AddCardToDeckAndUpdateCount:
 	call TryAddCardToDeck
 	ret c ; failed to add the card
 	push de
-	call PrintCardTypeCounts
-	lb de, 15, 0
+	call PrintCardTypeCountsAll12
+	;call PrintCardTypeCountsBottomRow
+	lb de, DB_TOTAL_CARD_COUNT_X, DB_TOTAL_CARD_COUNT_Y ; x, y coords
 	call PrintTotalCardCount
 	pop de
 	call GetCountOfCardInCurDeck
@@ -2467,8 +2810,9 @@ RemoveCardFromDeckAndUpdateCount:
 	call RemoveCardFromDeck
 	ret nc
 	push de
-	call PrintCardTypeCounts
-	lb de, 15, 0
+	call PrintCardTypeCountsAll12
+	;call PrintCardTypeCountsBottomRow
+	lb de, DB_TOTAL_CARD_COUNT_X, DB_TOTAL_CARD_COUNT_Y ; x, y coords
 	call PrintTotalCardCount
 	pop de
 	call GetCountOfCardInCurDeck
@@ -2704,7 +3048,7 @@ ShowDeckInfoHeader:
 	lb bc, 20, 4
 	call DrawRegularTextBox
 ; print card count
-	lb de, 14, 1
+	lb de, 14, 1 ; x, y coords
 	call PrintTotalCardCount
 	ld b, 16
 	ld c, e
@@ -3091,11 +3435,11 @@ HandlePlayersCardsScreen:
 	jp .wait_input
 
 CardsScreenSelectionParams:
-	db 1 ; x position
-	db 7 ; y position
+	db 7 ; x position
+	db 2 ; y position
 	db 2 ; y spacing
 	db 0 ; x spacing
-	db 7 ; number of entries
+	db 8 ; number of entries
 	db SYM_CURSOR_R ; visible cursor tile
 	db SYM_SPACE ; invisible cursor tile
 	dw NULL ; wCardListHandlerFunction
@@ -3104,6 +3448,8 @@ CardsScreenSelectionParams:
 ; preserves af
 ; input:
 ;	a = index for CardTypeFilters
+; chooses where the pointer shows up
+;   and which order the list selects from?
 PrintFilteredCardSelectionList:
 	push af
 	ld hl, CardTypeFilters
@@ -3120,9 +3466,9 @@ PrintFilteredCardSelectionList:
 	ld a, NUM_DECK_CONFIRMATION_VISIBLE_CARDS
 	ld [wNumVisibleCardListEntries], a
 	ld hl, wCardListCoords
-	ld a, 5 ; y coordinate
+	ld a, DB_FILTERED_CARD_LIST_START_Y ; y coordinate
 	ld [hli], a
-	ld [hl], 2 ; x coordinate
+	ld [hl], DB_FILTERED_CARD_LIST_START_X ; x coordinate
 	xor a ; SYM_SPACE
 	ld [wCursorAlternateTile], a
 	call PrintCardSelectionList
@@ -3311,8 +3657,8 @@ PrintPlayersCardsHeaderInfo:
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
 .skip_empty_screen
 	lb bc, 0, 4
-	ld a, SYM_BOX_TOP
-	call FillBGMapLineWithA
+	ld a, SYM_BOX_RIGHT
+	call FillBGMapColumnWithA
 	call PrintTotalNumberOfCardsInCollection
 	call PrintPlayersCardsText
 ;	fallthrough
@@ -3351,18 +3697,21 @@ DrawCardTypeIcons:
 
 .CardTypeIcons
 ; icon tile, x coordinate, y coordinate
-	db ICON_TILE_GRASS,      0, 1
-	db ICON_TILE_FIRE,       3, 1
-	db ICON_TILE_WATER,      6, 1
-	db ICON_TILE_LIGHTNING,  9, 1
-	db ICON_TILE_FIGHTING,   12, 1
-	db ICON_TILE_PSYCHIC,   15, 1
-	db ICON_TILE_COLORLESS, 0, 4
-	;db ICON_TILE_DARK, 	3, 4 
-	;db ICON_TILE_STEEL, 	6, 4 
-	;db ICON_TILE_DRAGON,	9, 4  
-	db ICON_TILE_TRAINER,   12, 4
-	db ICON_TILE_ENERGY,    15, 4
+	db ICON_TILE_GRASS,      1, 0
+	db ICON_TILE_FIRE,       4, 0
+	db ICON_TILE_WATER,      1, 3
+	db ICON_TILE_LIGHTNING,  4, 3
+	db ICON_TILE_FIGHTING,   1, 6
+	db ICON_TILE_PSYCHIC,   4, 6
+	;db ICON_TILE_DARK, 	1, 9 
+	;db ICON_TILE_STEEL, 	4, 9
+	;db ICON_TILE_DRAGON,	1, 12
+	db ICON_TILE_ENERGY, 	1, 9
+	db ICON_TILE_ENERGY, 	4, 9 
+	db ICON_TILE_ENERGY,	1, 12
+	db ICON_TILE_COLORLESS, 4, 12 
+	db ICON_TILE_TRAINER,   1, 15
+	db ICON_TILE_ENERGY,    4, 15
 	db $00
 
 

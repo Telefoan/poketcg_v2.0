@@ -174,9 +174,9 @@ ProcessSpecialTextCharacter::
 SetupText::
 	ld a, d
 	dec a
-	ld [wcd04], a
+	ld [wTextTileStart], a
 	ld a, e
-	ldh [hffa8], a
+	ldh [hTextTileEnd], a
 	call InitTextFormat
 	xor a
 	ldh [hffb0], a
@@ -346,8 +346,8 @@ Func_2325::
 	ret c
 	or a
 	ret nz
-	ldh a, [hffa8]
-	ld hl, wcd04
+	ldh a, [hTextTileEnd]
+	ld hl, wTextTileStart
 	cp [hl]
 	jr nz, .asm_2345
 	ldh a, [hffa9]

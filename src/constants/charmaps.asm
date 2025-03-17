@@ -711,3 +711,11 @@ ENDM
 	txsymbol SLASH          ; $2e
 	txsymbol CURSOR_D       ; $2f
 	txsymbol PRIZE          ; $30
+	txsymbol DIV_TOP_A		; $31
+	txsymbol DIV_TOP_B		; $32
+	txsymbol DIV_MID_A		; $33
+	txsymbol DIV_MID_B		; $34
+	txsymbol DIV_BOT_A		; $35
+	txsymbol DIV_BOT_B		; $36
+	txsymbol DIV_HORIZON	; $37
+	

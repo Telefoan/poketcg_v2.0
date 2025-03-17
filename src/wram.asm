@@ -858,7 +858,7 @@ wTextBoxFrameType:: ; ccf3
 wTextTileBuffer:: ; ccf4
 	ds TILE_SIZE
 
-wcd04:: ; cd04
+wTextTileStart:: ;wcd04:: ; cd04
 	ds $1
 
 ; used by PlaceNextTextTile

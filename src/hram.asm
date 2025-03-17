@@ -124,7 +124,7 @@ hTempList:: ; ffa0
 ENDU
 
 ; hffa8 through hffb0 belong to the text engine
-hffa8:: ; ffa8
+hTextTileEnd:: ;hffa8:: ; ffa8
 	ds $1
 
 hffa9:: ; ffa9
