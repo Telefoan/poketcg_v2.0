@@ -44,8 +44,8 @@ Duel_Init:
 	call PlaySong
 	call FlashWhiteScreen
 	call DoFrameIfLCDEnabled
-	lb bc, SYM_CURSOR_D, SYM_BOX_BOTTOM ; cursor tile, tile behind cursor
-	lb de, 18, 17 ; x, y
+	lb bc, SYM_CURSOR_D, SYM_BOX_TOP ; cursor tile, tile behind cursor
+	lb de, 18, 17 ; x, y COORDS
 	call SetCursorParametersForTextBox
 	call WaitForButtonAorB
 	call WaitForSongToFinish

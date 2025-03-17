@@ -508,7 +508,7 @@ PrintFilteredCardList_UseDuelTempList:
 	ld a, 3 ; initial y coordinate
 	ld [hli], a
 	ld [hl], 2 ; initial x coordinate
-	ld a, SYM_BOX_RIGHT
+	ld a, SYM_BOX_SIDE
 	ld [wCursorAlternateTile], a
 	jp PrintCardSelectionList
 

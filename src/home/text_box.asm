@@ -53,7 +53,7 @@ DrawLabeledTextBox::
 	ld hl, wc000
 	ld a, TX_SYMBOL
 	ld [hli], a
-	ld a, SYM_BOX_TOP_L
+	ld a, SYM_BOX_CORNER
 	ld [hli], a
 	; white tile before the text
 	ld a, FW_SPACE
@@ -90,7 +90,7 @@ DrawLabeledTextBox::
 .draw_top_border_right_tile
 	ld a, TX_SYMBOL
 	ld [hli], a
-	ld a, SYM_BOX_TOP_R
+	ld a, SYM_BOX_CORNER
 	ld [hli], a
 	ld [hl], TX_END
 	pop bc
@@ -152,7 +152,7 @@ DrawRegularTextBoxDMG::
 	call DECoordToBGMap0Address
 	; top line (border) of the text box
 	ld a, SYM_BOX_TOP
-	lb de, SYM_BOX_TOP_L, SYM_BOX_TOP_R
+	lb de, SYM_BOX_CORNER, SYM_BOX_CORNER
 	call CopyLine
 ;	fallthrough
 
@@ -163,13 +163,13 @@ ContinueDrawingTextBoxDMGorSGB::
 	dec c
 .draw_text_box_body_loop
 	xor a ; SYM_SPACE
-	lb de, SYM_BOX_LEFT, SYM_BOX_RIGHT
+	lb de, SYM_BOX_SIDE, SYM_BOX_SIDE
 	call CopyLine
 	dec c
 	jr nz, .draw_text_box_body_loop
 	; bottom line (border) of the text box
-	ld a, SYM_BOX_BOTTOM
-	lb de, SYM_BOX_BTM_L, SYM_BOX_BTM_R
+	ld a, SYM_BOX_TOP
+	lb de, SYM_BOX_CORNER, SYM_BOX_CORNER
 ;	fallthrough
 
 ; copies b bytes of data to sp-$1f and to hl, and returns hl += BG_MAP_WIDTH
@@ -216,7 +216,7 @@ DrawRegularTextBoxCGB::
 	call DECoordToBGMap0Address
 	; top line (border) of the text box
 	ld a, SYM_BOX_TOP
-	lb de, SYM_BOX_TOP_L, SYM_BOX_TOP_R
+	lb de, SYM_BOX_CORNER, SYM_BOX_CORNER
 	call CopyCurrentLineTilesAndAttrCGB
 ;	fallthrough
 
@@ -227,7 +227,7 @@ ContinueDrawingTextBoxCGB::
 	dec c
 .draw_text_box_body_loop
 	xor a ; SYM_SPACE
-	lb de, SYM_BOX_LEFT, SYM_BOX_RIGHT
+	lb de, SYM_BOX_SIDE, SYM_BOX_SIDE
 	push hl
 	call CopyLine
 	pop hl
@@ -241,8 +241,8 @@ ContinueDrawingTextBoxCGB::
 	dec c
 	jr nz, .draw_text_box_body_loop
 	; bottom line (border) of the text box
-	ld a, SYM_BOX_BOTTOM
-	lb de, SYM_BOX_BTM_L, SYM_BOX_BTM_R
+	ld a, SYM_BOX_TOP
+	lb de, SYM_BOX_CORNER, SYM_BOX_CORNER
 ;	fallthrough
 
 ; Assumes b = SCREEN_WIDTH and that VRAM bank 0 is loaded
@@ -334,8 +334,8 @@ DrawTextBoxSeparator::
 	push bc
 	push de
 	call DECoordToBGMap0Address
-	ld a, SYM_BOX_BOTTOM
-	lb de, SYM_BOX_HEADER_L, SYM_BOX_HEADER_R
+	ld a, SYM_BOX_TOP
+	lb de, SYM_BOX_CORNER, SYM_BOX_CORNER
 	push hl
 	call CopyLine
 	pop hl

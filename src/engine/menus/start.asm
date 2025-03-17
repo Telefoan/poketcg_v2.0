@@ -389,7 +389,7 @@ ShowCardPopCGBDisclaimer:
 	lb de, 1,12
 	ldtx hl, YouCanAccessCardPopOnlyWithGameBoyColorsText
 	call InitTextPrinting_PrintTextNoDelay
-	lb bc, SYM_CURSOR_D, SYM_BOX_BOTTOM
+	lb bc, SYM_CURSOR_D, SYM_BOX_TOP
 	lb de, 18, 17
 	call SetCursorParametersForTextBox
 	call WaitForButtonAorB

@@ -73,7 +73,7 @@ OpenGlossaryScreen:
 
 ; alternate header separator that uses a text box tile (it's also colored)
 ;	lb bc, 0, 1
-;	ld a, SYM_BOX_BOTTOM
+;	ld a, SYM_BOX_TOP
 ;	farcall FillBGMapLineWithA
 
 ; print the current page number in the bottom right corner

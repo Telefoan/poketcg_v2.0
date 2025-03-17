@@ -121,7 +121,7 @@ PrintScrollableText_NoTextBoxLabel::
 ; when a text box is full or the text is over, this prompts the player to
 ; press A or B in order to clear the text and print the next lines.
 WaitForPlayerToAdvanceText::
-	lb bc, SYM_CURSOR_D, SYM_BOX_BOTTOM ; cursor tile, tile behind cursor
+	lb bc, SYM_CURSOR_D, SYM_BOX_TOP ; cursor tile, tile behind cursor
 	lb de, 18, 17 ; x, y
 	call SetCursorParametersForTextBox
 	jp WaitForButtonAorB

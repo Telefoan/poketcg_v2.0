@@ -1184,9 +1184,9 @@ DrawCardTypeIconsAndPrintCardCounts:
 	call Set_OBJ_8x8
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
 	; screen divider
-	;lb bc, 6, 0
-	;ld a, SYM_BOX_RIGHT
-	;call FillBGMapColumnWithA
+	lb bc, 0, 7 ; x, y coordinates
+	ld a, SYM_BOX_TOP
+	call FillBGMapLineWithA
 
 	;lb de, 0, 0 ; x,y coords for start of box
 	;lb bc, 6, 18 ; x,y coords for end of box
@@ -1211,14 +1211,14 @@ DrawCardTypeIconsAndPrintCardCounts:
 ;	bc = coordinates to print line
 FillBGMapLineWithA::
 	call BCCoordToBGMap0Address
-	ld b, SCREEN_HEIGHT
+	ld b, SCREEN_WIDTH
 	call FillDEWithA
 	; palette
 	ld a, [wConsole]
 	cp CONSOLE_CGB
 	ret nz ; return if not CGB
 	ld a, $04 ; CGB Background Palette 4 (orange/red)
-	ld b, SCREEN_HEIGHT
+	ld b, SCREEN_WIDTH
 	call BankswitchVRAM1
 	call FillDEWithA
 	jp BankswitchVRAM0
@@ -1742,7 +1742,7 @@ PrintCardTypeCountsTopRow:
 ; prints the card count of each individual card type.
 ; assumes CountNumberOfCardsForEachCardType was already called.
 ; instead of concatenating all the digits, print each one in a designated place
-PrintCardTypeCounts1of12:
+PrintCardTypeCounts1of12: ; GRASS
 	ld c, 1
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
@@ -1753,11 +1753,11 @@ PrintCardTypeCounts1of12:
 	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 1, 2
+	lb de, DB_GRASS_ICON_X, DB_GRASS_ICON_Y + 2 ; x, y coords
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 	
-PrintCardTypeCounts2of12:
+PrintCardTypeCounts2of12: ; FIRE
 	ld c, 1
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
@@ -1769,11 +1769,11 @@ PrintCardTypeCounts2of12:
 	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 4, 2
+	lb de, DB_FIRE_ICON_X, DB_FIRE_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts3of12:
+PrintCardTypeCounts3of12: ; WATER
 	ld c, 1
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
@@ -1786,11 +1786,11 @@ PrintCardTypeCounts3of12:
 	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 1, 5
+	lb de, DB_WATER_ICON_X, DB_WATER_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts4of12:
+PrintCardTypeCounts4of12: ; LIGHTNING
 	ld c, 1
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
@@ -1804,11 +1804,11 @@ PrintCardTypeCounts4of12:
 	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 4, 5
+	lb de, DB_LIGHTNING_ICON_X, DB_LIGHTNING_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts5of12:
+PrintCardTypeCounts5of12: ; FIGHTING 
 	ld c, 1
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
@@ -1823,11 +1823,11 @@ PrintCardTypeCounts5of12:
 	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 1, 8
+	lb de, DB_FIGHTING_ICON_X,	DB_FIGHTING_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts6of12:
+PrintCardTypeCounts6of12: ; PSYCHIC
 	ld c, 1
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
@@ -1843,11 +1843,11 @@ PrintCardTypeCounts6of12:
 	dec c ; count down
 	jr nz, .loop
 	ld [hl], c ; $00 (TX_END)
-	lb de, 4, 8
+	lb de, DB_PSYCHIC_ICON_X, DB_PSYCHIC_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts7of12:
+PrintCardTypeCounts7of12: ; DARK
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
 	inc de
@@ -1859,11 +1859,11 @@ PrintCardTypeCounts7of12:
 	ld a, [de]
 	inc de ;next type
 	call ConvertToNumericalDigits
-	lb de, 1, 11
+	lb de, DB_DARK_ICON_X,	DB_DARK_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts8of12:
+PrintCardTypeCounts8of12: ; STEEL
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
 	inc de
@@ -1876,11 +1876,11 @@ PrintCardTypeCounts8of12:
 	ld a, [de]
 	inc de ;next type
 	call ConvertToNumericalDigits
-	lb de, 4, 11
+	lb de, DB_STEEL_ICON_X, DB_STEEL_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts9of12:
+PrintCardTypeCounts9of12: ; DRAGON
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
 	inc de
@@ -1894,33 +1894,13 @@ PrintCardTypeCounts9of12:
 	ld a, [de]
 	inc de ;next type
 	call ConvertToNumericalDigits
-	lb de, 1, 14
+	lb de, DB_DRAGON_ICON_X, DB_DRAGON_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts10of12:
+PrintCardTypeCounts10of12: ; COLORLESS
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
-	inc de
-	inc de
-	inc de
-	inc de
-	inc de
-	inc de
-	inc de
-	inc de
-	inc de
-	ld a, [de]
-	inc de ;next type
-	call ConvertToNumericalDigits
-	lb de, 4, 14
-	ld hl, wDefaultText
-	jp InitTextPrinting_ProcessText
-
-PrintCardTypeCounts11of12:
-	ld de, wCardFilterCounts
-	ld hl, wDefaultText
-	inc de
 	inc de
 	inc de
 	inc de
@@ -1933,14 +1913,13 @@ PrintCardTypeCounts11of12:
 	ld a, [de]
 	inc de ;next type
 	call ConvertToNumericalDigits
-	lb de, 1, 17
+	lb de, DB_COLORLESS_ICON_X, DB_COLORLESS_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
-PrintCardTypeCounts12of12:
+PrintCardTypeCounts11of12: ; TRAINER
 	ld de, wCardFilterCounts
 	ld hl, wDefaultText
-	inc de
 	inc de
 	inc de
 	inc de
@@ -1954,7 +1933,28 @@ PrintCardTypeCounts12of12:
 	ld a, [de]
 	inc de ;next type
 	call ConvertToNumericalDigits
-	lb de, 4, 17
+	lb de, DB_TRAINER_ICON_X, DB_TRAINER_ICON_Y + 2
+	ld hl, wDefaultText
+	jp InitTextPrinting_ProcessText
+
+PrintCardTypeCounts12of12: ; ENERGY
+	ld de, wCardFilterCounts
+	ld hl, wDefaultText
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+	ld a, [de]
+	inc de ;next type
+	call ConvertToNumericalDigits
+	lb de, DB_ENERGY_ICON_X, DB_ENERGY_ICON_Y + 2
 	ld hl, wDefaultText
 	jp InitTextPrinting_ProcessText
 
@@ -3657,7 +3657,7 @@ PrintPlayersCardsHeaderInfo:
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
 .skip_empty_screen
 	lb bc, 0, 4
-	ld a, SYM_BOX_RIGHT
+	ld a, SYM_BOX_SIDE
 	call FillBGMapColumnWithA
 	call PrintTotalNumberOfCardsInCollection
 	call PrintPlayersCardsText
@@ -3697,21 +3697,21 @@ DrawCardTypeIcons:
 
 .CardTypeIcons
 ; icon tile, x coordinate, y coordinate
-	db ICON_TILE_GRASS,      1, 0
-	db ICON_TILE_FIRE,       4, 0
-	db ICON_TILE_WATER,      1, 3
-	db ICON_TILE_LIGHTNING,  4, 3
-	db ICON_TILE_FIGHTING,   1, 6
-	db ICON_TILE_PSYCHIC,   4, 6
-	;db ICON_TILE_DARK, 	1, 9 
-	;db ICON_TILE_STEEL, 	4, 9
-	;db ICON_TILE_DRAGON,	1, 12
-	db ICON_TILE_ENERGY, 	1, 9
-	db ICON_TILE_ENERGY, 	4, 9 
-	db ICON_TILE_ENERGY,	1, 12
-	db ICON_TILE_COLORLESS, 4, 12 
-	db ICON_TILE_TRAINER,   1, 15
-	db ICON_TILE_ENERGY,    4, 15
+	db ICON_TILE_GRASS,		DB_GRASS_ICON_X, DB_GRASS_ICON_Y
+	db ICON_TILE_FIRE,		DB_FIRE_ICON_X, DB_FIRE_ICON_Y
+	db ICON_TILE_WATER,		DB_WATER_ICON_X, DB_WATER_ICON_Y
+	db ICON_TILE_LIGHTNING,	DB_LIGHTNING_ICON_X, DB_LIGHTNING_ICON_Y
+	db ICON_TILE_FIGHTING,	DB_FIGHTING_ICON_X,	DB_FIGHTING_ICON_Y
+	db ICON_TILE_PSYCHIC,	DB_PSYCHIC_ICON_X, DB_PSYCHIC_ICON_Y
+	;db ICON_TILE_DARK,		DB_DARK_ICON_X,	DB_DARK_ICON_Y
+	;db ICON_TILE_STEEL,	DB_STEEL_ICON_X, DB_STEEL_ICON_Y
+	;db ICON_TILE_DRAGON,	DB_DRAGON_ICON_X, DB_DRAGON_ICON_Y
+	db ICON_TILE_ENERGY,	DB_DARK_ICON_X,	DB_DARK_ICON_Y
+	db ICON_TILE_ENERGY,	DB_STEEL_ICON_X, DB_STEEL_ICON_Y
+	db ICON_TILE_ENERGY,	DB_DRAGON_ICON_X, DB_DRAGON_ICON_Y
+	db ICON_TILE_COLORLESS,	DB_COLORLESS_ICON_X, DB_COLORLESS_ICON_Y
+	db ICON_TILE_TRAINER,	DB_TRAINER_ICON_X, DB_TRAINER_ICON_Y
+	db ICON_TILE_ENERGY,	DB_ENERGY_ICON_X, DB_ENERGY_ICON_Y
 	db $00
 
 

@@ -397,7 +397,7 @@ NarrowTextBoxMenuParameters::
 	db 1 ; y displacement between items
 	db 1 ; number of items
 	db SYM_CURSOR_D ; cursor tile number
-	db SYM_BOX_BOTTOM ; tile behind cursor
+	db SYM_BOX_TOP ; tile behind cursor
 	dw NULL ; function pointer if non-0
 
 
@@ -432,7 +432,7 @@ WideTextBoxMenuParameters::
 	db 1 ; y displacement between items
 	db 1 ; number of items
 	db SYM_CURSOR_D ; cursor tile number
-	db SYM_BOX_BOTTOM ; tile behind cursor
+	db SYM_BOX_TOP ; tile behind cursor
 	dw NULL ; function pointer if non-0
 
 

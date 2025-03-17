@@ -993,7 +993,7 @@ TryDeleteSavedDeck:
 DrawListScrollArrows:
 	ld a, [wCardListVisibleOffset]
 	or a
-	ld a, SYM_BOX_RIGHT
+	ld a, SYM_BOX_SIDE
 	jr z, .got_tile_1
 	ld a, SYM_CURSOR_U
 .got_tile_1
@@ -1013,7 +1013,7 @@ DrawListScrollArrows:
 .no_down_cursor
 	ld a, TRUE
 	ld [wUnableToScrollDown], a
-	ld a, SYM_BOX_RIGHT
+	ld a, SYM_BOX_SIDE
 .got_tile_2
 	lb bc, 19, 11
 	jp WriteByteToBGMap0
