@@ -435,6 +435,16 @@ HandleDeckBuildScreen:
 	ld hl, FiltersCardSelectionParams
 	call InitCardSelectionParams
 .wait_input
+	xor a
+    ld [wInPlayAreaCurPosition], a
+    ld [wCheckMenuCursorBlinkCounter], a
+    dec a ; $ff
+    ld [wDuelInitialPrizesUpperBitsSet], a
+    ld hl, wMenuInputTablePointer
+    ld a, LOW(DeckBuildTypeMenu_TransitionTable)
+    ld [hli], a
+    ld [hl], HIGH(DeckBuildTypeMenu_TransitionTable)
+	farcall YourOrOppPlayAreaScreen_HandleInput
 	call DoFrame
 	xor a ; FALSE
 	ld [wReturnToCardListFromDeckBuildMenu], a ; FALSE
@@ -446,7 +456,7 @@ HandleDeckBuildScreen:
 	ld b, a
 	ld a, [wTempCardTypeFilter]
 	cp b
-	jr z, .check_down_btn
+	jr z, .check_btn
 	; need to refresh the filtered card list
 	ld [wCurCardTypeFilter], a
 	ld hl, wCardListVisibleOffset
@@ -454,12 +464,12 @@ HandleDeckBuildScreen:
 	call PrintFilteredCardList
 	ld a, NUM_FILTERS
 	ld [wCardListNumCursorPositions], a
-.check_down_btn
-	ldh a, [hDPadHeld]
-	and D_DOWN
-	jr z, .no_down_btn
+.check_btn
+	push af
+	call ZeroObjectPositionsAndToggleOAMCopy
+	pop af
 	call ConfirmSelectionAndReturnCarry
-	jr .jump_to_list
+	jr nz, .jump_to_list
 
 .no_down_btn
 	call HandleCardSelectionInput
@@ -649,6 +659,23 @@ DeckBuildMenuData:
 	textitem  2, 1, DeckBuildingMenuOptions1Text
 	textitem 12, 1, DeckBuildingMenuOptions2Text
 	db $ff
+
+; related to wMenuInputTablePointer
+; with this table, the cursor moves into the proper location based on the input.
+; x coordinate, y coordinate, Cursor Type, D-pad up, D-pad down, D-pad right, D-pad left
+DeckBuildTypeMenu_TransitionTable:
+	cursor_transition DB_GRASS_ICON_X - 1, DB_GRASS_ICON_Y, 		SYM_CURSOR_R, $00, $06, $01, $05 ; $00 GRASS
+	cursor_transition DB_FIRE_ICON_X - 1, DB_FIRE_ICON_Y,			SYM_CURSOR_R, $01, $07, $02, $00 ; $01 Fire
+	cursor_transition DB_WATER_ICON_X - 1, DB_WATER_ICON_Y, 		SYM_CURSOR_R, $02, $08, $03, $01 ; $02 Water
+	cursor_transition DB_LIGHTNING_ICON_X - 1, DB_LIGHTNING_ICON_Y, SYM_CURSOR_R, $03, $09, $04, $02 ; $03 Lightning
+	cursor_transition DB_FIGHTING_ICON_X - 1, DB_FIGHTING_ICON_Y, 	SYM_CURSOR_R, $04, $0a, $05, $03 ; $04 Fighting
+	cursor_transition DB_PSYCHIC_ICON_X - 1, DB_PSYCHIC_ICON_Y, 	SYM_CURSOR_R, $05, $0b, $00, $04 ; $05 Psychic
+	cursor_transition DB_DARK_ICON_X - 1, DB_DARK_ICON_Y, 			SYM_CURSOR_R, $00, $06, $07, $0b ; $06 Dark
+	cursor_transition DB_STEEL_ICON_X - 1, DB_STEEL_ICON_Y, 		SYM_CURSOR_R, $01, $07, $08, $06 ; $07 Steel 
+	cursor_transition DB_DRAGON_ICON_X - 1, DB_DRAGON_ICON_Y, 		SYM_CURSOR_R, $02, $08, $09, $07 ; $08 Dragon
+	cursor_transition DB_COLORLESS_ICON_X - 1, DB_COLORLESS_ICON_Y, SYM_CURSOR_R, $03, $09, $0a, $08 ; $09 Colorless
+	cursor_transition DB_TRAINER_ICON_X - 1, DB_TRAINER_ICON_Y, 	SYM_CURSOR_R, $04, $0a, $0b, $09 ; $0a Trainer
+	cursor_transition DB_ENERGY_ICON_X - 1, DB_ENERGY_ICON_Y, 		SYM_CURSOR_R, $05, $0b, $07, $0a ; $0b Energy
 
 StatisticsSuffix:
 	db " Statistics"
@@ -1238,66 +1265,6 @@ FillDEWithA:
 	dec b
 	jr nz, .loop
 	ret
-
-; draws the same tile across an entire column in BG Map
-; if CGB, also fills the line with background palette 4 in VRAM1
-; input:
-;	a = TX_SYMBOL (SYM_* constant)
-;	bc = coordinates to print line
-FillBGMapColumnWithA:
-	ld hl, ColumnTileData
-	call WriteDataBlocksToBGMap0
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	ret nz
-	call BankswitchVRAM1
-	ld hl, ColumnTileCGBPalData
-	call WriteDataBlocksToBGMap0
-	jp BankswitchVRAM0
-
-ColumnTileData:
-; x, y, (tile marked in a), 0
-	db 6, 0, $00, 0
-	db 6, 1, $00, 0
-	db 6, 2, $00, 0
-	db 6, 3, $00, 0
-	db 6, 4, $00, 0
-	db 6, 5, $00, 0
-	db 6, 6, $00, 0
-	db 6, 7, $00, 0
-	db 6, 8, $00, 0
-	db 6, 9, $00, 0
-	db 6, 10, $00, 0
-	db 6, 11, $00, 0
-	db 6, 12, $00, 0
-	db 6, 13, $00, 0
-	db 6, 14, $00, 0
-	db 6, 15, $00, 0
-	db 6, 16, $00, 0
-	db 6, 17, $00, 0
-
-
-ColumnTileCGBPalData:
-;x, y, palette, 0
-	db 6, 0, $02, 0
-	db 6, 1, $02, 0
-	db 6, 2, $02, 0
-	db 6, 3, $02, 0
-	db 6, 4, $02, 0
-	db 6, 5, $02, 0
-	db 6, 6, $02, 0
-	db 6, 7, $02, 0
-	db 6, 8, $02, 0
-	db 6, 9, $02, 0
-	db 6, 10, $02, 0
-	db 6, 11, $02, 0
-	db 6, 12, $02, 0
-	db 6, 13, $02, 0
-	db 6, 14, $02, 0
-	db 6, 15, $02, 0
-	db 6, 16, $02, 0
-	db 6, 17, $02, 0
-
 
 ; saves the count of each type of card that is in wCurDeckCards
 ; stores these values in wCardFilterCounts
@@ -2350,6 +2317,7 @@ DrawHorizontalListCursor:
 DrawHorizontalListCursor_Visible:
 	ld a, [wVisibleCursorTile]
 	jr DrawHorizontalListCursor
+	;jp YourOrOppPlayAreaScreen_HandleInput
 
 
 ; handles user input when selecting cards to add to a deck configuration
@@ -3657,8 +3625,8 @@ PrintPlayersCardsHeaderInfo:
 	call EmptyScreenAndLoadFontDuelAndDeckIcons
 .skip_empty_screen
 	lb bc, 0, 4
-	ld a, SYM_BOX_SIDE
-	call FillBGMapColumnWithA
+	ld a, SYM_BOX_TOP
+	call FillBGMapLineWithA
 	call PrintTotalNumberOfCardsInCollection
 	call PrintPlayersCardsText
 ;	fallthrough
