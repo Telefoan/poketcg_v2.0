@@ -2317,7 +2317,6 @@ DrawHorizontalListCursor:
 DrawHorizontalListCursor_Visible:
 	ld a, [wVisibleCursorTile]
 	jr DrawHorizontalListCursor
-	;jp YourOrOppPlayAreaScreen_HandleInput
 
 
 ; handles user input when selecting cards to add to a deck configuration
