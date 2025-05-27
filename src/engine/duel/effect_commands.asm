@@ -878,11 +878,11 @@ AerodactylPrehistoricPowerEffectCommands:
 	db  $00
 
 ; also handled in engine/duel/ai/pkmn_powers.asm
-AlakazamDamageSwapEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DamageSwapCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DamageSwap_SelectAndSwapEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageSwap_SwapEffect
-	db  $00
+;AlakazamDamageSwapEffectCommands:
+;	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DamageSwapCheck
+;	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DamageSwap_SelectAndSwapEffect
+;	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageSwap_SwapEffect
+;	db  $00
 
 ; also handled in engine/duel/ai/pkmn_powers.asm
 SlowbroStrangeBehaviorEffectCommands:
@@ -1133,6 +1133,22 @@ SwitchEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwitchEffect
 	db  $00
 
+PsydriveEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, ActivePokemon_DoublePsychicEnergyCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Discard2AttachedFireEnergy_PlayerSelection
+	dbw EFFECTCMDTYPE_AI_SELECTION, Discard2AttachedFireEnergy_AISelection
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Discard2AttachedEnergyCards_DiscardEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Rage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Rage_DamageBoostEffect
+	db  $00
+
+PsyShadowEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PsyShadowCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DeckCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachBasicEnergyFromDeck_PlayerSelection
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachBasicEnergyFromDeck_AISelection
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsyShadow_AttachBasicEnergyFromDeck_AttachEffect
+	db  $00
 
 ;--------------------------------------------------------------------------------------------------------------
 ; ENERGY CARD EFFECT COMMANDS START HERE.

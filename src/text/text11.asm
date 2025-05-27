@@ -1398,18 +1398,18 @@ AerodactylDescription:
 	line "serrated saw-like fangs."
 	done
 
-AbraName:
-	text "Abra"
+RaltsName:
+	text "Ralts"
 	done
 
 PsiName:
 	text "Psi"
 	done
 
-AbraDescription:
-	text "Using its ability to read minds,"
-	line "it will identify impending danger"
-	line "and teleport to safety."
-	done
+;AbraDescription:
+;	text "Using its ability to read minds,"
+;	line "it will identify impending danger"
+;	line "and teleport to safety."
+;	done
 
 ;	ds $31

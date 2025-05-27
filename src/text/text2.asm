@@ -1672,8 +1672,8 @@ StrangePowerDescriptionText:
 	done
 
 StrangePsyshockDescriptionText:
-	text "Use Alakazam's Damage Swap"
-	line "to move damage counters!"
+	text "Use Gardevoir's Psy Shadow"
+	line "to attach psuchic energies!"
 	done
 
 LovelyNidoranDescriptionText:
@@ -1738,7 +1738,7 @@ SquirtleAndFriendsDescriptionText:
 
 BulbasaurAndFriendsDescriptionText:
 	text "A Grass, Lightning and Psychic Deck:"
-	line "Bulbasaur, Pikachu and Abra"
+	line "Bulbasaur, Pikachu and Ralts"
 	done
 
 PsychicMachampDescriptionText:

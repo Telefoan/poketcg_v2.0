@@ -2684,17 +2684,17 @@ TextOffsets::
 	textpointer PrehistoricPowerDescription                        ; 0x0a78
 	textpointer FossilName                                         ; 0x0a79
 	textpointer AerodactylDescription                              ; 0x0a7a
-	textpointer AbraName                                           ; 0x0a7b
+	textpointer RaltsName                                           ; 0x0a7b
 	textpointer PsiName                                            ; 0x0a7c
-	textpointer AbraDescription                                    ; 0x0a7d
-	textpointer KadabraName                                        ; 0x0a7e
-	textpointer KadabrasRecoverDescription                         ; 0x0a7f
+;	textpointer AbraDescription                                    ; 0x0a7d
+	textpointer KirliaName                                        ; 0x0a7e
+	textpointer KirliasRecoverDescription                         ; 0x0a7f
 	textpointer SuperPsiName                                       ; 0x0a80
-	textpointer KadabraDescription                                 ; 0x0a81
-	textpointer AlakazamName                                       ; 0x0a82
+;	textpointer KadabraDescription                                 ; 0x0a81
+	textpointer GardevoirName                                       ; 0x0a82
 	textpointer DamageSwapName                                     ; 0x0a83
 	textpointer DamageSwapDescription                              ; 0x0a84
-	textpointer AlakazamDescription                                ; 0x0a85
+;	textpointer AlakazamDescription                                ; 0x0a85
 	textpointer SlowpokeName                                       ; 0x0a86
 	textpointer SlowpokesAmnesiaDescription                        ; 0x0a87
 	textpointer DopeyName                                          ; 0x0a88
@@ -3004,3 +3004,11 @@ TextOffsets::
 	textpointer ChooseTrainerCardText                              ; 0x0bb8
 	textpointer ChooseTrainerCardFromDeckText                      ; 0x0bb9
 	textpointer Draw2CardsText                                     ; 0x0bba
+	textpointer PsychicSphereName
+	textpointer PsydriveDescription
+	textpointer PsydriveName
+	textpointer ChooseAndDiscard2PsychicEnergyCardsText   
+	textpointer PsyshotName
+	textpointer PsyShadowName
+	textpointer PsyShadowDescription
+	

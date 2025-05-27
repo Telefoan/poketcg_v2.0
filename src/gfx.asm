@@ -1983,15 +1983,15 @@ AerodactylCardGfx::
 	INCBIN "gfx/cards/aerodactyl.2bpp"
 	INCBIN "gfx/cards/aerodactyl.pal"
 
-AbraCardGfx::
+RaltsCardGfx::
 	INCBIN "gfx/cards/abra.2bpp"
 	INCBIN "gfx/cards/abra.pal"
 
-KadabraCardGfx::
+KirliaCardGfx::
 	INCBIN "gfx/cards/kadabra.2bpp"
 	INCBIN "gfx/cards/kadabra.pal"
 
-AlakazamCardGfx::
+GardevoirCardGfx::
 	INCBIN "gfx/cards/alakazam.2bpp"
 	INCBIN "gfx/cards/alakazam.pal"
 

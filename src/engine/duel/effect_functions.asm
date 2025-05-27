@@ -265,6 +265,18 @@ ActivePokemon_PsychicEnergyCheck:
 	cp 1
 	ret
 
+; preserves bc
+; output:
+;	hl = ID for notification text
+;	carry = set:  if the turn holder's Active Pokemon has
+;	              fewer than 2 Psychic Energy attached to it
+ActivePokemon_DoublePsychicEnergyCheck:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wAttachedEnergies + PSYCHIC]
+	ldtx hl, NotEnoughPsychicEnergyText
+	cp 2
+	ret
 
 ; preserves bc and de
 ; output:
@@ -388,6 +400,11 @@ SetCarryEF:
 	scf
 	ret
 
+OncePerTurnPokePowerSet:
+	ldh a, [hTemp_ffa0]
+	add DUELVARS_ARENA_CARD_FLAGS
+	get_turn_duelist_var
+	set USED_PKMN_POWER_THIS_TURN_F, [hl]
 
 ;---------------------------------------------------------------------------------
 ; (2) NEXT ARE SOME FUNCTIONS THAT ARE FREQUENTLY CALLED BY OTHER FUNCTIONS
@@ -823,6 +840,38 @@ AttachBasicEnergyFromDeck_AttachEffect:
 	bank1call DisplayCardDetailScreen
 	jr ShuffleCardsInDeck
 
+PsyShadow_AttachBasicEnergyFromDeck_AttachEffect:
+	jp OncePerTurnPokePowerSet
+	ldh a, [hTemp_ffa0]
+	cp -1
+	jr z, ShuffleCardsInDeck ; shuffle and return if no card was selected
+
+; add card to the hand and attach it to the selected Pokemon
+	call SearchCardInDeckAndAddToHand
+	call AddCardToHand
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	ldh a, [hTemp_ffa0]
+	call PutHandCardInPlayArea
+	call IsPlayerTurn
+	jr c, ShuffleCardsInDeck ; shuffle and return if it's the Player's turn
+
+; not Player, so show detail screen and which Pokemon was chosen to attach Energy
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	add DUELVARS_ARENA_CARD
+	get_turn_duelist_var
+	call LoadCardDataToBuffer1_FromDeckIndex
+	ld hl, wLoadedCard1Name
+	ld de, wTxRam2_b
+	ld a, [hli]
+	ld [de], a
+	inc de
+	ld a, [hli]
+	ld [de], a
+	ldh a, [hTemp_ffa0]
+	ldtx hl, AttachedEnergyToPokemonText
+	bank1call DisplayCardDetailScreen
+	jp ShuffleCardsInDeck 
 
 ; handles the Player's selection of a Trainer card from their deck
 ; (actual logic is in effect_functions2.asm)
@@ -4419,6 +4468,15 @@ CreateListOfFireEnergyAttachedToActive:
 	ld a, TYPE_ENERGY_FIRE
 ;	fallthrough
 
+; creates in wDuelTempList a list of Spychic Energy cards
+; that are attached to the turn holder's Active Pokemon.
+; output:
+;	a & c = number of Psychic Energy cards attached to the turn holder's Active Pokémon
+;	wDuelTempList = $ff-terminated list with deck indices of Psychic Energy cards in the Arena
+CreateListOfPsychicEnergyAttachedToActive:
+	ld a, TYPE_ENERGY_PSYCHIC
+;	fallthrough
+
 ; creates in wDuelTempList a list of cards that
 ; are in the turn holder's Arena of the same type as input a.
 ; this is called to list Energy cards of a specific type
@@ -4633,6 +4691,43 @@ Discard2AttachedFireEnergy_AISelection:
 	ldh [hTempList + 1], a
 	ret
 
+; handles the Player's selection of 2 Psychic Energy attached to their Active Pokemon
+; output:
+;	carry = set:  if the operation was cancelled by the Player (with B button)
+;	[hTempList] = deck index of a Psychic Energy attached to the turn holder's Active Pokémon (0-59)
+;	[hTempList + 1] = deck index of another Psychic Energy attached to the turn holder's Active Pokémon (0-59)
+Discard2AttachedPsychicEnergy_PlayerSelection:
+	ldtx hl, ChooseAndDiscard2PsychicEnergyCardsText
+	call DrawWideTextBox_WaitForInput
+
+	xor a
+	ldh [hCurSelectionItem], a
+	call CreateListOfPsychicEnergyAttachedToActive
+	xor a ; PLAY_AREA_ARENA
+	bank1call DisplayEnergyDiscardScreen
+.loop_input
+	bank1call HandleEnergyDiscardMenuInput
+	ret c ; exit if the B button was pressed
+	call GetNextPositionInTempList
+	ldh a, [hTempCardIndex_ff98]
+	ld [hl], a
+	call RemoveCardFromDuelTempList
+	ldh a, [hCurSelectionItem]
+	cp 2
+	ret nc ; return if 2 Psychic Energy have been chosen
+	bank1call DisplayEnergyDiscardMenu
+	jr .loop_input
+
+; makes a list of every Psychic Energy attached to the AI's Active Pokemon
+; and the AI picks the first 2 cards in that list
+; output:
+;	[hTempList] = deck index of a Psychic Energy attached to the turn holder's Active Pokémon (0-59)
+;	[hTempList + 1] = deck index of another Psychic Energy attached to the turn holder's Active Pokémon (0-59)
+Discard2AttachedPsychicEnergy_AISelection:
+	call DiscardAttachedPsychicEnergy_AISelection
+	ld a, [wDuelTempList + 1]
+	ldh [hTempList + 1], a
+	ret
 
 ; output:
 ;	carry = set:  if the operation was cancelled by the Player (with B button)
@@ -4676,6 +4771,19 @@ DiscardAttachedWaterEnergy_AISelection:
 DiscardAttachedPsychicEnergy_AISelection:
 	ld a, TYPE_ENERGY_PSYCHIC
 ;	fallthrough
+
+; makes a list of every Fire Energy attached to the AI's Active Pokemon
+; and the AI picks the first card in that list
+; output:
+;	[hTemp_ffa0] = deck index of a Fire Energy attached to the turn holder's Active Pokémon (0-59)
+;;watermelonPrincess here: added this just because the function i copied had its 
+;;version of this look like the below, idk 
+
+DiscardAttachedPsychicEnergy_AISelection_V2:
+	call DiscardAttachedPsychicEnergy_AISelection
+	ld a, [wDuelTempList]
+	ldh [hTemp_ffa0], a
+	ret
 
 ; AI picks the first suitable Energy card in the list of attached Energy
 ; input:
@@ -6271,10 +6379,7 @@ SolarPower_RemoveStatusEffect:
 	call PlayAttackAnimation
 	call WaitAttackAnimation
 
-	ldh a, [hTemp_ffa0]
-	add DUELVARS_ARENA_CARD_FLAGS
-	get_turn_duelist_var
-	set USED_PKMN_POWER_THIS_TURN_F, [hl]
+	call OncePerTurnPokePowerSet
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	ld [hl], NO_STATUS
 
@@ -6336,10 +6441,7 @@ Heal_RemoveDamageEffect:
 
 .done
 ; flag the Pokemon Power as being used regardless of coin outcome
-	ldh a, [hTemp_ffa0]
-	add DUELVARS_ARENA_CARD_FLAGS
-	get_turn_duelist_var
-	set USED_PKMN_POWER_THIS_TURN_F, [hl]
+	call OncePerTurnPokePowerSet
 	ldh a, [hAIPkmnPowerEffectParam]
 	or a
 	ret z ; return if coin toss result was tails
@@ -6660,10 +6762,7 @@ PealOfThunder_RandomlyDamageEffect:
 ;	[hTemp_ffa0] = play area location offset of the user (PLAY_AREA_* constant)
 Peek_SelectEffect:
 ; set Pokemon Power used flag
-	ldh a, [hTemp_ffa0]
-	add DUELVARS_ARENA_CARD_FLAGS
-	get_turn_duelist_var
-	set USED_PKMN_POWER_THIS_TURN_F, [hl]
+	call OncePerTurnPokePowerSet
 
 	ld a, DUELVARS_DUELIST_TYPE
 	get_turn_duelist_var
@@ -7084,10 +7183,7 @@ Curse_PlayerSelection:
 ;	[hPlayAreaEffectTarget] = play area location offset of the Pokemon gaining the damage counter
 Curse_TransferDamageEffect:
 ; set Pokemon Power as used
-	ldh a, [hTemp_ffa0]
-	add DUELVARS_ARENA_CARD_FLAGS
-	get_turn_duelist_var
-	set USED_PKMN_POWER_THIS_TURN_F, [hl]
+	call OncePerTurnPokePowerSet
 
 ; figure out the type of duelist that used Curse.
 ; if it was the player, no need to draw the Play Area screen.
@@ -9187,6 +9283,11 @@ SwitchEffect:
 	ld e, a
 	jp SwapArenaWithBenchPokemon
 
+PsyShadowCheck:
+	call OncePerTurnPokePowerCheck
+	ret c 
+	;call OncePerTurnPokePowerSet
+	ret
 
 ;----------------------------------------
 ;        UNREFERENCED FUNCTIONS

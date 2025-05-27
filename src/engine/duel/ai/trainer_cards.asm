@@ -1564,7 +1564,7 @@ AIDecide_PokemonBreeder:
 	jr z, .found
 	cp VILEPLUME
 	jr z, .found
-	cp ALAKAZAM
+	cp GARDEVOIR
 	jr z, .found
 	cp GENGAR
 	jr nz, .loop_hand_1

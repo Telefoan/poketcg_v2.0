@@ -145,9 +145,9 @@ CardPointers::
 	dw KabutoCard
 	dw KabutopsCard
 	dw AerodactylCard
-	dw AbraCard
-	dw KadabraCard
-	dw AlakazamCard
+	dw RaltsCard
+	dw KirliaCard
+	dw GardevoirCard
 	dw SlowpokeLv9Card
 	dw SlowpokeLv18Card
 	dw SlowbroCard
@@ -242,23 +242,23 @@ BulbasaurCard:
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
 	db BULBASAUR
-	db 40 ; hp
+	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
-	; attack 1
-	energy GRASS, 2 ; energies
-	tx LeechSeedName ; name
-	tx BulbasaursLeechSeedDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Drain10EffectCommands ; effect commands
-	db NONE ; flags 1
-	db HEAL_USER ; flags 2
-	db NONE ; flags 3
-	db HEAL_10_HP_IF_DAMAGE_IS_DEALT ; used to calculate the HEAL_USER attack score bonus
-	db ATK_ANIM_DRAIN ; animation
+	; attack 1	
+	energy GRASS,1,COLORLESS,1	; energies
+	tx VineWhipName	; name
+	dw NONE	; description
+	dw NONE	; description (cont)
+	db 30	; damage
+	db DAMAGE_NORMAL	; category
+	dw NONE	; effect commands
+	db NONE	; flags 1
+	db NONE	; flags 2
+	db NONE	; flags 3
+	db 0	; effect parameters
+	db ATK_ANIM_WHIP ;need animations	; animations
 
 	; attack 2
 	energy 0 ; energies
@@ -277,12 +277,12 @@ BulbasaurCard:
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
 	db NONE ; resistance
-	tx SeedName ; category
-	dw 1 ; Pokedex number
-	db 13 ; level
-	db 2, 4 ; length
-	dw 15 * 10 ; weight
-	tx BulbasaurDescription ; description
+	db NONE  ; category
+	db NONE ; Pokedex number
+	db NONE ; level
+	db NONE ; length
+	db NONE ; weight
+	db NONE ; description
 	db HAS_EVOLUTION ; pokemon flags
 
 IvysaurCard:
@@ -292,16 +292,16 @@ IvysaurCard:
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
 	db IVYSAUR
-	db 60 ; hp
+	db 90 ; hp
 	db STAGE1 ; stage
 	tx BulbasaurName ; pre-evo name
 
 	; attack 1
 	energy GRASS, 1, COLORLESS, 2 ; energies
-	tx VineWhipName ; name
+	tx RazorLeafName ; name
 	dw NONE ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 60 ; damage
 	db DAMAGE_NORMAL ; category
 	dw NONE ; effect commands
 	db NONE ; flags 1
@@ -310,19 +310,19 @@ IvysaurCard:
 	db 0
 	db ATK_ANIM_WHIP ; animation
 
-	; attack 2
-	energy GRASS, 3 ; energies
-	tx PoisonPowderName ; name
-	tx InflictPoisonDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw InflictPoisonEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_POWDER_HIT_POISON ; animation
+	; atk 2	
+	energy NONE	; energies
+	dw NONE	; name
+	dw NONE	; description
+	dw NONE	; description (cont)
+	db 0	; damage
+	db NONE	; category
+	dw NONE	; effect commands
+	db NONE	; flags 1
+	db NONE	; flags 2
+	db NONE	; flags 3
+	db 0	
+	db NONE ;need animations	; animations
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
@@ -6935,14 +6935,14 @@ AerodactylCard:
 	tx AerodactylDescription ; description
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
-AbraCard:
+RaltsCard:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx AbraCardGfx ; gfx
-	tx AbraName ; name
+	gfx RaltsCardGfx ; gfx
+	tx RaltsName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
-	db ABRA
-	db 30 ; hp
+	db RALTS
+	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
@@ -6974,32 +6974,32 @@ AbraCard:
 	db 0
 	db ATK_ANIM_NONE ; animation
 
-	db 0 ; retreat cost
+	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
-	tx PsiName ; category
-	dw 63 ; Pokedex number
-	db 10 ; level
-	db 2, 11 ; length
-	dw 43 * 10 ; weight
-	tx AbraDescription ; description
+	db NONE ; category
+	dw NONE ; Pokedex number
+	db NONE ; level
+	db NONE ; length
+	dw NONE ; weight
+	db NONE ; description
 	db HAS_EVOLUTION ; pokemon flags
 
-KadabraCard:
+KirliaCard:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx KadabraCardGfx ; gfx
-	tx KadabraName ; name
+	gfx KirliaCardGfx ; gfx
+	tx KirliaName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
-	db KADABRA
-	db 60 ; hp
+	db KIRLIA
+	db 80 ; hp
 	db STAGE1 ; stage
-	tx AbraName ; pre-evo name
+	tx RaltsName ; pre-evo name
 
 	; attack 1
 	energy PSYCHIC, 2 ; energies
 	tx RecoverName ; name
-	tx KadabrasRecoverDescription ; description
+	tx KirliasRecoverDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
@@ -7027,33 +7027,33 @@ KadabraCard:
 	db 3 ; retreat cost
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
-	tx PsiName ; category
-	dw 64 ; Pokedex number
-	db 38 ; level
-	db 4, 3 ; length
-	dw 125 * 10 ; weight
-	tx KadabraDescription ; description
+	db NONE ; category
+	dw NONE ; Pokedex number
+	db NONE ; level
+	db NONE ; length
+	dw NONE ; weight
+	db NONE ; description
 	db HAS_EVOLUTION | AI_ENCOURAGE_EVOLUTION | AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
-AlakazamCard:
+GardevoirCard:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx AlakazamCardGfx ; gfx
-	tx AlakazamName ; name
+	gfx GardevoirCardGfx ; gfx
+	tx GardevoirName ; name
 	db STAR ; rarity
 	db MYSTERY | NONE ; sets
-	db ALAKAZAM
-	db 80 ; hp
+	db GARDEVOIR
+	db 110 ; hp
 	db STAGE2 ; stage
-	tx KadabraName ; pre-evo name
+	tx KirliaName ; pre-evo name
 
 	; attack 1
 	energy 0 ; energies
-	tx DamageSwapName ; name
-	tx DamageSwapDescription ; description
+	tx PsyShadowName ; name
+	tx PsyShadowDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw AlakazamDamageSwapEffectCommands ; effect commands
+	dw PsyShadowEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7061,28 +7061,28 @@ AlakazamCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy PSYCHIC, 3 ; energies
-	tx ConfuseRayName ; name
-	tx MayInflictConfusionDescription ; description
+	energy PSYCHIC, 2, COLORLESS, 1 ; energies
+	tx PsyshotName ; name
+	dw NONE ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 60 ; damage
 	db DAMAGE_NORMAL ; category
-	dw MayInflictConfusionEffectCommands ; effect commands
-	db INFLICT_CONFUSION ; flags 1
+	dw NONE ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_CONFUSE_RAY ; animation
 
-	db 3 ; retreat cost
+	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
 	tx PsiName ; category
-	dw 65 ; Pokedex number
-	db 42 ; level
-	db 4, 11 ; length
-	dw 106 * 10 ; weight
-	tx AlakazamDescription ; description
+	dw NONE ; Pokedex number
+	db NONE ; level
+	db NONE ; length
+	dw NONE ; weight
+	db NONE ; description
 	db AI_TRY_TO_KEEP_ON_BENCH ; pokemon flags
 
 SlowpokeLv9Card:
@@ -7692,47 +7692,46 @@ MewtwoLv53Card:
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
 	db MEWTWO_LV53
-	db 60 ; hp
+	db 150 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx PsychicName ; name
-	tx PsychicDescription ; description
+	tx PsychicSphereName ; name
+	dw NONE ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw PsychicEffectCommands ; effect commands
+	db 50 ; damage
+	db DAMAGE_NORMAL ; category
+	dw NONE ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_PSYCHIC_HIT ; animation
 
-	; attack 2
-	energy PSYCHIC, 2 ; energies
-	tx BarrierName ; name
-	tx BarrierDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw MewtwoBarrierEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NULLIFY_OR_WEAKEN_ATTACK | DISCARD_ENERGY ; flags 2
-	db NONE ; flags 3
-	db 2 ; attack score penalty for DISCARD_ENERGY
-	db ATK_ANIM_BARRIER ; animation
+	; atk 2	
+	energy PSYCHIC,2,COLORLESS,2	; energies
+	tx PsydriveName	; name
+	tx PsydriveDescription	; description
+	dw NONE	; description (cont)
+	db 150	; damage
+	db DAMAGE_NORMAL; need effect	; category
+	dw PsydriveEffectCommands	; effect commands
+	db NONE	; flags 1
+	db NONE	; flags 2
+	db NONE	; flags 3
+	db 0	
 
-	db 3 ; retreat cost
+	db 2 ; retreat cost
 	db WR_PSYCHIC ; weakness
 	db NONE ; resistance
-	tx GeneticName ; category
-	dw 150 ; Pokedex number
-	db 53 ; level
-	db 6, 7 ; length
-	dw 269 * 10 ; weight
-	tx MewtwoLv53Description ; description
+	db NONE ; category
+	db NONE ; Pokedex number
+	db NONE ; level
+	db NONE ; length
+	db NONE ; weight
+	db NONE ; description
 	db 0 ; pokemon flags
 
 MewtwoLv60Card:

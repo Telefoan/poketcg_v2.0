@@ -166,9 +166,9 @@ UnnamedDeck:
 	card_item MANKEY,            4
 	card_item SLOWPOKE_LV9,      4
 	card_item SLOWBRO,           4
-	card_item ABRA,              4
-	card_item KADABRA,           4
-	card_item ALAKAZAM,          4
+	card_item RALTS,              4
+	card_item KIRLIA,           4
+	card_item GARDEVOIR,          4
 	card_item GASTLY_LV17,       4
 	card_item HAUNTER_LV17,      4
 	card_item GENGAR,            4
@@ -525,14 +525,14 @@ PracticePlayerDeck:
 	card_item WATER_ENERGY,   1
 	card_item PSYCHIC_ENERGY, 1
 	card_item RATTATA,        1
-	card_item ABRA,           1
+	card_item RALTS,           1
 	card_item PSYCHIC_ENERGY, 1
 	card_item HYPNO,          1
 	card_item WATER_ENERGY,   1
 	card_item PSYCHIC_ENERGY, 1
 	card_item SEEL,           1
 	card_item PSYCHIC_ENERGY, 1
-	card_item KADABRA,        1
+	card_item KIRLIA,        1
 	card_item POTION,         1
 	card_item PSYCHIC_ENERGY, 1
 	card_item DROWZEE,        1
@@ -544,13 +544,13 @@ PracticePlayerDeck:
 	card_item GOLDEEN,        1
 	card_item STARYU,         1
 	card_item LAPRAS,         1
-	card_item ABRA,           1
+	card_item RALTS,           1
 	card_item DROWZEE,        1
 	card_item HYPNO,          1
 	card_item RATTATA,        1
 	card_item RATICATE,       1
 	card_item RATICATE,       1
-	card_item ALAKAZAM,       1
+	card_item GARDEVOIR,       1
 	deck_list_end
 	tx PracticePlayerDeckName
 
@@ -617,35 +617,16 @@ SamsPracticeDeck:
 
 CharmanderAndFriendsDeck:
 	deck_list_start
-	card_item FIRE_ENERGY,      10
-	card_item LIGHTNING_ENERGY,  8
-	card_item FIGHTING_ENERGY,   6
-	card_item CHARMANDER,        2
-	card_item CHARMELEON,        1
-	card_item CHARIZARD,         1
-	card_item GROWLITHE,         2
-	card_item ARCANINE_LV45,     1
-	card_item PONYTA,            2
-	card_item MAGMAR_LV24,       1
-	card_item PIKACHU_LV12,      2
-	card_item RAICHU_LV40,       1
-	card_item MAGNEMITE_LV13,    2
-	card_item MAGNETON_LV28,     1
-	card_item ZAPDOS_LV64,       1
-	card_item DIGLETT,           2
-	card_item DUGTRIO,           1
-	card_item MACHOP,            1
-	card_item MACHOKE,           1
-	card_item RATTATA,           2
-	card_item RATICATE,          1
-	card_item MEOWTH_LV14,       1
-	card_item PROFESSOR_OAK,     1
-	card_item BILL,              2
-	card_item SWITCH,            1
-	card_item COMPUTER_SEARCH,   1
-	card_item PLUSPOWER,         1
-	card_item POTION,            2
-	card_item FULL_HEAL,         2
+	card_item PSYCHIC_ENERGY,     24
+	card_item RALTS,          	4
+	card_item KIRLIA,         	4
+	card_item GARDEVOIR,        4
+	card_item MEWTWO_LV53,      4
+	card_item PROFESSOR_OAK,    4
+	card_item BILL,             4
+	card_item SWITCH,           4
+	card_item COMPUTER_SEARCH,  4
+	card_item POTION,           4
 	deck_list_end
 	tx CharmanderAndFriendsDeckName
 
@@ -665,8 +646,8 @@ CharmanderExtraDeck:
 	card_item DEWGONG,         1
 	card_item GOLDEEN,         2
 	card_item SEAKING,         1
-	card_item ABRA,            2
-	card_item KADABRA,         1
+	card_item RALTS,            2
+	card_item KIRLIA,         1
 	card_item GASTLY_LV8,      1
 	card_item GRASS_ENERGY,   30 ; irrelevant
 	deck_list_end
@@ -687,8 +668,8 @@ SquirtleAndFriendsDeck:
 	card_item GOLDEEN,          1
 	card_item SEAKING,          1
 	card_item LAPRAS,           1
-	card_item ABRA,             2
-	card_item KADABRA,          1
+	card_item RALTS,             2
+	card_item KIRLIA,          1
 	card_item GASTLY_LV8,       2
 	card_item HAUNTER_LV22,     1
 	card_item MACHOP,           1
@@ -779,8 +760,8 @@ BulbasaurExtraDeck:
 	card_item RAICHU_LV40,       1
 	card_item MAGNEMITE_LV13,    1
 	card_item ELECTABUZZ_LV35,   1
-	card_item ABRA,              2
-	card_item KADABRA,           1
+	card_item RALTS,              2
+	card_item KIRLIA,           1
 	card_item JYNX,              1
 	card_item GASTLY_LV8,        2
 	card_item HAUNTER_LV22,      1
@@ -872,8 +853,8 @@ GrassAndPsychicDeck:
 	card_item EXEGGCUTE,       2
 	card_item EXEGGUTOR,       1
 	card_item PINSIR,          1
-	card_item ABRA,            3
-	card_item KADABRA,         2
+	card_item RALTS,            3
+	card_item KIRLIA,         2
 	card_item DROWZEE,         3
 	card_item HYPNO,           2
 	card_item JYNX,            1
@@ -1083,9 +1064,9 @@ FlowerPowerDeck:
 StrangePsyshockDeck:
 	deck_list_start
 	card_item PSYCHIC_ENERGY, 22
-	card_item ABRA,            4
-	card_item KADABRA,         3
-	card_item ALAKAZAM,        2
+	card_item RALTS,            4
+	card_item KIRLIA,         3
+	card_item GARDEVOIR,        2
 	card_item MR_MIME,         2
 	card_item CHANSEY,         3
 	card_item KANGASKHAN,      3

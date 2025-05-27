@@ -140,9 +140,9 @@
 	const KABUTO                      ; $8b
 	const KABUTOPS                    ; $8c
 	const AERODACTYL                  ; $8d
-	const ABRA                        ; $8e
-	const KADABRA                     ; $8f
-	const ALAKAZAM                    ; $90
+	const RALTS                        ; $8e
+	const KIRLIA                     ; $8f
+	const GARDEVOIR                    ; $90
 	const SLOWPOKE_LV9                ; $91
 	const SLOWPOKE_LV18               ; $92
 	const SLOWBRO                     ; $93
@@ -226,5 +226,6 @@
 	const MAINTENANCE                 ; $e1
 	const POKEMON_FLUTE               ; $e2
 	const GAMBLER                     ; $e3
-	const RECYCLE                     ; $e4
+	const RECYCLE                     ; $
+	
 DEF NUM_CARDS EQU const_value - 1

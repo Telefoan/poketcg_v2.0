@@ -19,11 +19,11 @@ AIActionTable_StrangePsyshock:
 	db CHANSEY
 	db SNORLAX
 	db MR_MIME
-	db ABRA
+	db RALTS
 	db $00
 
 .list_bench
-	db ABRA
+	db RALTS
 	db MR_MIME
 	db KANGASKHAN
 	db SNORLAX
@@ -31,16 +31,16 @@ AIActionTable_StrangePsyshock:
 	db $00
 
 .list_retreat
-	ai_retreat ABRA,       -3
+	ai_retreat RALTS,       -3
 	ai_retreat SNORLAX,    -3
 	ai_retreat KANGASKHAN, -1
 	ai_retreat CHANSEY,    -1
 	db $00
 
 .list_energy
-	ai_energy ABRA,       3, +1
-	ai_energy KADABRA,    3, +0
-	ai_energy ALAKAZAM,   3, +0
+	ai_energy RALTS,       3, +1
+	ai_energy KIRLIA,    3, +0
+	ai_energy GARDEVOIR,   3, +0
 	ai_energy MR_MIME,    2, +0
 	ai_energy CHANSEY,    2, -2
 	ai_energy KANGASKHAN, 4, -2
@@ -50,7 +50,7 @@ AIActionTable_StrangePsyshock:
 .list_prize
 	db GAMBLER
 	db MR_MIME
-	db ALAKAZAM
+	db GARDEVOIR
 	db SWITCH
 	db $00
 

@@ -1,26 +1,26 @@
-KadabraName:
-	text "Kadabra"
+KirliaName:
+	text "Kirlia"
 	done
 
-KadabrasRecoverDescription:
+KirliasRecoverDescription:
 	text "Discard 1 <PSYCHIC> Energy card attached to"
-	line "Kadabra in order to use this attack."
+	line "Kirlia in order to use this attack."
 	line "Remove all damage counters from"
-	line "Kadabra."
+	line "Kirlia."
 	done
 
 SuperPsiName:
 	text "Super Psy"
 	done
 
-KadabraDescription:
-	text "It emits special alpha waves from"
-	line "its body that induce headaches"
-	line "even to those just nearby."
-	done
+;KadabraDescription:
+;	text "It emits special alpha waves from"
+;	line "its body that induce headaches"
+;	line "even to those just nearby."
+;	done
 
-AlakazamName:
-	text "Alakazam"
+GardevoirName:
+	text "Gardevoir"
 	done
 
 DamageSwapName:
@@ -37,11 +37,11 @@ DamageSwapDescription:
 	line "is Asleep, Confused, or Paralyzed."
 	done
 
-AlakazamDescription:
-	text "Its brain can outperform a"
-	line "supercomputer. Its intelligence"
-	line "quotient is said to be 5000."
-	done
+;AlakazamDescription:
+;	text "Its brain can outperform a"
+;	line "supercomputer. Its intelligence"
+;	line "quotient is said to be 5000."
+;	done
 
 SlowpokeName:
 	text "Slowpoke"

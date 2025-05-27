@@ -1025,166 +1025,166 @@ AIEnergyTransTransferEnergyToBench:
 
 
 
-; AI logic for Damage Swap to transfer damage from the Active Pokémon
-; to a Benched Pokémon with more than 10 HP remaining
-; and with no Energy cards attached to it.
-; only removes damage counters from the Active Pokémon and will only select
-; specific Pokémon (from Murray's Strange Psyshock deck) for the transfer.
+;; AI logic for Damage Swap to transfer damage from the Active Pokémon
+;; to a Benched Pokémon with more than 10 HP remaining
+;; and with no Energy cards attached to it.
+;; only removes damage counters from the Active Pokémon and will only select
+;; specific Pokémon (from Murray's Strange Psyshock deck) for the transfer.
 HandleAIDamageSwap:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	get_turn_duelist_var
-	dec a ; cp 1
-	ret z ; return if there are no Benched Pokémon
-
-	call AIChooseRandomlyNotToDoAction
-	ret c
-
-	ld a, ALAKAZAM
-	call CountTurnDuelistPokemonWithActivePkmnPower
-	ret nc ; return if no Alakazam
-	call CheckIfPkmnPowersAreCurrentlyDisabled
-	ret c ; return if Pokémon Powers can't be used
-
-; only take damage off certain Active Pokémon
-	ld a, DUELVARS_ARENA_CARD
-	get_turn_duelist_var
-	call _GetCardIDFromDeckIndex
-	cp ALAKAZAM
-	jr z, .ok
-	cp KADABRA
-	jr z, .ok
-	cp ABRA
-	jr z, .ok
-	cp MR_MIME
-	ret nz
-
-.ok
-	ld e, PLAY_AREA_ARENA
-	call GetCardDamageAndMaxHP
-	or a
-	ret z ; return if no damage
-
-	call ConvertHPToDamageCounters_Bank8
-	ld [wce06], a
-	ld a, ALAKAZAM
-	ld b, PLAY_AREA_BENCH_1
-	call LookForCardIDInPlayArea_Bank8
-	jr c, .is_in_bench
-
-; the only Alakazam is the Active Pokémon
-	xor a ; PLAY_AREA_ARENA
-.is_in_bench
-	ld [wce08], a
-	call .CheckForDamageSwapTargetInBench
-	ret c ; return if not found
-
-; use Damage Swap
-	ld a, [wce08]
-	add DUELVARS_ARENA_CARD
-	get_turn_duelist_var
-	ldh [hTempCardIndex_ff9f], a
-	ld a, [wce08]
-	ldh [hTemp_ffa0], a
-	ld a, OPPACTION_USE_PKMN_POWER
-	bank1call AIMakeDecision
-	ld a, OPPACTION_EXECUTE_PKMN_POWER_EFFECT
-	bank1call AIMakeDecision
-
-	ld a, [wce06]
-	ld e, a
-.loop_damage
-	; 30 frame delay
-	ld a, 30
-	call DoAFrames
-
-	push de
-	call .CheckForDamageSwapTargetInBench
-	jr c, .no_more_target
-
-	ldh [hPlayAreaEffectTarget], a
-	xor a ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ffa1], a
-	ld a, OPPACTION_6B15
-	bank1call AIMakeDecision
-	pop de
-	dec e
-	jr nz, .loop_damage
-
-.done
-; return to main scene after a 60 frame delay
-	ld a, 60
-	call DoAFrames
-	ld a, OPPACTION_DUEL_MAIN_SCENE
-	bank1call AIMakeDecision
-	ret
-
-.no_more_target
-	pop de
-	jr .done
-
-; looks for a Benched Pokémon to receive the damage counters.
-; output:
-;	a = chosen Pokémon's play area location offset (PLAY_AREA_* constant)
-;	carry = set:  if the AI didn't choose a Benched Pokémon
-.CheckForDamageSwapTargetInBench
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	get_turn_duelist_var
-	ld b, a
-	ld c, PLAY_AREA_BENCH_1
-	lb de, $ff, $ff
-
-; look for candidates on the Bench to get the damage counters
-; only target specific card IDs.
-.loop_bench
-	ld a, c
-	add DUELVARS_ARENA_CARD
-	get_turn_duelist_var
-	call _GetCardIDFromDeckIndex
-	cp CHANSEY
-	jr z, .found_candidate
-	cp KANGASKHAN
-	jr z, .found_candidate
-	cp SNORLAX
-	jr z, .found_candidate
-	cp MR_MIME
-	jr z, .found_candidate
-
-.next_play_area
-	inc c
-	dec b
-	jr nz, .loop_bench
-
-; done
-	ld a, e
-	cp $ff
-	jr nz, .no_carry
-	ld a, d
-	cp $ff
-	jr z, .set_carry
-.no_carry
-	or a
-	ret
-
-.found_candidate
-; found a potential candidate to receive damage counters
-	ld a, DUELVARS_ARENA_CARD_HP
-	add c
-	get_turn_duelist_var
-	cp 20
-	jr c, .next_play_area ; ignore cards with only 10 HP left
-
-	ld d, c ; store location
-	push de
-	ld e, c
-	call GetPlayAreaCardAttachedEnergies
-	pop de
-	or a
-	jr nz, .next_play_area ; ignore cards with attached Energy
-	ld e, c ; store location again
-	jr .next_play_area
-
-.set_carry
-	scf
+;	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+;	get_turn_duelist_var
+;	dec a ; cp 1
+;	ret z ; return if there are no Benched Pokémon
+;
+;	call AIChooseRandomlyNotToDoAction
+;	ret c
+;
+;	ld a, ALAKAZAM
+;	call CountTurnDuelistPokemonWithActivePkmnPower
+;	ret nc ; return if no Alakazam
+;	call CheckIfPkmnPowersAreCurrentlyDisabled
+;	ret c ; return if Pokémon Powers can't be used
+;
+;; only take damage off certain Active Pokémon
+;	ld a, DUELVARS_ARENA_CARD
+;	get_turn_duelist_var
+;	call _GetCardIDFromDeckIndex
+;	cp ALAKAZAM
+;	jr z, .ok
+;	cp KADABRA
+;	jr z, .ok
+;	cp ABRA
+;	jr z, .ok
+;	cp MR_MIME
+;	ret nz
+;
+;.ok
+;	ld e, PLAY_AREA_ARENA
+;	call GetCardDamageAndMaxHP
+;	or a
+;	ret z ; return if no damage
+;
+;	call ConvertHPToDamageCounters_Bank8
+;	ld [wce06], a
+;	ld a, ALAKAZAM
+;	ld b, PLAY_AREA_BENCH_1
+;	call LookForCardIDInPlayArea_Bank8
+;	jr c, .is_in_bench
+;
+;; the only Alakazam is the Active Pokémon
+;	xor a ; PLAY_AREA_ARENA
+;.is_in_bench
+;	ld [wce08], a
+;	call .CheckForDamageSwapTargetInBench
+;	ret c ; return if not found
+;
+;; use Damage Swap
+;	ld a, [wce08]
+;	add DUELVARS_ARENA_CARD
+;	get_turn_duelist_var
+;	ldh [hTempCardIndex_ff9f], a
+;	ld a, [wce08]
+;	ldh [hTemp_ffa0], a
+;	ld a, OPPACTION_USE_PKMN_POWER
+;	bank1call AIMakeDecision
+;	ld a, OPPACTION_EXECUTE_PKMN_POWER_EFFECT
+;	bank1call AIMakeDecision
+;
+;	ld a, [wce06]
+;	ld e, a
+;.loop_damage
+;	; 30 frame delay
+;	ld a, 30
+;	call DoAFrames
+;
+;	push de
+;	call .CheckForDamageSwapTargetInBench
+;	jr c, .no_more_target
+;
+;	ldh [hPlayAreaEffectTarget], a
+;	xor a ; PLAY_AREA_ARENA
+;	ldh [hTempPlayAreaLocation_ffa1], a
+;	ld a, OPPACTION_6B15
+;	bank1call AIMakeDecision
+;	pop de
+;	dec e
+;	jr nz, .loop_damage
+;
+;.done
+;; return to main scene after a 60 frame delay
+;	ld a, 60
+;	call DoAFrames
+;	ld a, OPPACTION_DUEL_MAIN_SCENE
+;	bank1call AIMakeDecision
+;	ret
+;
+;.no_more_target
+;	pop de
+;	jr .done
+;
+;; looks for a Benched Pokémon to receive the damage counters.
+;; output:
+;;	a = chosen Pokémon's play area location offset (PLAY_AREA_* constant)
+;;	carry = set:  if the AI didn't choose a Benched Pokémon
+;.CheckForDamageSwapTargetInBench
+;	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+;	get_turn_duelist_var
+;	ld b, a
+;	ld c, PLAY_AREA_BENCH_1
+;	lb de, $ff, $ff
+;
+;; look for candidates on the Bench to get the damage counters
+;; only target specific card IDs.
+;.loop_bench
+;	ld a, c
+;	add DUELVARS_ARENA_CARD
+;	get_turn_duelist_var
+;	call _GetCardIDFromDeckIndex
+;	cp CHANSEY
+;	jr z, .found_candidate
+;	cp KANGASKHAN
+;	jr z, .found_candidate
+;	cp SNORLAX
+;	jr z, .found_candidate
+;	cp MR_MIME
+;	jr z, .found_candidate
+;
+;.next_play_area
+;	inc c
+;	dec b
+;	jr nz, .loop_bench
+;
+;; done
+;	ld a, e
+;	cp $ff
+;	jr nz, .no_carry
+;	ld a, d
+;	cp $ff
+;	jr z, .set_carry
+;.no_carry
+;	or a
+;	ret
+;
+;.found_candidate
+;; found a potential candidate to receive damage counters
+;	ld a, DUELVARS_ARENA_CARD_HP
+;	add c
+;	get_turn_duelist_var
+;	cp 20
+;	jr c, .next_play_area ; ignore cards with only 10 HP left
+;
+;	ld d, c ; store location
+;	push de
+;	ld e, c
+;	call GetPlayAreaCardAttachedEnergies
+;	pop de
+;	or a
+;	jr nz, .next_play_area ; ignore cards with attached Energy
+;	ld e, c ; store location again
+;	jr .next_play_area
+;
+;.set_carry
+;	scf
 	ret
 
 

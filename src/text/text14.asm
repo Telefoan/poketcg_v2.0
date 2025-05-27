@@ -68,3 +68,35 @@ ChooseTrainerCardFromDeckText:
 Draw2CardsText:
 	text "Draw 2 cards."
 	done
+
+PsychicSphereName:
+	text "Psychic Sphere"
+	done
+
+PsydriveDescription:
+	text "Discard 2 PSYCHIC energy fron this "
+	line "Pokemon"
+	done
+
+PsydriveName:
+	text "Psydrive"
+	done
+
+ChooseAndDiscard2PsychicEnergyCardsText:
+	text "Discard 2 <PSYCHIC> Energy."
+	done
+
+PsyshotName:
+	text "Psyshot"
+	done
+
+PsyShadowDescription:	
+	text "Once during your turn, you may take"
+	line " a PSYCHIC Energy from your Energy "
+	line "one and attach it to the PSYCHIC Po"
+	line "emon in your Active Spot"
+	done
+
+PsyShadowName:	
+	text "Psy Shadow"
+	done
